@@ -1,456 +1,278 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>علي الشيدي | أخصائي علاقات عامة</title>
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="بورتفوليو علي بن سالم الشيدي - أخصائي علاقات عامة وإعلام مؤسسي من سلطنة عمان.">
+  <title>علي الشيدي | بورتفوليو</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    :root{
+      --bg: #0b0f16;
+      --panelLight:#e6e6e6;
+      --panelDark:#0a0a0a;
+      --textDark:#111;
+      --textLight:#f3f4f6;
+      --muted:#9ca3af;
+
+      --brand:#ffffff;      /* لون زر Contact */
+      --brandText:#111827;
+      --accent:#d1d5db;     /* لون خطوط/تفاصيل */
     }
 
-    body {
-      background: #f5f5f7;
-      color: #111827;
-      line-height: 1.7;
-    }
+    *{ box-sizing:border-box; font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+    body{ margin:0; background:var(--bg); color:var(--textLight); }
 
-    a {
-      text-decoration: none;
-      color: inherit;
+    /* Top Nav */
+    .topbar{
+      position: sticky; top:0; z-index: 50;
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
-
-    header {
-      background: linear-gradient(135deg, #111827, #1f2937);
-      color: #f9fafb;
-      padding: 24px 16px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    .topbar .wrap{
+      max-width: 1100px; margin:0 auto;
+      padding: 14px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
     }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 16px;
+    .brand{
+      font-weight:800; letter-spacing:.3px;
+      display:flex; align-items:center; gap:10px;
     }
-
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: var(--brand);
+      display:inline-block;
     }
-
-    .logo-text {
-      font-size: 1.2rem;
-      font-weight: 700;
+    .nav{
+      display:flex; align-items:center; gap:18px;
+      font-size: 14px;
+      opacity:.95;
     }
-
-    nav a {
-      margin-left: 16px;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    nav a:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
-
-    .hero {
-      background: #0b1120;
-      color: #f9fafb;
-      padding: 48px 16px 56px;
-    }
-
-    .hero-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
-      gap: 32px;
-      align-items: center;
-    }
-
-    .hero-title {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
-      color: #e5e7eb;
-      margin-bottom: 16px;
-    }
-
-    .hero-text {
-      font-size: 0.98rem;
-      color: #d1d5db;
-      margin-bottom: 24px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn-primary {
-      background: #2563eb;
-      color: #111827;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      font-weight: 600;
+    .nav a{ color:var(--textLight); text-decoration:none; }
+    .nav a:hover{ text-decoration: underline; }
+    .btn{
+      background: var(--brand);
+      color: var(--brandText);
       border: none;
-      cursor: pointer;
-    }
-
-    .btn-primary:hover {
-      background: #3b82f6;
-    }
-
-    .btn-outline {
+      padding: 10px 14px;
       border-radius: 999px;
-      padding: 9px 16px;
-      border: 1px solid #6b7280;
-      background: transparent;
-      color: #e5e7eb;
-      font-size: 0.9rem;
+      font-weight: 700;
       cursor: pointer;
+      font-size: 13px;
     }
+    .btn:hover{ opacity:.92; }
 
-    .btn-outline:hover {
-      background: rgba(148, 163, 184, 0.15);
+    /* Hero Split */
+    .hero{
+      max-width: 1100px; margin: 22px auto 0;
+      padding: 0 16px 22px;
     }
-
-    .hero-card {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      border-radius: 16px;
-      padding: 20px 18px;
-    }
-
-    .hero-card h3 {
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-
-    .hero-card p {
-      font-size: 0.9rem;
-      color: #e5e7eb;
-      margin-bottom: 6px;
-    }
-
-    main {
-      padding: 40px 0 56px;
-    }
-
-    section {
-      margin-bottom: 36px;
-      background: #ffffff;
+    .split{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      min-height: 520px;
       border-radius: 18px;
-      padding: 24px 18px;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 25px 80px rgba(0,0,0,.35);
     }
-
-    section h2 {
-      font-size: 1.2rem;
-      margin-bottom: 14px;
-      border-right: 4px solid #f97316;
-      padding-right: 8px;
+    .left{
+      background: var(--panelLight);
+      color: var(--textDark);
+      padding: 46px 34px;
+      position: relative;
     }
-
-    .tagline {
-      font-size: 0.95rem;
-      color: #4b5563;
-      margin-bottom: 8px;
+    /* الميلان بين اللوحين */
+    .left::after{
+      content:"";
+      position:absolute;
+      top:-40px;
+      left:-80px;
+      width: 180px;
+      height: 200%;
+      transform: rotate(12deg);
+      background: rgba(0,0,0,.08);
     }
-
-    .section-text {
-      font-size: 0.95rem;
-      color: #374151;
+    .hello{ font-size: 18px; opacity:.75; margin-bottom: 14px; }
+    .name{ font-size: 44px; line-height:1.05; font-weight: 900; margin: 0 0 8px; }
+    .role{ font-size: 15px; opacity:.75; margin-bottom: 22px; }
+    .bio{
+      font-size: 14px;
+      line-height: 1.9;
+      color: rgba(17,24,39,.88);
+      max-width: 480px;
+      margin-bottom: 22px;
     }
-
-    .experience-item {
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px dashed #e5e7eb;
+    .social{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 14px;
     }
-
-    .experience-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-      margin-bottom: 0;
-    }
-
-    .exp-header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-
-    .exp-title {
-      font-weight: 600;
-    }
-
-    .exp-place {
-      font-size: 0.9rem;
-      color: #6b7280;
-    }
-
-    .exp-date {
-      font-size: 0.85rem;
-      color: #6b7280;
-    }
-
-    ul {
-      padding-right: 18px;
-      font-size: 0.93rem;
-      color: #4b5563;
-    }
-
-    li {
-      margin-bottom: 4px;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .chip {
-      font-size: 0.85rem;
-      padding: 4px 10px;
+    .pill{
+      border: 1px solid rgba(17,24,39,.15);
+      background: rgba(255,255,255,.45);
+      color: #111827;
+      padding: 9px 12px;
       border-radius: 999px;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      color: #374151;
+      font-size: 13px;
+      text-decoration:none;
+      font-weight:700;
+    }
+    .pill:hover{ background: rgba(255,255,255,.75); }
+
+    .right{
+      background: radial-gradient(1200px 600px at 60% 35%, rgba(255,255,255,.08), transparent 55%), var(--panelDark);
+      padding: 28px 28px 0;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      position: relative;
+    }
+    .photoWrap{
+      width: min(360px, 82%);
+      aspect-ratio: 3/4;
+      border-radius: 22px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 25px 80px rgba(0,0,0,.55);
+      background: rgba(255,255,255,.06);
+    }
+    .photoWrap img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .note{
+      position:absolute;
+      bottom: 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,.6);
+      text-align:center;
+      width: 100%;
+      padding: 0 14px;
     }
 
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* Sections */
+    .sections{
+      max-width: 1100px;
+      margin: 18px auto 60px;
+      padding: 0 16px;
+      display:grid;
       gap: 14px;
-      font-size: 0.95rem;
     }
-
-    .contact-box {
-      background: #f9fafb;
-      border-radius: 14px;
-      padding: 12px 12px;
-      border: 1px solid #e5e7eb;
+    .card{
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 18px 16px;
     }
-
-    .contact-label {
-      font-size: 0.78rem;
-      color: #6b7280;
-      margin-bottom: 2px;
+    .card h2{
+      margin:0 0 10px;
+      font-size: 16px;
+      border-right: 4px solid rgba(255,255,255,.25);
+      padding-right: 10px;
     }
-
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #6b7280;
-      padding: 18px 12px 26px;
+    .card p, .card li{
+      color: rgba(255,255,255,.82);
+      font-size: 14px;
+      line-height: 1.9;
     }
+    ul{ margin: 10px 18px 0 0; }
 
-    @media (max-width: 768px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-      }
-      nav {
-        display: none;
-      }
-      header {
-        padding-bottom: 16px;
-      }
+    /* Responsive */
+    @media (max-width: 900px){
+      .split{ grid-template-columns: 1fr; }
+      .left::after{ display:none; }
+      .right{ padding: 18px; align-items:center; }
+      .photoWrap{ width: min(340px, 92%); }
+      .name{ font-size: 36px; }
+      .nav{ display:none; }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- الهيدر -->
-  <header>
-    <div class="container">
-      <div class="top-bar">
-        <div class="logo-text">علي الشيدي</div>
-        <nav>
-          <a href="#about">من أنا</a>
-          <a href="#experience">الخبرات</a>
-          <a href="#skills">المهارات</a>
-          <a href="#contact">التواصل</a>
-        </nav>
-      </div>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand"><span class="dot"></span> علي الشيدي</div>
+
+      <nav class="nav">
+        <a href="#about">عنّي</a>
+        <a href="#skills">المهارات</a>
+        <a href="#work">الأعمال</a>
+      </nav>
+
+      <a class="btn" href="#contact">تواصل معي</a>
     </div>
   </header>
 
-  <!-- البطل (Hero) -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <h1 class="hero-title">أخصائي علاقات عامة وإعلام مؤسسي</h1>
-        <p class="hero-subtitle">بكالوريوس اتصال جماهيري – تخصص علاقات عامة، جامعة التقنية والعلوم التطبيقية – صور.</p>
-        <p class="hero-text">
-          أمتلك خبرة عملية في التسويق، إدارة الحملات، التواصل مع الجمهور،
-          تنظيم الفعاليات، وإنتاج المحتوى المرئي والمكتوب. أسعى لبناء صورة
-          مؤسسية قوية للجهات التي أعمل معها وتعزيز حضورها الإعلامي.
-        </p>
-        <div class="hero-actions">
-          <!-- غيّر الرابط إلى رابط سيرتك الذاتية إن وجد -->
-          <a href="#" class="btn-primary">تحميل السيرة الذاتية</a>
-          <a href="#contact" class="btn-outline">تواصل معي</a>
-        </div>
-      </div>
+  <main class="hero">
+    <div class="split">
+      <!-- اللوح الفاتح -->
+      <section class="left">
+        <div class="hello">مرحبًا، أنا</div>
+        <h1 class="name">علي الشيدي</h1>
+        <div class="role">أخصائي علاقات عامة • إعلام مؤسسي • تسويق</div>
 
-      <aside class="hero-card">
-        <h3>نبذة سريعة</h3>
-        <p>الاسم: علي بن سالم بن علي الشيدي</p>
-        <p>المسمى: أخصائي علاقات عامة</p>
-        <p>الموقع: سلطنة عمان – شمال الباطنة – ولاية صحم</p>
-        <p>متاح لفرص عمل في مجالات العلاقات العامة، الإعلام، والتسويق.</p>
-      </aside>
+        <div class="bio">
+          خريج اتصال جماهيري (علاقات عامة). خبرة في بيئة حكومية والتسويق وإدارة المحتوى،
+          وتنظيم الفعاليات والتصميم والمونتاج. هدفي دعم الصورة المؤسسية وتعزيز حضور الجهة إعلاميًا.
+        </div>
+
+        <div class="social">
+          <a class="pill" href="mailto:alialsheidi@gmail.com">Email</a>
+          <a class="pill" href="https://alisheidi.komi.io" target="_blank">Portfolio</a>
+          <!-- غيّر رابط لينكدإن لاحقًا إذا عندك -->
+          <a class="pill" href="#" target="_blank">LinkedIn</a>
+        </div>
+      </section>
+
+      <!-- اللوح الغامق + صورة -->
+      <section class="right">
+        <div class="photoWrap">
+          <!-- ارفع صورة باسم profile.jpg داخل نفس المستودع -->
+          <img src="profile.jpg" alt="صورة شخصية">
+        </div>
+        <div class="note">ارفع صورتك داخل GitHub باسم: profile.jpg</div>
+      </section>
+    </div>
+  </main>
+
+  <section class="sections">
+    <div class="card" id="about">
+      <h2>عنّي</h2>
+      <p>
+        متدرب علاقات عامة سابقًا في بلدية صحم، وشاركت في حملات طلابية للإعلام والتسويق.
+        أمتلك مهارات في التواصل، التنسيق، وإنتاج المحتوى المرئي والمكتوب.
+      </p>
+    </div>
+
+    <div class="card" id="skills">
+      <h2>المهارات</h2>
+      <ul>
+        <li>إدارة المحتوى على منصات التواصل الاجتماعي</li>
+        <li>التصميم (Adobe Photoshop)</li>
+        <li>المونتاج (Adobe Premiere)</li>
+        <li>تنظيم الفعاليات والعمل الجماعي</li>
+        <li>Microsoft Office والأرشفة الإلكترونية</li>
+      </ul>
+    </div>
+
+    <div class="card" id="work">
+      <h2>الأعمال</h2>
+      <p>
+        هنا تقدر تضيف صور أعمالك لاحقًا (تصاميم، فعاليات، حملات) — إذا تحب أضيف لك “معرض صور” مرتب.
+      </p>
+    </div>
+
+    <div class="card" id="contact">
+      <h2>تواصل</h2>
+      <p>
+        الهاتف: 95647786<br>
+        البريد: <a href="mailto:alialsheidi@gmail.com" style="color:#fff;text-decoration:underline;">alialsheidi@gmail.com</a>
+      </p>
     </div>
   </section>
 
-  <!-- المحتوى الرئيسي -->
-  <main class="container">
-
-    <!-- من أنا -->
-    <section id="about">
-      <h2>من أنا</h2>
-      <p class="tagline">خريج اتصال جماهيري بشغف للإعلام والتواصل المؤسسي.</p>
-      <p class="section-text">
-        أكملت درجة البكالوريوس في الاتصال الجماهيري – تخصص العلاقات العامة من جامعة
-        التقنية والعلوم التطبيقية بصور. خلال فترة الدراسة والتدريب اكتسبت خبرة في بيئة
-        العمل الحكومية، تنظيم الحملات الطلابية، إدارة المحتوى على منصات التواصل، والتصميم
-        الجرافيكي ومونتاج الفيديو.
-        أطمح للانضمام إلى مؤسسة أُسهم فيها في تطوير استراتيجيات الاتصال وتعزيز صورتها
-        لدى الجمهور.
-      </p>
-    </section>
-
-    <!-- الخبرات العملية -->
-    <section id="experience">
-      <h2>الخبرات العملية</h2>
-
-      <div class="experience-item">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title">نائب مدير التسويق</div>
-            <div class="exp-place">ورشة مهاد للأثاث</div>
-          </div>
-          <div class="exp-date">مدة العمل: 3 أشهر</div>
-        </div>
-        <ul>
-          <li>المشاركة في إدارة وتنسيق الحملات التسويقية.</li>
-          <li>إدارة المحتوى على منصات التواصل الاجتماعي للورشة.</li>
-          <li>إلقاء محاضرات والتحدث أمام الجمهور عند الفعاليات.</li>
-          <li>التصوير الفوتوغرافي وتوثيق الفعاليات.</li>
-          <li>التصميم الجرافيكي وإنتاج المواد الإعلانية.</li>
-          <li>مونتاج وتحرير الفيديو للترويج للمنتجات والخدمات.</li>
-        </ul>
-      </div>
-
-      <div class="experience-item">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title">عضو فريق الحملة الطلابية – الإعلام والتسويق</div>
-            <div class="exp-place">جامعة التقنية والعلوم التطبيقية – صور</div>
-          </div>
-          <div class="exp-date">مارس 2025 – يونيو 2025</div>
-        </div>
-        <ul>
-          <li>التسويق الميداني والتواصل المباشر مع الجمهور وتعريفهم بالحملة.</li>
-          <li>التسويق الإلكتروني وإدارة ونشر المحتوى عبر وسائل التواصل الاجتماعي.</li>
-          <li>المساهمة في تنظيم الفعاليات وترتيب المهام بين أعضاء الفريق.</li>
-          <li>إعداد التصاميم الإعلانية والبصرية للحملة.</li>
-        </ul>
-      </div>
-
-      <div class="experience-item">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title">متدرب علاقات عامة – إداري وموظف استقبال</div>
-            <div class="exp-place">دائرة بلدية صحم – سلطنة عمان</div>
-          </div>
-          <div class="exp-date">8 يوليو 2024 – 15 أغسطس 2024</div>
-        </div>
-        <ul>
-          <li>المساعدة في صياغة وتنسيق الرسائل الرسمية والمراسلات الداخلية والخارجية.</li>
-          <li>الرد على استفسارات الجمهور ودعم قسم العلاقات العامة.</li>
-          <li>تنظيم الوثائق والأرشفة والمساهمة في إعداد التقارير الداخلية.</li>
-          <li>المشاركة في تعزيز التواصل بين البلدية والمجتمع المحلي.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- المهارات -->
-    <section id="skills">
-      <h2>المهارات</h2>
-      <p class="section-text">
-        مزيج من المهارات التقنية والعملية في مجال العلاقات العامة والإعلام:
-      </p>
-      <div class="chips">
-        <span class="chip">إدارة الحملات التسويقية</span>
-        <span class="chip">إعداد المحتوى الإعلامي</span>
-        <span class="chip">التصميم الجرافيكي (Adobe Photoshop)</span>
-        <span class="chip">مونتاج الفيديو (Adobe Premiere)</span>
-        <span class="chip">التصوير الفوتوغرافي وتوثيق الفعاليات</span>
-        <span class="chip">التواصل والعرض والإقناع</span>
-        <span class="chip">تنظيم الفعاليات والعمل الجماعي</span>
-        <span class="chip">Microsoft Office</span>
-        <span class="chip">الأرشفة الإلكترونية</span>
-        <span class="chip">إدخال البيانات وإنجاز المعاملات الحكومية</span>
-      </div>
-    </section>
-
-    <!-- تواصل -->
-    <section id="contact">
-      <h2>التواصل</h2>
-      <p class="section-text">
-        يسعدني التواصل بخصوص الفرص الوظيفية أو التعاون في مشاريع إعلامية وترويجية:
-      </p>
-      <div class="contact-grid">
-        <div class="contact-box">
-          <div class="contact-label">الهاتف</div>
-          <div>95647786+</div>
-        </div>
-        <div class="contact-box">
-          <div class="contact-label">البريد الإلكتروني</div>
-          <div><a href="mailto:alialsheidi@gmail.com">alialsheidi@gmail.com</a></div>
-        </div>
-        <div class="contact-box">
-          <div class="contact-label">البورتفوليو</div>
-          <div><a href="https://alisheidi.komi.io" target="_blank">alisheidi.komi.io</a></div>
-        </div>
-        <div class="contact-box">
-          <div class="contact-label">الموقع</div>
-          <div>سلطنة عمان – شمال الباطنة – ولاية صحم</div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    © <span id="year"></span> علي بن سالم الشيدي – جميع الحقوق محفوظة.
-  </footer>
-
-  <script>
-    // ضبط السنة تلقائياً في الفوتر
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
-
