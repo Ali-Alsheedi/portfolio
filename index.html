@@ -3,189 +3,230 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>علي سالم الشيدي | بورتفوليو</title>
+  <title>علي الشيدي | بورتفوليو</title>
+  <meta name="description" content="بورتفوليو علي الشيدي - علاقات عامة وإعلام مؤسسي" />
+
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&display=swap');
+
     :root{
-      --bg: #0b0f16;
-      --panelLight:#e6e6e6;
-      --panelDark:#0a0a0a;
-      --textDark:#111;
-      --textLight:#f3f4f6;
-      --muted:#9ca3af;
-
-      --brand:#ffffff;      /* لون زر Contact */
-      --brandText:#111827;
-      --accent:#d1d5db;     /* لون خطوط/تفاصيل */
+      --bg: #070A12;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.10);
+      --text: #F5F7FF;
+      --muted: rgba(245,247,255,.70);
+      --accent: #7C3AED;   /* غيّر اللون من هنا */
+      --accent2:#22C55E;   /* لون مساعد */
+      --shadow: 0 20px 70px rgba(0,0,0,.45);
+      --radius: 18px;
     }
 
-    *{ box-sizing:border-box; font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
-    body{ margin:0; background:var(--bg); color:var(--textLight); }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(124,58,237,.20), transparent 60%),
+        radial-gradient(800px 450px at 80% 20%, rgba(34,197,94,.14), transparent 60%),
+        radial-gradient(900px 600px at 60% 90%, rgba(255,255,255,.06), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.9;
+    }
 
-    /* Top Nav */
+    a{ color: inherit; text-decoration:none; }
+    .container{ max-width: 1100px; margin:0 auto; padding: 0 16px; }
+
+    /* Topbar */
     .topbar{
-      position: sticky; top:0; z-index: 50;
-      background: rgba(0,0,0,.65);
+      position: sticky; top:0; z-index:50;
+      background: rgba(7,10,18,.60);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid var(--border);
     }
-    .topbar .wrap{
-      max-width: 1100px; margin:0 auto;
-      padding: 14px 16px;
+    .topbar .row{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 14px 0;
     }
-    .brand{
-      font-weight:800; letter-spacing:.3px;
+    .logo{
       display:flex; align-items:center; gap:10px;
+      font-weight: 900;
+      letter-spacing:.2px;
     }
     .dot{
       width:10px; height:10px; border-radius:999px;
-      background: var(--brand);
-      display:inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
     }
     .nav{
-      display:flex; align-items:center; gap:18px;
+      display:flex; gap:18px; align-items:center;
       font-size: 14px;
-      opacity:.95;
+      color: var(--muted);
     }
-    .nav a{ color:var(--textLight); text-decoration:none; }
-    .nav a:hover{ text-decoration: underline; }
+    .nav a:hover{ color: var(--text); text-decoration: underline; }
     .btn{
-      background: var(--brand);
-      color: var(--brandText);
-      border: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
       padding: 10px 14px;
       border-radius: 999px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 13px;
+      font-weight: 800;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease;
+      display:inline-flex; align-items:center; gap:8px;
     }
-    .btn:hover{ opacity:.92; }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
+    .btnPrimary{
+      background: linear-gradient(135deg, var(--accent), #4F46E5);
+      border: none;
+      box-shadow: 0 12px 35px rgba(124,58,237,.25);
+    }
+    .btnPrimary:hover{ background: linear-gradient(135deg, #8B5CF6, #4F46E5); }
 
-    /* Hero Split */
-    .hero{
-      max-width: 1100px; margin: 22px auto 0;
-      padding: 0 16px 22px;
-    }
-    .split{
+    /* Hero */
+    .hero{ padding: 26px 0 10px; }
+    .heroGrid{
       display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      min-height: 520px;
-      border-radius: 18px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.08);
-      box-shadow: 0 25px 80px rgba(0,0,0,.35);
+      grid-template-columns: 1.15fr .85fr;
+      gap: 14px;
+      align-items: stretch;
     }
-    .left{
-      background: var(--panelLight);
-      color: var(--textDark);
-      padding: 46px 34px;
-      position: relative;
+    .panel{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
-    /* الميلان بين اللوحين */
-    .left::after{
-      content:"";
-      position:absolute;
-      top:-40px;
-      left:-80px;
-      width: 180px;
-      height: 200%;
-      transform: rotate(12deg);
-      background: rgba(0,0,0,.08);
-    }
-    .hello{ font-size: 18px; opacity:.75; margin-bottom: 14px; }
-    .name{ font-size: 44px; line-height:1.05; font-weight: 900; margin: 0 0 8px; }
-    .role{ font-size: 15px; opacity:.75; margin-bottom: 22px; }
-    .bio{
-      font-size: 14px;
-      line-height: 1.9;
-      color: rgba(17,24,39,.88);
-      max-width: 480px;
-      margin-bottom: 22px;
-    }
-    .social{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top: 14px;
-    }
-    .pill{
-      border: 1px solid rgba(17,24,39,.15);
-      background: rgba(255,255,255,.45);
-      color: #111827;
-      padding: 9px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      text-decoration:none;
-      font-weight:700;
-    }
-    .pill:hover{ background: rgba(255,255,255,.75); }
 
-    .right{
-      background: radial-gradient(1200px 600px at 60% 35%, rgba(255,255,255,.08), transparent 55%), var(--panelDark);
-      padding: 28px 28px 0;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
+    .heroLeft{
+      padding: 26px 22px;
       position: relative;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      font-size: 13px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .badge span{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(34,197,94,.14);
+    }
+
+    h1{ margin: 6px 0 10px; font-size: 42px; line-height:1.15; font-weight: 900; }
+    .subtitle{ color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+    .heroText{ color: rgba(245,247,255,.86); max-width: 60ch; margin-bottom: 18px; }
+
+    .ctaRow{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 12px; }
+
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 14px; }
+    .chip{
+      font-size: 13px;
+      color: rgba(245,247,255,.85);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      padding: 7px 10px;
+      border-radius: 999px;
+    }
+
+    .heroRight{
+      display:flex;
+      flex-direction: column;
     }
     .photoWrap{
-      width: min(360px, 82%);
+      padding: 16px;
+      height: 100%;
+      display:flex; align-items:center; justify-content:center;
+      background:
+        radial-gradient(700px 500px at 50% 20%, rgba(255,255,255,.08), transparent 60%),
+        rgba(255,255,255,.02);
+    }
+    .photoCard{
+      width: 100%;
+      max-width: 340px;
       aspect-ratio: 3/4;
       border-radius: 22px;
       overflow:hidden;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 25px 80px rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 24px 80px rgba(0,0,0,.55);
+      position: relative;
       background: rgba(255,255,255,.06);
     }
-    .photoWrap img{
-      width:100%;
-      height:100%;
+    .photoCard img{
+      width:100%; height:100%;
       object-fit: cover;
       display:block;
     }
-    .note{
+    .photoHint{
       position:absolute;
-      bottom: 14px;
+      bottom: 10px; left: 10px; right: 10px;
       font-size: 12px;
-      color: rgba(255,255,255,.6);
-      text-align:center;
-      width: 100%;
-      padding: 0 14px;
+      color: rgba(245,247,255,.65);
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 8px 10px;
+      border-radius: 12px;
     }
 
     /* Sections */
     .sections{
-      max-width: 1100px;
-      margin: 18px auto 60px;
-      padding: 0 16px;
       display:grid;
+      grid-template-columns: 1fr 1fr;
       gap: 14px;
+      margin: 14px 0 50px;
     }
     .card{
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 16px;
-      padding: 18px 16px;
+      padding: 18px 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
     }
     .card h2{
-      margin:0 0 10px;
-      font-size: 16px;
-      border-right: 4px solid rgba(255,255,255,.25);
-      padding-right: 10px;
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 900;
+      display:flex; align-items:center; gap:10px;
     }
-    .card p, .card li{
-      color: rgba(255,255,255,.82);
-      font-size: 14px;
-      line-height: 1.9;
+    .bar{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
     }
-    ul{ margin: 10px 18px 0 0; }
+    ul{ margin: 8px 18px 0 0; color: rgba(245,247,255,.86); }
+    li{ margin-bottom: 6px; }
+
+    .twoCol{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .mini{
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: rgba(245,247,255,.88);
+    }
+    .mini small{ color: var(--muted); display:block; margin-bottom: 2px; }
+
+    footer{
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 18px 0 26px;
+      text-align:center;
+      font-size: 13px;
+    }
 
     /* Responsive */
     @media (max-width: 900px){
-      .split{ grid-template-columns: 1fr; }
-      .left::after{ display:none; }
-      .right{ padding: 18px; align-items:center; }
-      .photoWrap{ width: min(340px, 92%); }
-      .name{ font-size: 36px; }
       .nav{ display:none; }
+      .heroGrid{ grid-template-columns: 1fr; }
+      h1{ font-size: 34px; }
+      .sections{ grid-template-columns: 1fr; }
+      .twoCol{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -193,87 +234,140 @@
 <body>
 
   <header class="topbar">
-    <div class="wrap">
-      <div class="brand"><span class="dot"></span> علي الشيدي</div>
+    <div class="container">
+      <div class="row">
+        <div class="logo"><span class="dot"></span> علي الشيدي</div>
 
-      <nav class="nav">
-        <a href="#about">عنّي</a>
-        <a href="#skills">المهارات</a>
-        <a href="#work">الأعمال</a>
-      </nav>
+        <nav class="nav">
+          <a href="#about">عنّي</a>
+          <a href="#skills">المهارات</a>
+          <a href="#experience">الخبرات</a>
+          <a href="#contact">تواصل</a>
+        </nav>
 
-      <a class="btn" href="#contact">تواصل معي</a>
+        <a class="btn btnPrimary" href="#contact">تواصل معي</a>
+      </div>
     </div>
   </header>
 
-  <main class="hero">
-    <div class="split">
-      <!-- اللوح الفاتح -->
-      <section class="left">
-        <div class="hello">مرحبًا، أنا</div>
-        <h1 class="name">علي الشيدي</h1>
-        <div class="role">أخصائي علاقات عامة • إعلام مؤسسي • تسويق</div>
+  <main class="container hero">
+    <div class="heroGrid">
 
-        <div class="bio">
-          خريج اتصال جماهيري (علاقات عامة). خبرة في بيئة حكومية والتسويق وإدارة المحتوى،
-          وتنظيم الفعاليات والتصميم والمونتاج. هدفي دعم الصورة المؤسسية وتعزيز حضور الجهة إعلاميًا.
+      <section class="panel heroLeft">
+        <div class="badge"><span></span> جاهز لفرص العمل في العلاقات العامة والإعلام والتسويق</div>
+
+        <h1>بورتفوليو مهني</h1>
+        <div class="subtitle">علي الشيدي • علاقات عامة • إعلام مؤسسي • تسويق</div>
+
+        <p class="heroText">
+          أقدّم حلولًا في التواصل المؤسسي وصناعة المحتوى وتنظيم الفعاليات وإدارة الحملات.
+          هدفي أن يكون حضور الجهة واضحًا، محترفًا، ومؤثرًا لدى الجمهور.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn btnPrimary" href="#experience">شاهد الخبرات</a>
+          <a class="btn" href="mailto:alialsheidi@gmail.com">راسلني عبر البريد</a>
+          <a class="btn" href="https://alisheidi.komi.io" target="_blank">بورتفوليو خارجي</a>
         </div>
 
-        <div class="social">
-          <a class="pill" href="mailto:alialsheidi@gmail.com">Email</a>
-          <a class="pill" href="https://alisheidi.komi.io" target="_blank">Portfolio</a>
-          <!-- غيّر رابط لينكدإن لاحقًا إذا عندك -->
-          <a class="pill" href="#" target="_blank">LinkedIn</a>
+        <div class="chips">
+          <span class="chip">تصميم (Photoshop)</span>
+          <span class="chip">مونتاج (Premiere)</span>
+          <span class="chip">إدارة محتوى</span>
+          <span class="chip">تنظيم فعاليات</span>
+          <span class="chip">Microsoft Office</span>
         </div>
       </section>
 
-      <!-- اللوح الغامق + صورة -->
-      <section class="right">
+      <section class="panel heroRight">
         <div class="photoWrap">
-          <!-- ارفع صورة باسم profile.jpg داخل نفس المستودع -->
-          <img src="profile.jpg?v=2" alt="صورة شخصية">
+          <div class="photoCard">
+            <!-- مهم: ارفع صورة في GitHub بنفس المكان باسم profile.jpg -->
+            <img src="profile.jpg" alt="صورة شخصية">
+            <div class="photoHint">إذا ما ظهرت الصورة: ارفعها باسم <b>profile.jpg</b> بجانب ملف index.html</div>
+          </div>
         </div>
-        <div class="note">ارفع صورتك داخل GitHub باسم: profile.jpg</div>
       </section>
+
     </div>
+
+    <section class="sections">
+      <div class="card" id="about">
+        <h2><span class="bar"></span> عنّي</h2>
+        <p style="color: rgba(245,247,255,.86); margin:0;">
+          خريج اتصال جماهيري (علاقات عامة). خبرة في بيئة حكومية والتسويق وصناعة المحتوى.
+          أعمل على تحسين صورة الجهة والتواصل مع الجمهور بشكل احترافي.
+        </p>
+      </div>
+
+      <div class="card" id="skills">
+        <h2><span class="bar"></span> المهارات</h2>
+        <ul>
+          <li>إدارة المحتوى على منصات التواصل الاجتماعي</li>
+          <li>التواصل، العرض، والإقناع</li>
+          <li>التصميم الجرافيكي (Adobe Photoshop)</li>
+          <li>مونتاج الفيديو (Adobe Premiere)</li>
+          <li>Microsoft Office + الأرشفة الإلكترونية</li>
+        </ul>
+      </div>
+
+      <div class="card" id="experience" style="grid-column: 1 / -1;">
+        <h2><span class="bar"></span> الخبرات (مختصر)</h2>
+        <div class="twoCol">
+          <div class="mini">
+            <small>ورشة مهاد للأثاث</small>
+            <b>نائب مدير التسويق</b>
+            <div style="color: var(--muted);">3 أشهر</div>
+          </div>
+          <div class="mini">
+            <small>UTAS – صور</small>
+            <b>عضو فريق حملة طلابية (إعلام وتسويق)</b>
+            <div style="color: var(--muted);">مارس 2025 – يونيو 2025</div>
+          </div>
+          <div class="mini">
+            <small>بلدية صحم</small>
+            <b>متدرب علاقات عامة / استقبال / إداري</b>
+            <div style="color: var(--muted);">6 أسابيع</div>
+          </div>
+          <div class="mini">
+            <small>جاهز للتوظيف</small>
+            <b>تواصل مؤسسي • محتوى • فعاليات</b>
+            <div style="color: var(--muted);">سلطنة عمان</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="contact" style="grid-column: 1 / -1;">
+        <h2><span class="bar"></span> تواصل</h2>
+        <div class="twoCol">
+          <div class="mini">
+            <small>الهاتف</small>
+            <b>95647786</b>
+          </div>
+          <div class="mini">
+            <small>البريد</small>
+            <b><a href="mailto:alialsheidi@gmail.com" style="text-decoration: underline;">alialsheidi@gmail.com</a></b>
+          </div>
+          <div class="mini">
+            <small>موقع البورتفوليو</small>
+            <b><a href="https://alisheidi.komi.io" target="_blank" style="text-decoration: underline;">alisheidi.komi.io</a></b>
+          </div>
+          <div class="mini">
+            <small>الموقع</small>
+            <b>سلطنة عمان</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <section class="sections">
-    <div class="card" id="about">
-      <h2>عنّي</h2>
-      <p>
-        متدرب علاقات عامة سابقًا في بلدية صحم، وشاركت في حملات طلابية للإعلام والتسويق.
-        أمتلك مهارات في التواصل، التنسيق، وإنتاج المحتوى المرئي والمكتوب.
-      </p>
-    </div>
+  <footer>
+    © <span id="y"></span> علي الشيدي — جميع الحقوق محفوظة
+  </footer>
 
-    <div class="card" id="skills">
-      <h2>المهارات</h2>
-      <ul>
-        <li>إدارة المحتوى على منصات التواصل الاجتماعي</li>
-        <li>التصميم (Adobe Photoshop)</li>
-        <li>المونتاج (Adobe Premiere)</li>
-        <li>تنظيم الفعاليات والعمل الجماعي</li>
-        <li>Microsoft Office والأرشفة الإلكترونية</li>
-      </ul>
-    </div>
-
-    <div class="card" id="work">
-      <h2>الأعمال</h2>
-      <p>
-        هنا تقدر تضيف صور أعمالك لاحقًا (تصاميم، فعاليات، حملات) — إذا تحب أضيف لك “معرض صور” مرتب.
-      </p>
-    </div>
-
-    <div class="card" id="contact">
-      <h2>تواصل</h2>
-      <p>
-        الهاتف: 95647786<br>
-        البريد: <a href="mailto:alialsheidi@gmail.com" style="color:#fff;text-decoration:underline;">alialsheidi@gmail.com</a>
-      </p>
-    </div>
-  </section>
-
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
