@@ -5,6 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>علي الشيدي | بورتفوليو</title>
   <meta name="description" content="بورتفوليو علي الشيدي - علاقات عامة وإعلام مؤسسي" />
+/* ✅ تخصيص العرض للهواتف */
+@media (max-width: 768px){
+
+  /* خلي أقسام الهيرو عمودية */
+  .heroGrid{
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* خفف الحواف والمسافات */
+  .panel{
+    border-radius: 16px !important;
+  }
+
+  /* العنوان أكبر ومريح */
+  h1{
+    font-size: 30px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* الأزرار تكون بعرض كامل */
+  .ctaRow a.btn{
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* الصورة أصغر شوي وتكون واضحة */
+  .photoCard{
+    max-width: 320px !important;
+    margin: 0 auto !important;
+  }
+
+  /* البطاقات تصير عمود واحد */
+  .sections{
+    grid-template-columns: 1fr !important;
+  }
+
+  /* تصغير شريط التنقل (لو ظهر) */
+  .nav{
+    display: none !important;
+  }
+}
+
+/* ✅ تخصيص للشاشات الكبيرة (كمبيوتر) */
+@media (min-width: 1024px){
+  h1{ font-size: 44px; }
+  .heroLeft{ padding: 28px 26px; }
+}
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&display=swap');
@@ -372,6 +420,7 @@
   </script>
 </body>
 </html>
+
 
 
 
