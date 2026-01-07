@@ -619,10 +619,14 @@
     ];
 
     // فيديوات (ضع رابط الفيديو + صورة مصغرة)
-    const videos = [
-      { title: "فيديو 1", desc: "وصف قصير للفيديو.", thumb: "assets/img/video-1.jpg", url: "https://www.youtube.com/" },
-      { title: "فيديو 2", desc: "وصف قصير للفيديو.", thumb: "assets/img/video-2.jpg", url: "https://www.instagram.com/" }
-    ];
+ const videos = [
+  {
+    title: "أول فيديو",
+    desc: "وصف بسيط للفيديو.",
+    src: "assets/videos/video-1.mp4",
+    poster: "assets/img/video-1.jpg"
+  }
+];
 
     // روابط التواصل
     const socials = [
@@ -665,24 +669,46 @@
       return card;
     }
 
-    function makeVideoCard({title, desc, thumb, url}){
-      const card = document.createElement("a");
-      card.className = "item";
-      card.href = url;
-      card.target = "_blank";
-      card.rel = "noopener";
-      card.innerHTML = `
-        <div class="item-media">
-          <img src="${thumb}" alt="${title}" loading="lazy">
-          <div class="play"><span>▶</span></div>
-        </div>
-        <div class="item-body">
-          <h4 class="item-title">${title}</h4>
-          <p class="item-desc">${desc || ""}</p>
-        </div>
-      `;
-      return card;
-    }
+ function makeVideoCard({title, desc, src, poster}) {
+  const card = document.createElement("div");
+  card.className = "item";
+  card.style.cursor = "pointer";
+
+  card.innerHTML = `
+    <div class="item-media">
+      <video
+        src="${src}"
+        ${poster ? `poster="${poster}"` : ""}
+        muted
+        playsinline
+        preload="metadata"
+        style="width:100%;height:100%;object-fit:cover;display:block;"
+      ></video>
+    </div>
+    <div class="item-body">
+      <h4 class="item-title">${title}</h4>
+      <p class="item-desc">${desc || ""}</p>
+    </div>
+  `;
+
+  const vid = card.querySelector("video");
+
+  card.addEventListener("mouseenter", () => {
+    vid.play().catch(()=>{});
+  });
+
+  card.addEventListener("mouseleave", () => {
+    vid.pause();
+    vid.currentTime = 0;
+  });
+
+  card.addEventListener("touchstart", () => {
+    if (vid.paused) vid.play().catch(()=>{});
+    else vid.pause();
+  }, { passive: true });
+
+  return card;
+}
 
     function renderTrack(trackId, items, factory){
       const track = document.getElementById(trackId);
@@ -787,3 +813,4 @@
   </script>
 </body>
 </html>
+
