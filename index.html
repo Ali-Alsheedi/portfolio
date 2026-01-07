@@ -1,1431 +1,789 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/index.html b/index.html
-index 5d4730d8412806f0664960f9791e20ceb1d4ecba..719e000290857680702e6e934f6fa27abe3ac665 100644
---- a/index.html
-+++ b/index.html
-@@ -1,651 +1,771 @@
--<!doctype html>
--<html lang="ar" dir="rtl">
--<head>
--  <meta charset="utf-8" />
--  <meta name="viewport" content="width=device-width, initial-scale=1" />
--  <title>علي الشيدي | بورتفوليو</title>
--  <meta name="description" content="بورتفوليو علي الشيدي - علاقات عامة وإعلام مؤسسي" />
--
--  <style>
--    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&display=swap');
--
--    :root{
--      --bg: #070A12;
--      --card: rgba(255,255,255,.06);
--      --border: rgba(255,255,255,.10);
--      --text: #F5F7FF;
--      --muted: rgba(245,247,255,.70);
--      --accent: #7C3AED;   /* غيّر اللون من هنا */
--      --accent2:#22C55E;   /* لون مساعد */
--      --shadow: 0 20px 70px rgba(0,0,0,.45);
--      --radius: 18px;
--    }
--
--    *{ box-sizing:border-box; }
--    body{
--      margin:0;
--      font-family: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
--      background:
--        radial-gradient(900px 500px at 20% 10%, rgba(124,58,237,.20), transparent 60%),
--        radial-gradient(800px 450px at 80% 20%, rgba(34,197,94,.14), transparent 60%),
--        radial-gradient(900px 600px at 60% 90%, rgba(255,255,255,.06), transparent 60%),
--        var(--bg);
--      color: var(--text);
--      line-height: 1.9;
--    }
--
--    a{ color: inherit; text-decoration:none; }
--    .container{ max-width: 1100px; margin:0 auto; padding: 0 16px; }
--
--    /* ✅ إظهار/إخفاء حسب الجهاز */
--    .mobile-only{ display:none; }
--    .desktop-only{ display:block; }
--
--    /* ملاحظة: خلينا الموبايل لحد 1024 عشان يشتغل حتى لو جهازك يعتبر تابلت */
--    @media (max-width: 1024px){
--      .mobile-only{ display:block; }
--      .desktop-only{ display:none; }
--      .container{ padding: 0 14px; }
--    }
--
--    /* =========================
--       Desktop UI (لابتوب/كمبيوتر)
--       ========================= */
--
--    .topbar{
--      position: sticky; top:0; z-index:50;
--      background: rgba(7,10,18,.60);
--      backdrop-filter: blur(10px);
--      border-bottom: 1px solid var(--border);
--    }
--    .topbar .row{
--      display:flex; align-items:center; justify-content:space-between; gap:12px;
--      padding: 14px 0;
--    }
--    .logo{
--      display:flex; align-items:center; gap:10px;
--      font-weight: 900;
--      letter-spacing:.2px;
--    }
--    .dot{
--      width:10px; height:10px; border-radius:999px;
--      background: linear-gradient(135deg, var(--accent), var(--accent2));
--      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
--    }
--    .nav{
--      display:flex; gap:18px; align-items:center;
--      font-size: 14px;
--      color: var(--muted);
--    }
--    .nav a:hover{ color: var(--text); text-decoration: underline; }
--
--    .btn{
--      border: 1px solid var(--border);
--      background: rgba(255,255,255,.06);
--      color: var(--text);
--      padding: 10px 14px;
--      border-radius: 999px;
--      font-weight: 800;
--      cursor:pointer;
--      transition: transform .12s ease, background .12s ease;
--      display:inline-flex; align-items:center; gap:8px;
--    }
--    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
--    .btnPrimary{
--      background: linear-gradient(135deg, var(--accent), #4F46E5);
--      border: none;
--      box-shadow: 0 12px 35px rgba(124,58,237,.25);
--    }
--
--    .hero{ padding: 26px 0 10px; }
--    .heroGrid{
--      display:grid;
--      grid-template-columns: 1.15fr .85fr;
--      gap: 14px;
--      align-items: stretch;
--    }
--    .panel{
--      background: rgba(255,255,255,.06);
--      border: 1px solid var(--border);
--      border-radius: var(--radius);
--      box-shadow: var(--shadow);
--      overflow: hidden;
--    }
--    .heroLeft{ padding: 26px 22px; }
--    .badge{
--      display:inline-flex; align-items:center; gap:10px;
--      font-size: 13px;
--      color: var(--muted);
--      border: 1px solid var(--border);
--      background: rgba(255,255,255,.05);
--      padding: 8px 12px;
--      border-radius: 999px;
--      margin-bottom: 12px;
--    }
--    .badge span{
--      width:8px; height:8px; border-radius:999px;
--      background: var(--accent2);
--      box-shadow: 0 0 0 4px rgba(34,197,94,.14);
--    }
--    h1{ margin: 6px 0 10px; font-size: 42px; line-height:1.15; font-weight: 900; }
--    .subtitle{ color: var(--muted); margin-bottom: 14px; font-weight: 700; }
--    .heroText{ color: rgba(245,247,255,.86); max-width: 60ch; margin-bottom: 18px; }
--    .ctaRow{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 12px; }
--    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 14px; }
--    .chip{
--      font-size: 13px;
--      color: rgba(245,247,255,.85);
--      border: 1px solid var(--border);
--      background: rgba(255,255,255,.05);
--      padding: 7px 10px;
--      border-radius: 999px;
--    }
--
--    .heroRight{ display:flex; flex-direction: column; }
--    .photoWrap{
--      padding: 16px;
--      height: 100%;
--      display:flex; align-items:center; justify-content:center;
--      background:
--        radial-gradient(700px 500px at 50% 20%, rgba(255,255,255,.08), transparent 60%),
--        rgba(255,255,255,.02);
--    }
--    .photoCard{
--      width: 100%;
--      max-width: 340px;
--      aspect-ratio: 3/4;
--      border-radius: 22px;
--      overflow:hidden;
--      border: 1px solid rgba(255,255,255,.14);
--      box-shadow: 0 24px 80px rgba(0,0,0,.55);
--      position: relative;
--      background: rgba(255,255,255,.06);
--    }
--    .photoCard img{
--      width:100%; height:100%;
--      object-fit: cover;
--      display:block;
--    }
--    .photoHint{
--      position:absolute;
--      bottom: 10px; left: 10px; right: 10px;
--      font-size: 12px;
--      color: rgba(245,247,255,.85);
--      background: rgba(0,0,0,.35);
--      border: 1px solid rgba(255,255,255,.12);
--      padding: 10px 12px;
--      border-radius: 12px;
--      text-align: center;
--    }
--
--    .sections{
--      display:grid;
--      grid-template-columns: 1fr 1fr;
--      gap: 14px;
--      margin: 14px 0 50px;
--    }
--    .card{
--      padding: 18px 18px;
--      background: rgba(255,255,255,.06);
--      border: 1px solid var(--border);
--      border-radius: var(--radius);
--      box-shadow: 0 18px 60px rgba(0,0,0,.35);
--    }
--    .card h2{
--      margin: 0 0 10px;
--      font-size: 18px;
--      font-weight: 900;
--      display:flex; align-items:center; gap:10px;
--    }
--    .bar{
--      width: 10px; height: 10px; border-radius: 999px;
--      background: linear-gradient(135deg, var(--accent), var(--accent2));
--    }
--    ul{ margin: 8px 18px 0 0; color: rgba(245,247,255,.86); }
--    li{ margin-bottom: 6px; }
--
--    .twoCol{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
--    .mini{
--      background: rgba(255,255,255,.05);
--      border: 1px solid var(--border);
--      border-radius: 14px;
--      padding: 12px 12px;
--      color: rgba(245,247,255,.88);
--    }
--    .mini small{ color: var(--muted); display:block; margin-bottom: 2px; }
--
--    footer{
--      border-top: 1px solid var(--border);
--      color: var(--muted);
--      padding: 18px 0 26px;
--      text-align:center;
--      font-size: 13px;
--    }
--
--    /* =========================
--       Mobile UI (نسخة مختلفة تمامًا)
--       ========================= */
--    .m-wrap{ max-width: 520px; margin:0 auto; padding: 12px 14px 26px; }
--
--    .m-badgeTest{
--      margin: 10px 0 0;
--      display:inline-flex;
--      gap:10px;
--      align-items:center;
--      padding: 8px 12px;
--      border-radius: 999px;
--      border: 1px solid rgba(255,255,255,.12);
--      background: rgba(255,255,255,.06);
--      color: rgba(245,247,255,.9);
--      font-weight: 900;
--      font-size: 13px;
--    }
--    .m-badgeTest span{
--      width:8px; height:8px; border-radius:999px;
--      background: var(--accent2);
--      box-shadow: 0 0 0 4px rgba(34,197,94,.14);
--    }
--
--    .m-top{
--      display:flex; align-items:center; justify-content:space-between; gap:10px;
--      padding: 10px 0 14px;
--    }
--    .m-brand{
--      display:flex; align-items:center; gap:10px;
--      font-weight: 900;
--      font-size: 16px;
--    }
--    .m-dot{
--      width:10px; height:10px; border-radius:999px;
--      background: linear-gradient(135deg, var(--accent), var(--accent2));
--      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
--    }
--    .m-pill{
--      padding: 10px 14px;
--      border-radius: 999px;
--      border: 1px solid rgba(255,255,255,.14);
--      background: rgba(255,255,255,.06);
--      color: rgba(245,247,255,.92);
--      font-weight: 800;
--    }
--
--    .m-hero{
--      background: rgba(255,255,255,.06);
--      border: 1px solid rgba(255,255,255,.10);
--      box-shadow: 0 18px 60px rgba(0,0,0,.45);
--      border-radius: 24px;
--      overflow:hidden;
--    }
--    .m-photo{
--      position:relative;
--      padding: 14px;
--    }
--    .m-photoCard{
--      width:100%;
--      aspect-ratio: 4/3;
--      border-radius: 22px;
--      overflow:hidden;
--      border: 1px solid rgba(255,255,255,.14);
--      box-shadow: 0 22px 70px rgba(0,0,0,.55);
--      background: rgba(255,255,255,.06);
--    }
--    .m-photoCard img{
--      width:100%; height:100%;
--      object-fit: cover;
--      display:block;
--    }
--    .m-nameTag{
--      position:absolute;
--      left: 22px; right: 22px;
--      bottom: 22px;
--      background: rgba(0,0,0,.30);
--      border: 1px solid rgba(255,255,255,.12);
--      color: rgba(245,247,255,.90);
--      padding: 10px 12px;
--      border-radius: 16px;
--      text-align:center;
--      font-weight: 900;
--      font-size: 13px;
--      backdrop-filter: blur(8px);
--    }
--
--    .m-body{ padding: 6px 16px 16px; }
--    .m-title{
--      margin: 6px 0 6px;
--      font-weight: 900;
--      font-size: 26px;
--      line-height: 1.2;
--    }
--    .m-sub{
--      margin: 0 0 10px;
--      color: rgba(245,247,255,.75);
--      font-weight: 800;
--      font-size: 13px;
--    }
--    .m-text{
--      margin: 0 0 14px;
--      color: rgba(245,247,255,.86);
--      font-size: 14px;
--      line-height: 1.95;
--    }
--
--    .m-actions{
--      display:grid;
--      grid-template-columns: 1fr;
--      gap: 10px;
--      margin: 12px 0 10px;
--    }
--    .m-btn{
--      display:flex;
--      justify-content:center;
--      align-items:center;
--      padding: 14px 14px;
--      border-radius: 18px;
--      border: 1px solid rgba(255,255,255,.14);
--      background: rgba(255,255,255,.06);
--      color: rgba(245,247,255,.92);
--      font-weight: 900;
--      font-size: 14px;
--    }
--    .m-btnPrimary{
--      border: none;
--      background: linear-gradient(135deg, var(--accent), #4F46E5);
--      box-shadow: 0 14px 40px rgba(124,58,237,.28);
--    }
--
--    .m-chips{
--      display:flex;
--      flex-wrap:wrap;
--      gap: 8px;
--      margin-top: 10px;
--    }
--    .m-chip{
--      font-size: 13px;
--      color: rgba(245,247,255,.86);
--      border: 1px solid rgba(255,255,255,.12);
--      background: rgba(255,255,255,.05);
--      padding: 8px 11px;
--      border-radius: 999px;
--    }
--
--    .m-grid{
--      margin-top: 12px;
--      display:grid;
--      grid-template-columns: 1fr;
--      gap: 12px;
--    }
--    .m-card{
--      background: rgba(255,255,255,.06);
--      border: 1px solid rgba(255,255,255,.10);
--      box-shadow: 0 18px 60px rgba(0,0,0,.35);
--      border-radius: 22px;
--      padding: 16px 14px;
--    }
--    .m-card h2{
--      margin: 0 0 10px;
--      font-size: 16px;
--      font-weight: 900;
--      display:flex;
--      align-items:center;
--      gap: 10px;
--    }
--    .m-bar{
--      width: 10px; height: 10px; border-radius: 999px;
--      background: linear-gradient(135deg, var(--accent), var(--accent2));
--    }
--    .m-card p{ margin:0; color: rgba(245,247,255,.86); }
--    .m-card ul{ margin: 8px 18px 0 0; }
--    .m-mini{
--      background: rgba(255,255,255,.05);
--      border: 1px solid rgba(255,255,255,.10);
--      border-radius: 16px;
--      padding: 12px 12px;
--      margin-top: 10px;
--    }
--    .m-mini small{ display:block; color: rgba(245,247,255,.70); margin-bottom: 2px; }
--
--    .m-foot{
--      text-align:center;
--      color: rgba(245,247,255,.60);
--      font-size: 12px;
--      padding: 16px 0 0;
--    }
--  </style>
--</head>
--
--<body>
--
--  <!-- ✅ نسخة اللابتوب/الكمبيوتر -->
--  <div class="desktop-only">
--    <header class="topbar">
--      <div class="container">
--        <div class="row">
--          <div class="logo"><span class="dot"></span> علي الشيدي</div>
--
--          <nav class="nav">
--            <a href="#about">عنّي</a>
--            <a href="#skills">المهارات</a>
--            <a href="#experience">الخبرات</a>
--            <a href="#contact">تواصل</a>
--          </nav>
--
--          <a class="btn btnPrimary" href="#contact">تواصل معي</a>
--        </div>
--      </div>
--    </header>
--
--    <main class="container hero">
--      <div class="heroGrid">
--
--        <section class="panel heroLeft">
--          <div class="badge"><span></span> جاهز لفرص العمل في العلاقات العامة والإعلام والتسويق</div>
--
--          <h1>أخصائي في الاتصال الجماهيري وآدابه</h1>
--          <div class="subtitle">علي الشيدي • علاقات عامة • إعلام مؤسسي • تسويق</div>
--
--          <p class="heroText">
--            أقدّم حلولًا في التواصل المؤسسي وصناعة المحتوى وتنظيم الفعاليات وإدارة الحملات.
--            هدفي أن يكون حضور الجهة واضحًا، محترفًا، ومؤثرًا لدى الجمهور.
--          </p>
--
--          <div class="ctaRow">
--            <a class="btn btnPrimary" href="#experience">شاهد الخبرات</a>
--            <a class="btn" href="mailto:alialsheidi@gmail.com">راسلني عبر البريد</a>
--            <a class="btn" href="https://alisheidi.komi.io" target="_blank" rel="noopener">بورتفوليو خارجي</a>
--          </div>
--
--          <div class="chips">
--            <span class="chip">تصميم (Photoshop)</span>
--            <span class="chip">مونتاج (Premiere)</span>
--            <span class="chip">إدارة محتوى</span>
--            <span class="chip">تنظيم فعاليات</span>
--            <span class="chip">Microsoft Office</span>
--          </div>
--        </section>
--
--        <section class="panel heroRight">
--          <div class="photoWrap">
--            <div class="photoCard">
--              <img src="profile.jpg" alt="صورة شخصية">
--              <div class="photoHint">علي بن سالم بن علي الشـيـدي</div>
--            </div>
--          </div>
--        </section>
--
--      </div>
--
--      <section class="sections">
--        <div class="card" id="about">
--          <h2><span class="bar"></span> عنّي</h2>
--          <p style="color: rgba(245,247,255,.86); margin:0;">
--            خريج اتصال جماهيري (علاقات عامة). خبرة في بيئة حكومية والتسويق وصناعة المحتوى.
--            أعمل على تحسين صورة الجهة والتواصل مع الجمهور بشكل احترافي.
--          </p>
--        </div>
--
--        <div class="card" id="skills">
--          <h2><span class="bar"></span> المهارات</h2>
--          <ul>
--            <li>إدارة المحتوى على منصات التواصل الاجتماعي</li>
--            <li>التواصل، العرض، والإقناع</li>
--            <li>التصميم الجرافيكي (Adobe Photoshop)</li>
--            <li>مونتاج الفيديو (Adobe Premiere)</li>
--            <li>Microsoft Office + الأرشفة الإلكترونية</li>
--          </ul>
--        </div>
--
--        <div class="card" id="experience" style="grid-column: 1 / -1;">
--          <h2><span class="bar"></span> الخبرات (مختصر)</h2>
--          <div class="twoCol">
--            <div class="mini">
--              <small>ورشة مهاد للأثاث</small>
--              <b>نائب مدير التسويق</b>
--              <div style="color: var(--muted);">3 أشهر</div>
--            </div>
--            <div class="mini">
--              <small>UTAS – صور</small>
--              <b>عضو فريق حملة طلابية (إعلام وتسويق)</b>
--              <div style="color: var(--muted);">مارس 2025 – يونيو 2025</div>
--            </div>
--            <div class="mini">
--              <small>بلدية صحم</small>
--              <b>متدرب علاقات عامة / استقبال / إداري</b>
--              <div style="color: var(--muted);">6 أسابيع</div>
--            </div>
--            <div class="mini">
--              <small>جاهز للتوظيف</small>
--              <b>تواصل مؤسسي • محتوى • فعاليات</b>
--              <div style="color: var(--muted);">سلطنة عمان</div>
--            </div>
--          </div>
--        </div>
--
--        <div class="card" id="contact" style="grid-column: 1 / -1;">
--          <h2><span class="bar"></span> تواصل</h2>
--          <div class="twoCol">
--            <div class="mini">
--              <small>الهاتف</small>
--              <b>95647786</b>
--            </div>
--            <div class="mini">
--              <small>البريد</small>
--              <b><a href="mailto:alialsheidi@gmail.com" style="text-decoration: underline;">alialsheidi@gmail.com</a></b>
--            </div>
--            <div class="mini">
--              <small>موقع البورتفوليو</small>
--              <b><a href="https://alisheidi.komi.io" target="_blank" rel="noopener" style="text-decoration: underline;">alisheidi.komi.io</a></b>
--            </div>
--            <div class="mini">
--              <small>الموقع</small>
--              <b>سلطنة عمان</b>
--            </div>
--          </div>
--        </div>
--      </section>
--
--    </main>
--
--    <footer>
--      © <span id="y"></span> علي الشيدي — جميع الحقوق محفوظة
--    </footer>
--  </div>
--
--  <!-- ✅ نسخة الموبايل (مختلفة) -->
--  <div class="mobile-only">
--    <div class="m-wrap">
--
--      <!-- علامة اختبار: تظهر فقط في الموبايل -->
--      <div class="m-badgeTest"><span></span> نسخة الموبايل ✅</div>
--
--      <div class="m-top">
--        <div class="m-brand"><span class="m-dot"></span> علي الشيدي</div>
--        <a class="m-pill" href="#m-contact">تواصل</a>
--      </div>
--
--      <section class="m-hero">
--        <div class="m-photo">
--          <div class="m-photoCard">
--            <img src="profile.jpg" alt="صورة شخصية">
--          </div>
--          <div class="m-nameTag">علي بن سالم بن علي الشيدي</div>
--        </div>
--
--        <div class="m-body">
--          <div class="m-title">أخصائي في الاتصال الجماهيري وآدابه</div>
--          <div class="m-sub">علاقات عامة • إعلام مؤسسي • تسويق</div>
--
--          <p class="m-text">
--            أقدّم حلولًا في التواصل المؤسسي وصناعة المحتوى وتنظيم الفعاليات وإدارة الحملات.
--            هدفي أن يكون حضور الجهة واضحًا واحترافيًا ومؤثرًا لدى الجمهور.
--          </p>
--
--          <div class="m-actions">
--            <a class="m-btn m-btnPrimary" href="#m-exp">شاهد الخبرات</a>
--            <a class="m-btn" href="mailto:alialsheidi@gmail.com">راسلني عبر البريد</a>
--            <a class="m-btn" href="https://alisheidi.komi.io" target="_blank" rel="noopener">بورتفوليو خارجي</a>
--          </div>
--
--          <div class="m-chips">
--            <span class="m-chip">تصميم (Photoshop)</span>
--            <span class="m-chip">مونتاج (Premiere)</span>
--            <span class="m-chip">إدارة محتوى</span>
--            <span class="m-chip">تنظيم فعاليات</span>
--            <span class="m-chip">Microsoft Office</span>
--          </div>
--        </div>
--      </section>
--
--      <section class="m-grid">
--        <div class="m-card" id="m-about">
--          <h2><span class="m-bar"></span> عنّي</h2>
--          <p>
--            خريج اتصال جماهيري (علاقات عامة). خبرة في بيئة حكومية والتسويق وصناعة المحتوى.
--            أعمل على تحسين صورة الجهة والتواصل مع الجمهور بشكل احترافي.
--          </p>
--        </div>
--
--        <div class="m-card" id="m-exp">
--          <h2><span class="m-bar"></span> الخبرات</h2>
--
--          <div class="m-mini">
--            <small>ورشة مهاد للأثاث</small>
--            <b>نائب مدير التسويق</b>
--            <div style="color: var(--muted);">3 أشهر</div>
--          </div>
--
--          <div class="m-mini">
--            <small>UTAS – صور</small>
--            <b>عضو فريق حملة طلابية (إعلام وتسويق)</b>
--            <div style="color: var(--muted);">مارس 2025 – يونيو 2025</div>
--          </div>
--
--          <div class="m-mini">
--            <small>بلدية صحم</small>
--            <b>متدرب علاقات عامة / استقبال / إداري</b>
--            <div style="color: var(--muted);">6 أسابيع</div>
--          </div>
--        </div>
--
--        <div class="m-card" id="m-contact">
--          <h2><span class="m-bar"></span> تواصل</h2>
--          <div class="m-actions" style="margin-top:10px;">
--            <a class="m-btn m-btnPrimary" href="tel:95647786">اتصال: 95647786</a>
--            <a class="m-btn" href="mailto:alialsheidi@gmail.com">alialsheidi@gmail.com</a>
--            <a class="m-btn" href="https://alisheidi.komi.io" target="_blank" rel="noopener">فتح البورتفوليو الخارجي</a>
--          </div>
--        </div>
--      </section>
--
--      <div class="m-foot">© <span id="my"></span> علي الشيدي</div>
--    </div>
--  </div>
--
--  <script>
--    const year = new Date().getFullYear();
--    const y = document.getElementById('y');
--    if (y) y.textContent = year;
--    const my = document.getElementById('my');
--    if (my) my.textContent = year;
--  </script>
--</body>
--</html>
-+<!doctype html>
-+<html lang="ar" dir="rtl">
-+<head>
-+  <meta charset="utf-8" />
-+  <meta name="viewport" content="width=device-width, initial-scale=1" />
-+  <title>ملفك الشخصي | بورتفوليو</title>
-+  <meta name="description" content="موقع شخصي يعرض نبذة مختصرة وأعمال ومواقع التواصل." />
-+
-+  <style>
-+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&display=swap');
-+
-+    :root{
-+      --bg: #070A12;
-+      --card: rgba(255,255,255,.06);
-+      --border: rgba(255,255,255,.10);
-+      --text: #F5F7FF;
-+      --muted: rgba(245,247,255,.70);
-+      --accent: #7C3AED;
-+      --accent2:#22C55E;
-+      --shadow: 0 20px 70px rgba(0,0,0,.45);
-+      --radius: 18px;
-+    }
-+
-+    *{ box-sizing:border-box; }
-+    body{
-+      margin:0;
-+      font-family: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-+      background:
-+        radial-gradient(900px 500px at 20% 10%, rgba(124,58,237,.20), transparent 60%),
-+        radial-gradient(800px 450px at 80% 20%, rgba(34,197,94,.14), transparent 60%),
-+        radial-gradient(900px 600px at 60% 90%, rgba(255,255,255,.06), transparent 60%),
-+        var(--bg);
-+      color: var(--text);
-+      line-height: 1.9;
-+    }
-+
-+    a{ color: inherit; text-decoration:none; }
-+    .container{ max-width: 1100px; margin:0 auto; padding: 0 16px; }
-+
-+    .mobile-only{ display:none; }
-+    .desktop-only{ display:block; }
-+
-+    @media (max-width: 1024px){
-+      .mobile-only{ display:block; }
-+      .desktop-only{ display:none; }
-+      .container{ padding: 0 14px; }
-+    }
-+
-+    /* =========================
-+       Desktop UI
-+       ========================= */
-+
-+    .topbar{
-+      position: sticky; top:0; z-index:50;
-+      background: rgba(7,10,18,.60);
-+      backdrop-filter: blur(10px);
-+      border-bottom: 1px solid var(--border);
-+    }
-+    .topbar .row{
-+      display:flex; align-items:center; justify-content:space-between; gap:12px;
-+      padding: 14px 0;
-+    }
-+    .logo{
-+      display:flex; align-items:center; gap:10px;
-+      font-weight: 900;
-+      letter-spacing:.2px;
-+    }
-+    .dot{
-+      width:10px; height:10px; border-radius:999px;
-+      background: linear-gradient(135deg, var(--accent), var(--accent2));
-+      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
-+    }
-+    .nav{
-+      display:flex; gap:18px; align-items:center;
-+      font-size: 14px;
-+      color: var(--muted);
-+    }
-+    .nav a:hover{ color: var(--text); text-decoration: underline; }
-+
-+    .btn{
-+      border: 1px solid var(--border);
-+      background: rgba(255,255,255,.06);
-+      color: var(--text);
-+      padding: 10px 14px;
-+      border-radius: 999px;
-+      font-weight: 800;
-+      cursor:pointer;
-+      transition: transform .12s ease, background .12s ease;
-+      display:inline-flex; align-items:center; gap:8px;
-+    }
-+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
-+    .btnPrimary{
-+      background: linear-gradient(135deg, var(--accent), #4F46E5);
-+      border: none;
-+      box-shadow: 0 12px 35px rgba(124,58,237,.25);
-+    }
-+
-+    .hero{ padding: 26px 0 10px; }
-+    .heroGrid{
-+      display:grid;
-+      grid-template-columns: 1.15fr .85fr;
-+      gap: 14px;
-+      align-items: stretch;
-+    }
-+    .panel{
-+      background: rgba(255,255,255,.06);
-+      border: 1px solid var(--border);
-+      border-radius: var(--radius);
-+      box-shadow: var(--shadow);
-+      overflow: hidden;
-+    }
-+    .heroLeft{ padding: 26px 22px; }
-+    .badge{
-+      display:inline-flex; align-items:center; gap:10px;
-+      font-size: 13px;
-+      color: var(--muted);
-+      border: 1px solid var(--border);
-+      background: rgba(255,255,255,.05);
-+      padding: 8px 12px;
-+      border-radius: 999px;
-+      margin-bottom: 12px;
-+    }
-+    .badge span{
-+      width:8px; height:8px; border-radius:999px;
-+      background: var(--accent2);
-+      box-shadow: 0 0 0 4px rgba(34,197,94,.14);
-+    }
-+    h1{ margin: 6px 0 10px; font-size: 42px; line-height:1.15; font-weight: 900; }
-+    .subtitle{ color: var(--muted); margin-bottom: 14px; font-weight: 700; }
-+    .heroText{ color: rgba(245,247,255,.86); max-width: 60ch; margin-bottom: 18px; }
-+    .ctaRow{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 12px; }
-+    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 14px; }
-+    .chip{
-+      font-size: 13px;
-+      color: rgba(245,247,255,.85);
-+      border: 1px solid var(--border);
-+      background: rgba(255,255,255,.05);
-+      padding: 7px 10px;
-+      border-radius: 999px;
-+    }
-+
-+    .heroRight{ display:flex; flex-direction: column; }
-+    .photoWrap{
-+      padding: 16px;
-+      height: 100%;
-+      display:flex; align-items:center; justify-content:center;
-+      background:
-+        radial-gradient(700px 500px at 50% 20%, rgba(255,255,255,.08), transparent 60%),
-+        rgba(255,255,255,.02);
-+    }
-+    .photoCard{
-+      width: 100%;
-+      max-width: 340px;
-+      aspect-ratio: 3/4;
-+      border-radius: 22px;
-+      overflow:hidden;
-+      border: 1px solid rgba(255,255,255,.14);
-+      box-shadow: 0 24px 80px rgba(0,0,0,.55);
-+      position: relative;
-+      background: rgba(255,255,255,.06);
-+    }
-+    .photoCard img{
-+      width:100%; height:100%;
-+      object-fit: cover;
-+      display:block;
-+    }
-+    .photoHint{
-+      position:absolute;
-+      bottom: 10px; left: 10px; right: 10px;
-+      font-size: 12px;
-+      color: rgba(245,247,255,.85);
-+      background: rgba(0,0,0,.35);
-+      border: 1px solid rgba(255,255,255,.12);
-+      padding: 10px 12px;
-+      border-radius: 12px;
-+      text-align: center;
-+    }
-+
-+    .sections{
-+      display:grid;
-+      grid-template-columns: 1fr;
-+      gap: 14px;
-+      margin: 14px 0 50px;
-+    }
-+    .card{
-+      padding: 18px 18px;
-+      background: rgba(255,255,255,.06);
-+      border: 1px solid var(--border);
-+      border-radius: var(--radius);
-+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
-+    }
-+    .card h2{
-+      margin: 0 0 10px;
-+      font-size: 18px;
-+      font-weight: 900;
-+      display:flex; align-items:center; gap:10px;
-+    }
-+    .bar{
-+      width: 10px; height: 10px; border-radius: 999px;
-+      background: linear-gradient(135deg, var(--accent), var(--accent2));
-+    }
-+
-+    .workSlider{
-+      position: relative;
-+    }
-+    .workTrack{
-+      display:grid;
-+      grid-auto-flow: column;
-+      grid-auto-columns: minmax(260px, 1fr);
-+      gap: 14px;
-+      overflow-x: auto;
-+      padding-bottom: 6px;
-+      scroll-snap-type: x mandatory;
-+      scroll-behavior: smooth;
-+      scrollbar-width: thin;
-+    }
-+    .workTrack::-webkit-scrollbar{ height: 6px; }
-+    .workTrack::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.2); border-radius: 999px; }
-+    .workCard{
-+      scroll-snap-align: start;
-+      background: rgba(255,255,255,.06);
-+      border: 1px solid var(--border);
-+      border-radius: 16px;
-+      padding: 16px;
-+      min-height: 210px;
-+      display:flex;
-+      flex-direction: column;
-+      justify-content: space-between;
-+      gap: 10px;
-+    }
-+    .workCard h3{ margin: 0; font-size: 16px; font-weight: 900; }
-+    .workCard p{ margin: 0; color: rgba(245,247,255,.82); }
-+    .workMeta{ display:flex; flex-wrap:wrap; gap:8px; }
-+    .workTag{
-+      font-size: 12px;
-+      padding: 6px 8px;
-+      border-radius: 999px;
-+      border: 1px solid rgba(255,255,255,.14);
-+      background: rgba(255,255,255,.05);
-+    }
-+    .workLink{
-+      font-size: 13px;
-+      color: rgba(245,247,255,.9);
-+      text-decoration: underline;
-+    }
-+    .workHint{
-+      margin-top: 10px;
-+      font-size: 12px;
-+      color: var(--muted);
-+    }
-+
-+    .socialGrid{
-+      display:grid;
-+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-+      gap: 12px;
-+    }
-+    .socialCard{
-+      border: 1px solid var(--border);
-+      background: rgba(255,255,255,.05);
-+      border-radius: 16px;
-+      padding: 14px;
-+    }
-+    .socialCard small{ color: var(--muted); display:block; margin-bottom: 4px; }
-+
-+    footer{
-+      border-top: 1px solid var(--border);
-+      color: var(--muted);
-+      padding: 18px 0 26px;
-+      text-align:center;
-+      font-size: 13px;
-+    }
-+
-+    /* =========================
-+       Mobile UI
-+       ========================= */
-+    .m-wrap{ max-width: 520px; margin:0 auto; padding: 12px 14px 26px; }
-+
-+    .m-top{
-+      display:flex; align-items:center; justify-content:space-between; gap:10px;
-+      padding: 10px 0 14px;
-+    }
-+    .m-brand{
-+      display:flex; align-items:center; gap:10px;
-+      font-weight: 900;
-+      font-size: 16px;
-+    }
-+    .m-dot{
-+      width:10px; height:10px; border-radius:999px;
-+      background: linear-gradient(135deg, var(--accent), var(--accent2));
-+      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
-+    }
-+    .m-pill{
-+      padding: 10px 14px;
-+      border-radius: 999px;
-+      border: 1px solid rgba(255,255,255,.14);
-+      background: rgba(255,255,255,.06);
-+      color: rgba(245,247,255,.92);
-+      font-weight: 800;
-+    }
-+
-+    .m-hero{
-+      background: rgba(255,255,255,.06);
-+      border: 1px solid rgba(255,255,255,.10);
-+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
-+      border-radius: 24px;
-+      overflow:hidden;
-+    }
-+    .m-photo{
-+      position:relative;
-+      padding: 14px;
-+    }
-+    .m-photoCard{
-+      width:100%;
-+      aspect-ratio: 4/3;
-+      border-radius: 22px;
-+      overflow:hidden;
-+      border: 1px solid rgba(255,255,255,.14);
-+      box-shadow: 0 22px 70px rgba(0,0,0,.55);
-+      background: rgba(255,255,255,.06);
-+    }
-+    .m-photoCard img{
-+      width:100%; height:100%;
-+      object-fit: cover;
-+      display:block;
-+    }
-+    .m-nameTag{
-+      position:absolute;
-+      left: 22px; right: 22px;
-+      bottom: 22px;
-+      background: rgba(0,0,0,.30);
-+      border: 1px solid rgba(255,255,255,.12);
-+      color: rgba(245,247,255,.90);
-+      padding: 10px 12px;
-+      border-radius: 16px;
-+      text-align:center;
-+      font-weight: 900;
-+      font-size: 13px;
-+      backdrop-filter: blur(8px);
-+    }
-+
-+    .m-body{ padding: 6px 16px 16px; }
-+    .m-title{
-+      margin: 6px 0 6px;
-+      font-weight: 900;
-+      font-size: 26px;
-+      line-height: 1.2;
-+    }
-+    .m-sub{
-+      margin: 0 0 10px;
-+      color: rgba(245,247,255,.75);
-+      font-weight: 800;
-+      font-size: 13px;
-+    }
-+    .m-text{
-+      margin: 0 0 14px;
-+      color: rgba(245,247,255,.86);
-+      font-size: 14px;
-+      line-height: 1.95;
-+    }
-+
-+    .m-actions{
-+      display:grid;
-+      grid-template-columns: 1fr;
-+      gap: 10px;
-+      margin: 12px 0 10px;
-+    }
-+    .m-btn{
-+      display:flex;
-+      justify-content:center;
-+      align-items:center;
-+      padding: 14px 14px;
-+      border-radius: 18px;
-+      border: 1px solid rgba(255,255,255,.14);
-+      background: rgba(255,255,255,.06);
-+      color: rgba(245,247,255,.92);
-+      font-weight: 900;
-+      font-size: 14px;
-+    }
-+    .m-btnPrimary{
-+      border: none;
-+      background: linear-gradient(135deg, var(--accent), #4F46E5);
-+      box-shadow: 0 14px 40px rgba(124,58,237,.28);
-+    }
-+
-+    .m-chips{
-+      display:flex;
-+      flex-wrap:wrap;
-+      gap: 8px;
-+      margin-top: 10px;
-+    }
-+    .m-chip{
-+      font-size: 13px;
-+      color: rgba(245,247,255,.86);
-+      border: 1px solid rgba(255,255,255,.12);
-+      background: rgba(255,255,255,.05);
-+      padding: 8px 11px;
-+      border-radius: 999px;
-+    }
-+
-+    .m-grid{
-+      margin-top: 12px;
-+      display:grid;
-+      grid-template-columns: 1fr;
-+      gap: 12px;
-+    }
-+    .m-card{
-+      background: rgba(255,255,255,.06);
-+      border: 1px solid rgba(255,255,255,.10);
-+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
-+      border-radius: 22px;
-+      padding: 16px 14px;
-+    }
-+    .m-card h2{
-+      margin: 0 0 10px;
-+      font-size: 16px;
-+      font-weight: 900;
-+      display:flex;
-+      align-items:center;
-+      gap: 10px;
-+    }
-+    .m-bar{
-+      width: 10px; height: 10px; border-radius: 999px;
-+      background: linear-gradient(135deg, var(--accent), var(--accent2));
-+    }
-+    .m-card p{ margin:0; color: rgba(245,247,255,.86); }
-+
-+    .m-workTrack{
-+      display:grid;
-+      grid-auto-flow: column;
-+      grid-auto-columns: minmax(220px, 1fr);
-+      gap: 12px;
-+      overflow-x: auto;
-+      padding-bottom: 6px;
-+      scroll-snap-type: x mandatory;
-+    }
-+    .m-workCard{
-+      scroll-snap-align: start;
-+      background: rgba(255,255,255,.06);
-+      border: 1px solid rgba(255,255,255,.10);
-+      border-radius: 18px;
-+      padding: 14px;
-+      min-height: 200px;
-+      display:flex;
-+      flex-direction: column;
-+      justify-content: space-between;
-+      gap: 8px;
-+    }
-+    .m-workCard h3{ margin: 0; font-size: 15px; font-weight: 900; }
-+    .m-workCard p{ margin: 0; color: rgba(245,247,255,.82); }
-+    .m-workTag{
-+      font-size: 12px;
-+      padding: 6px 8px;
-+      border-radius: 999px;
-+      border: 1px solid rgba(255,255,255,.14);
-+      background: rgba(255,255,255,.05);
-+    }
-+    .m-social{
-+      display:grid;
-+      grid-template-columns: 1fr;
-+      gap: 10px;
-+    }
-+    .m-socialCard{
-+      border: 1px solid rgba(255,255,255,.12);
-+      border-radius: 16px;
-+      padding: 12px;
-+      background: rgba(255,255,255,.05);
-+    }
-+
-+    .m-foot{
-+      text-align:center;
-+      color: rgba(245,247,255,.60);
-+      font-size: 12px;
-+      padding: 16px 0 0;
-+    }
-+  </style>
-+</head>
-+
-+<body>
-+
-+  <div class="desktop-only">
-+    <header class="topbar">
-+      <div class="container">
-+        <div class="row">
-+          <div class="logo"><span class="dot"></span> اسمك هنا</div>
-+
-+          <nav class="nav">
-+            <a href="#about">عنّي</a>
-+            <a href="#works">أعمالي</a>
-+            <a href="#contact">تواصل</a>
-+          </nav>
-+
-+          <a class="btn btnPrimary" href="#contact">تواصل معي</a>
-+        </div>
-+      </div>
-+    </header>
-+
-+    <main class="container hero">
-+      <div class="heroGrid">
-+
-+        <section class="panel heroLeft" id="about">
-+          <div class="badge"><span></span> متاح للتعاون والفرص الجديدة</div>
-+
-+          <h1>عنوانك الأساسي هنا</h1>
-+          <div class="subtitle">مجالك • تخصصك • مهارتك الرئيسية</div>
-+
-+          <p class="heroText">
-+            هذا المكان لنبذة مختصرة عنك: من أنت؟ ماذا تقدم؟ ولماذا الناس تختارك؟
-+            اكتب جملة أو جملتين توضح فيها شخصيتك وخبرتك بشكل مبسط.
-+          </p>
-+
-+          <div class="ctaRow">
-+            <a class="btn btnPrimary" href="#works">شاهد الأعمال</a>
-+            <a class="btn" href="mailto:you@email.com">راسلني عبر البريد</a>
-+            <a class="btn" href="#contact">مواقع التواصل</a>
-+          </div>
-+
-+          <div class="chips">
-+            <span class="chip">مهارة 1</span>
-+            <span class="chip">مهارة 2</span>
-+            <span class="chip">مهارة 3</span>
-+            <span class="chip">مهارة 4</span>
-+            <span class="chip">مهارة 5</span>
-+          </div>
-+        </section>
-+
-+        <section class="panel heroRight">
-+          <div class="photoWrap">
-+            <div class="photoCard">
-+              <img src="profile.jpg" alt="صورتك الشخصية">
-+              <div class="photoHint">اكتب اسمك الكامل هنا</div>
-+            </div>
-+          </div>
-+        </section>
-+
-+      </div>
-+
-+      <section class="sections">
-+        <div class="card" id="works">
-+          <h2><span class="bar"></span> أعمالي</h2>
-+          <div class="workSlider">
-+            <div class="workTrack" data-drag-scroll>
-+              <article class="workCard">
-+                <div>
-+                  <h3>اسم المشروع الأول</h3>
-+                  <p>وصف بسيط لما قدمته في هذا المشروع والفائدة التي حققتها.</p>
-+                </div>
-+                <div class="workMeta">
-+                  <span class="workTag">تصميم</span>
-+                  <span class="workTag">تسويق</span>
-+                  <span class="workTag">2024</span>
-+                </div>
-+                <a class="workLink" href="#">رابط المشروع</a>
-+              </article>
-+
-+              <article class="workCard">
-+                <div>
-+                  <h3>اسم المشروع الثاني</h3>
-+                  <p>هذا الوصف يشرح الفكرة والنتيجة بشكل مختصر وواضح.</p>
-+                </div>
-+                <div class="workMeta">
-+                  <span class="workTag">تطوير</span>
-+                  <span class="workTag">هوية بصرية</span>
-+                  <span class="workTag">2023</span>
-+                </div>
-+                <a class="workLink" href="#">رابط المشروع</a>
-+              </article>
-+
-+              <article class="workCard">
-+                <div>
-+                  <h3>اسم المشروع الثالث</h3>
-+                  <p>نبذة عن العمل الذي نفذته ونوع العملاء أو القطاع المستهدف.</p>
-+                </div>
-+                <div class="workMeta">
-+                  <span class="workTag">إعلام</span>
-+                  <span class="workTag">حملات</span>
-+                  <span class="workTag">2022</span>
-+                </div>
-+                <a class="workLink" href="#">رابط المشروع</a>
-+              </article>
-+
-+              <article class="workCard">
-+                <div>
-+                  <h3>اسم المشروع الرابع</h3>
-+                  <p>أضف تفاصيل سريعة: هدف المشروع، دورك، والنتائج.</p>
-+                </div>
-+                <div class="workMeta">
-+                  <span class="workTag">محتوى</span>
-+                  <span class="workTag">إدارة</span>
-+                  <span class="workTag">2021</span>
-+                </div>
-+                <a class="workLink" href="#">رابط المشروع</a>
-+              </article>
-+            </div>
-+            <div class="workHint">اسحب البطاقات يمين/يسار لاستعراض باقي الأعمال.</div>
-+          </div>
-+        </div>
-+
-+        <div class="card" id="contact">
-+          <h2><span class="bar"></span> مواقع التواصل</h2>
-+          <div class="socialGrid">
-+            <div class="socialCard">
-+              <small>إنستقرام</small>
-+              <b>@yourname</b>
-+            </div>
-+            <div class="socialCard">
-+              <small>سناب شات</small>
-+              <b>@yourname</b>
-+            </div>
-+            <div class="socialCard">
-+              <small>إكس (تويتر سابقًا)</small>
-+              <b>@yourname</b>
-+            </div>
-+            <div class="socialCard">
-+              <small>رقم الهاتف</small>
-+              <b>00000000</b>
-+            </div>
-+            <div class="socialCard">
-+              <small>البريد الإلكتروني</small>
-+              <b>you@email.com</b>
-+            </div>
-+            <div class="socialCard">
-+              <small>لينكدإن</small>
-+              <b>linkedin.com/in/yourname</b>
-+            </div>
-+          </div>
-+        </div>
-+      </section>
-+
-+    </main>
-+
-+    <footer>
-+      © <span id="y"></span> اسمك هنا — جميع الحقوق محفوظة
-+    </footer>
-+  </div>
-+
-+  <div class="mobile-only">
-+    <div class="m-wrap">
-+
-+      <div class="m-top">
-+        <div class="m-brand"><span class="m-dot"></span> اسمك هنا</div>
-+        <a class="m-pill" href="#m-contact">تواصل</a>
-+      </div>
-+
-+      <section class="m-hero">
-+        <div class="m-photo">
-+          <div class="m-photoCard">
-+            <img src="profile.jpg" alt="صورتك الشخصية">
-+          </div>
-+          <div class="m-nameTag">اكتب اسمك الكامل هنا</div>
-+        </div>
-+
-+        <div class="m-body">
-+          <div class="m-title">عنوانك الأساسي هنا</div>
-+          <div class="m-sub">مجالك • تخصصك • مهارتك الرئيسية</div>
-+
-+          <p class="m-text">
-+            هذه نبذة مختصرة عنك بنسخة الموبايل: عرف بنفسك بشكل بسيط وجذاب.
-+          </p>
-+
-+          <div class="m-actions">
-+            <a class="m-btn m-btnPrimary" href="#m-works">شاهد الأعمال</a>
-+            <a class="m-btn" href="mailto:you@email.com">راسلني عبر البريد</a>
-+            <a class="m-btn" href="#m-contact">مواقع التواصل</a>
-+          </div>
-+
-+          <div class="m-chips">
-+            <span class="m-chip">مهارة 1</span>
-+            <span class="m-chip">مهارة 2</span>
-+            <span class="m-chip">مهارة 3</span>
-+            <span class="m-chip">مهارة 4</span>
-+          </div>
-+        </div>
-+      </section>
-+
-+      <section class="m-grid">
-+        <div class="m-card" id="m-works">
-+          <h2><span class="m-bar"></span> أعمالي</h2>
-+          <div class="m-workTrack" data-drag-scroll>
-+            <article class="m-workCard">
-+              <h3>اسم المشروع الأول</h3>
-+              <p>وصف بسيط يوضح الفكرة والنتائج.</p>
-+              <div class="m-chips">
-+                <span class="m-workTag">تصميم</span>
-+                <span class="m-workTag">2024</span>
-+              </div>
-+            </article>
-+            <article class="m-workCard">
-+              <h3>اسم المشروع الثاني</h3>
-+              <p>نبذة مختصرة عن الدور الذي قمت به.</p>
-+              <div class="m-chips">
-+                <span class="m-workTag">إعلام</span>
-+                <span class="m-workTag">2023</span>
-+              </div>
-+            </article>
-+            <article class="m-workCard">
-+              <h3>اسم المشروع الثالث</h3>
-+              <p>أضف هنا تفاصيل قصيرة عن العميل أو القطاع.</p>
-+              <div class="m-chips">
-+                <span class="m-workTag">محتوى</span>
-+                <span class="m-workTag">2022</span>
-+              </div>
-+            </article>
-+          </div>
-+          <div class="workHint">اسحب البطاقات يمين/يسار لمشاهدة المزيد.</div>
-+        </div>
-+
-+        <div class="m-card" id="m-contact">
-+          <h2><span class="m-bar"></span> مواقع التواصل</h2>
-+          <div class="m-social">
-+            <div class="m-socialCard">
-+              <small>إنستقرام</small>
-+              <b>@yourname</b>
-+            </div>
-+            <div class="m-socialCard">
-+              <small>سناب شات</small>
-+              <b>@yourname</b>
-+            </div>
-+            <div class="m-socialCard">
-+              <small>رقم الهاتف</small>
-+              <b>00000000</b>
-+            </div>
-+            <div class="m-socialCard">
-+              <small>البريد الإلكتروني</small>
-+              <b>you@email.com</b>
-+            </div>
-+          </div>
-+        </div>
-+      </section>
-+
-+      <div class="m-foot">© <span id="my"></span> اسمك هنا</div>
-+    </div>
-+  </div>
-+
-+  <script>
-+    const year = new Date().getFullYear();
-+    const y = document.getElementById('y');
-+    if (y) y.textContent = year;
-+    const my = document.getElementById('my');
-+    if (my) my.textContent = year;
-+
-+    const dragTargets = document.querySelectorAll('[data-drag-scroll]');
-+    dragTargets.forEach((track) => {
-+      let isDown = false;
-+      let startX = 0;
-+      let scrollLeft = 0;
-+
-+      const startDrag = (event) => {
-+        isDown = true;
-+        startX = event.pageX || event.touches?.[0]?.pageX || 0;
-+        scrollLeft = track.scrollLeft;
-+      };
-+      const endDrag = () => { isDown = false; };
-+      const moveDrag = (event) => {
-+        if (!isDown) return;
-+        const x = event.pageX || event.touches?.[0]?.pageX || 0;
-+        const walk = (x - startX);
-+        track.scrollLeft = scrollLeft - walk;
-+      };
-+
-+      track.addEventListener('mousedown', startDrag);
-+      track.addEventListener('mouseleave', endDrag);
-+      track.addEventListener('mouseup', endDrag);
-+      track.addEventListener('mousemove', moveDrag);
-+
-+      track.addEventListener('touchstart', startDrag, { passive: true });
-+      track.addEventListener('touchend', endDrag, { passive: true });
-+      track.addEventListener('touchmove', moveDrag, { passive: true });
-+    });
-+  </script>
-+</body>
-+</html>
- 
-EOF
-)
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>موقعي الشخصي | Portfolio</title>
+  <meta name="description" content="موقعي الشخصي: نبذة، أعمالي (تصويري/بوسترات/فيديوات)، وروابط التواصل" />
+
+  <!-- خط عربي جميل -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #070A12;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --accent: #7c5cff;
+      --accent2:#22c1c3;
+
+      --radius: 18px;
+      --shadow: 0 18px 60px rgba(0,0,0,.40);
+      --max: 1100px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:"Tajawal", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1000px 500px at 15% 10%, rgba(124,92,255,.20), transparent 55%),
+        radial-gradient(900px 450px at 85% 20%, rgba(34,193,195,.15), transparent 55%),
+        radial-gradient(1200px 700px at 50% 120%, rgba(124,92,255,.14), transparent 50%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .wrap{
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    /* Top bar */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7,10,18,.55);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .topbar-inner{
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: 12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(124,92,255,.35);
+    }
+    nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-start;
+    }
+    .chip{
+      padding:8px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      border-radius: 999px;
+      font-size: 14px;
+      color: var(--muted);
+      transition:.2s ease;
+      user-select:none;
+    }
+    .chip:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); color:var(--text); }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .bio{
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:10px;
+      min-height: 260px;
+    }
+    .kicker{
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .kicker span{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(34,193,195,.75);
+      box-shadow: 0 0 16px rgba(34,193,195,.25);
+    }
+    h1{
+      margin: 0;
+      font-size: clamp(24px, 3.5vw, 40px);
+      line-height: 1.15;
+      letter-spacing: .2px;
+    }
+    .bio p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+    .cta-row{
+      margin-top: 8px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .btn{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      padding: 10px 14px;
+      border-radius: 12px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
+      transition:.2s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.20); }
+    .btn.primary{
+      border:none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0b0f1b;
+    }
+    .btn .ico{
+      width: 10px; height: 10px; border-radius: 3px;
+      background: rgba(255,255,255,.75);
+    }
+    .btn.primary .ico{ background: rgba(0,0,0,.25); }
+
+    /* Profile card */
+    .profile{
+      padding: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+      min-height: 260px;
+    }
+    .profile::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(300px 200px at 20% 20%, rgba(124,92,255,.25), transparent 60%),
+        radial-gradient(260px 180px at 80% 25%, rgba(34,193,195,.18), transparent 60%);
+      pointer-events:none;
+    }
+    .avatar{
+      width: min(260px, 70vw);
+      aspect-ratio: 1/1;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 24px 80px rgba(0,0,0,.45);
+      overflow:hidden;
+      background: rgba(255,255,255,.06);
+      position:relative;
+      z-index:1;
+    }
+    .avatar img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
+    }
+    .avatar .badge{
+      position:absolute;
+      bottom: 10px;
+      inset-inline-start: 10px;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      padding: 8px 10px;
+      border-radius: 12px;
+      color: rgba(255,255,255,.85);
+      font-weight:700;
+      font-size: 13px;
+    }
+
+    /* Sections */
+    section{
+      margin-top: 22px;
+    }
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+    .section-title{
+      margin:0;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing:.2px;
+    }
+    .section-sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Carousels */
+    .carousel{
+      position:relative;
+      padding: 14px;
+    }
+
+    .track{
+      display:flex;
+      gap: 12px;
+      overflow-x:auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 14px;
+      padding: 6px 4px 14px;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+      user-select:none;
+    }
+    .track:active{ cursor: grabbing; }
+    .track::-webkit-scrollbar{ height: 10px; }
+    .track::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.10);
+      border-radius: 999px;
+    }
+
+    .item{
+      scroll-snap-align: start;
+      flex: 0 0 auto;
+      width: 320px;
+      max-width: 78vw;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .item:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
+
+    .item-media{
+      position:relative;
+      width:100%;
+      aspect-ratio: 16/10;
+      background: rgba(255,255,255,.05);
+      overflow:hidden;
+    }
+    .item-media img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .play{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.35));
+      pointer-events:none;
+    }
+    .play span{
+      width: 56px; height: 56px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size: 18px;
+    }
+
+    .item-body{
+      padding: 12px 12px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .item-title{
+      margin:0;
+      font-weight:800;
+      font-size: 15px;
+      line-height:1.4;
+    }
+    .item-desc{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .hint{
+      margin-top: 8px;
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+      padding: 0 2px;
+    }
+
+    /* Social */
+    .social-grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 14px;
+    }
+    @media (max-width: 720px){
+      .social-grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .social{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      transition:.2s ease;
+    }
+    .social:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
+    .social .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .social .icon{
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(124,92,255,.35), rgba(34,193,195,.25));
+      border: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 900;
+    }
+    .social .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .social .name{
+      font-weight:800;
+      font-size: 14px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .social .handle{
+      color: var(--muted);
+      font-size: 12px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .social .arrow{
+      color: rgba(255,255,255,.55);
+      font-weight: 900;
+      font-size: 16px;
+      flex: 0 0 auto;
+    }
+
+    footer{
+      margin-top: 18px;
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+      text-align:center;
+      padding: 14px 0 0;
+    }
+
+    /* Modal viewer (optional) */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      background: rgba(0,0,0,.65);
+      z-index: 100;
+      padding: 18px;
+    }
+    .modal.open{ display:grid; }
+    .modal-card{
+      width: min(980px, 100%);
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,12,22,.85);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 90px rgba(0,0,0,.55);
+    }
+    .modal-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.85);
+      font-weight:800;
+    }
+    .close{
+      border:none;
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.85);
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-family: inherit;
+      font-weight:900;
+    }
+    .modal-media{
+      width:100%;
+      max-height: 70vh;
+      background: rgba(255,255,255,.04);
+    }
+    .modal-media img{
+      width:100%;
+      height:100%;
+      max-height: 70vh;
+      object-fit: contain;
+      display:block;
+      background: rgba(0,0,0,.25);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="dot"></span>
+        <span id="brandName">اسمك هنا</span>
+      </div>
+      <nav>
+        <a class="chip" href="#about">نبذة</a>
+        <a class="chip" href="#works">أعمالي</a>
+        <a class="chip" href="#social">التواصل</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <!-- Hero -->
+    <section id="about" class="hero">
+      <div class="card bio">
+        <div class="kicker"><span></span> موقعي الشخصي</div>
+        <h1 id="heroTitle">مرحباً! أنا <span style="background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent;">اسمك هنا</span></h1>
+        <p id="heroBio">
+          اكتب نبذة بسيطة عنك هنا: تخصصك، اهتمامك، وأهم شيء تشتغل عليه.
+          خليها قصيرة وواضحة وتترك انطباع جميل.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn primary" href="#works"><span class="ico"></span> شوف أعمالي</a>
+          <a class="btn" href="#social"><span class="ico"></span> تواصل معي</a>
+        </div>
+      </div>
+
+      <div class="card profile">
+        <div class="avatar">
+          <img id="profileImg" src="assets/img/profile.jpg" alt="صورتي الشخصية" loading="lazy">
+          <div class="badge" id="profileBadge">مجالك هنا</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Works -->
+    <section id="works">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">أعمالي</h2>
+          <p class="section-sub">اسحب البطاقات يمين/يسار عشان تشوف المزيد</p>
+        </div>
+      </div>
+
+      <!-- Photography -->
+      <div class="card carousel" style="margin-top:10px;">
+        <div class="section-head" style="margin:0 0 8px;">
+          <h3 class="section-title" style="font-size:18px;">تصويري</h3>
+          <p class="section-sub">صور + وصف بسيط</p>
+        </div>
+        <div class="track" data-dragscroll id="photosTrack" aria-label="تصويري"></div>
+        <div class="hint">📱 بالجوال: اسحب | 💻 بالكمبيوتر: اسحب بالماوس أو سكرول</div>
+      </div>
+
+      <!-- Posters -->
+      <div class="card carousel" style="margin-top:14px;">
+        <div class="section-head" style="margin:0 0 8px;">
+          <h3 class="section-title" style="font-size:18px;">بوسترات</h3>
+          <p class="section-sub">تصاميم/ملصقات</p>
+        </div>
+        <div class="track" data-dragscroll id="postersTrack" aria-label="بوسترات"></div>
+        <div class="hint">🎨 أضف صور البوسترات في assets/img ثم حدّث القائمة تحت</div>
+      </div>
+
+      <!-- Videos -->
+      <div class="card carousel" style="margin-top:14px;">
+        <div class="section-head" style="margin:0 0 8px;">
+          <h3 class="section-title" style="font-size:18px;">فيديوات</h3>
+          <p class="section-sub">فيديو + صورة مصغرة (Thumbnail)</p>
+        </div>
+        <div class="track" data-dragscroll id="videosTrack" aria-label="فيديوات"></div>
+        <div class="hint">▶️ بطاقة الفيديو تفتح الرابط في تبويب جديد</div>
+      </div>
+    </section>
+
+    <!-- Social -->
+    <section id="social">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">التواصل</h2>
+          <p class="section-sub">روابط حساباتي — اضغط ليفتح الرابط</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="social-grid" id="socialGrid"></div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> — صُمم بحب ✨
+    </footer>
+  </main>
+
+  <!-- Modal (لما تضغط على صورة تكبر) -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-top">
+        <div id="modalTitle">عرض</div>
+        <button class="close" id="modalClose" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="modal-media">
+        <img id="modalImg" alt="عرض الصورة">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================
+       1) عدّل بياناتك هنا
+    ========================== */
+
+    const profile = {
+      name: "اسمك هنا",
+      badge: "مثلاً: مصمم / مصور / طالب",
+      bio: "اكتب نبذة بسيطة عنك هنا: تخصصك، اهتمامك، وأهم شيء تشتغل عليه. خليها قصيرة وواضحة.",
+      image: "assets/img/profile.jpg"
+    };
+
+    // تصويري (أضف/احذف براحتك)
+    const photography = [
+      { title: "صورة 1", desc: "وصف بسيط للصورة.", img: "assets/img/photo-1.jpg" },
+      { title: "صورة 2", desc: "وصف بسيط للصورة.", img: "assets/img/photo-2.jpg" },
+      { title: "صورة 3", desc: "وصف بسيط للصورة.", img: "assets/img/photo-3.jpg" }
+    ];
+
+    // بوسترات
+    const posters = [
+      { title: "بوستر 1", desc: "وصف بسيط للبوستر.", img: "assets/img/poster-1.jpg" },
+      { title: "بوستر 2", desc: "وصف بسيط للبوستر.", img: "assets/img/poster-2.jpg" },
+      { title: "بوستر 3", desc: "وصف بسيط للبوستر.", img: "assets/img/poster-3.jpg" }
+    ];
+
+    // فيديوات (ضع رابط الفيديو + صورة مصغرة)
+    const videos = [
+      { title: "فيديو 1", desc: "وصف قصير للفيديو.", thumb: "assets/img/video-1.jpg", url: "https://www.youtube.com/" },
+      { title: "فيديو 2", desc: "وصف قصير للفيديو.", thumb: "assets/img/video-2.jpg", url: "https://www.instagram.com/" }
+    ];
+
+    // روابط التواصل
+    const socials = [
+      { name: "إنستجرام", handle: "@yourhandle", icon: "IG", url: "https://instagram.com/" },
+      { name: "تيك توك", handle: "@yourhandle", icon: "TT", url: "https://tiktok.com/" },
+      { name: "يوتيوب", handle: "قناتي", icon: "YT", url: "https://youtube.com/" },
+      { name: "إيميل", handle: "you@email.com", icon: "✉", url: "mailto:you@email.com" }
+    ];
+
+    /* =========================
+       2) رندر العناصر
+    ========================== */
+
+    // Profile
+    document.getElementById("brandName").textContent = profile.name;
+    document.getElementById("heroTitle").innerHTML =
+      `مرحباً! أنا <span style="background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent;">${profile.name}</span>`;
+    document.getElementById("heroBio").textContent = profile.bio;
+    document.getElementById("profileBadge").textContent = profile.badge;
+    const pimg = document.getElementById("profileImg");
+    pimg.src = profile.image;
+
+    // Render helpers
+    function makeImageCard({title, desc, img}, {clickToZoom=true} = {}){
+      const card = document.createElement("div");
+      card.className = "item";
+      card.innerHTML = `
+        <div class="item-media">
+          <img src="${img}" alt="${title}" loading="lazy">
+        </div>
+        <div class="item-body">
+          <h4 class="item-title">${title}</h4>
+          <p class="item-desc">${desc || ""}</p>
+        </div>
+      `;
+      if(clickToZoom){
+        card.style.cursor = "pointer";
+        card.addEventListener("click", () => openModal(title, img));
+      }
+      return card;
+    }
+
+    function makeVideoCard({title, desc, thumb, url}){
+      const card = document.createElement("a");
+      card.className = "item";
+      card.href = url;
+      card.target = "_blank";
+      card.rel = "noopener";
+      card.innerHTML = `
+        <div class="item-media">
+          <img src="${thumb}" alt="${title}" loading="lazy">
+          <div class="play"><span>▶</span></div>
+        </div>
+        <div class="item-body">
+          <h4 class="item-title">${title}</h4>
+          <p class="item-desc">${desc || ""}</p>
+        </div>
+      `;
+      return card;
+    }
+
+    function renderTrack(trackId, items, factory){
+      const track = document.getElementById(trackId);
+      track.innerHTML = "";
+      items.forEach(it => track.appendChild(factory(it)));
+    }
+
+    renderTrack("photosTrack", photography, (x) => makeImageCard(x, {clickToZoom:true}));
+    renderTrack("postersTrack", posters, (x) => makeImageCard(x, {clickToZoom:true}));
+    renderTrack("videosTrack", videos, makeVideoCard);
+
+    // Socials
+    const socialGrid = document.getElementById("socialGrid");
+    socialGrid.innerHTML = "";
+    socials.forEach(s => {
+      const a = document.createElement("a");
+      a.className = "social";
+      a.href = s.url;
+      a.target = s.url.startsWith("mailto:") ? "_self" : "_blank";
+      a.rel = "noopener";
+      a.innerHTML = `
+        <div class="left">
+          <div class="icon">${s.icon}</div>
+          <div class="meta">
+            <div class="name">${s.name}</div>
+            <div class="handle">${s.handle}</div>
+          </div>
+        </div>
+        <div class="arrow">↗</div>
+      `;
+      socialGrid.appendChild(a);
+    });
+
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* =========================
+       3) Drag-to-scroll (للكروسل)
+    ========================== */
+    function enableDragScroll(el){
+      let isDown = false;
+      let startX = 0;
+      let scrollLeft = 0;
+      let moved = false;
+
+      el.addEventListener("mousedown", (e) => {
+        isDown = true;
+        moved = false;
+        el.classList.add("active");
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      });
+
+      el.addEventListener("mouseleave", () => { isDown = false; });
+      el.addEventListener("mouseup", () => { isDown = false; });
+
+      el.addEventListener("mousemove", (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.1;
+        if(Math.abs(walk) > 6) moved = true;
+        el.scrollLeft = scrollLeft - walk;
+      });
+
+      // منع الضغط يفتح مودال أثناء السحب (للبطاقات اللي تفتح مودال)
+      el.addEventListener("click", (e) => {
+        if(moved){
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+    }
+
+    document.querySelectorAll("[data-dragscroll]").forEach(enableDragScroll);
+
+    /* =========================
+       4) Modal viewer
+    ========================== */
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalClose = document.getElementById("modalClose");
+
+    function openModal(title, img){
+      modalTitle.textContent = title;
+      modalImg.src = img;
+      modal.classList.add("open");
+    }
+    function closeModal(){
+      modal.classList.remove("open");
+      modalImg.src = "";
+    }
+
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) closeModal();
+    });
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeModal();
+    });
+  </script>
+</body>
+</html>
