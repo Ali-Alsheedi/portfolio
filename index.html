@@ -556,7 +556,7 @@
           <p class="section-sub">فيديو + صورة مصغرة (Thumbnail)</p>
         </div>
         <div class="track" data-dragscroll id="videosTrack" aria-label="فيديوات"></div>
-        <div class="hint">▶️ بطاقة الفيديو تفتح الرابط في تبويب جديد</div>
+        <div class="hint">▶️ مرّر المؤشر للتشغيل (أو اضغط للتشغيل/الإيقاف بالجوال)</div>
       </div>
     </section>
 
@@ -618,15 +618,15 @@
       { title: "بوستر 3", desc: "وصف بسيط للبوستر.", img: "assets/img/poster-3.jpg" }
     ];
 
-    // فيديوات (ضع رابط الفيديو + صورة مصغرة)
- const videos = [
-  {
-    title: "أول فيديو",
-    desc: "وصف بسيط للفيديو.",
-    src: "assets/videos/video-1.mp4",
-    poster: "assets/img/video-1.jpg"
-  }
-];
+    // فيديوات (ملفات MP4 داخل assets/videos + صورة مصغرة اختيارية)
+    const videos = [
+      {
+        title: "أول فيديو",
+        desc: "وصف بسيط للفيديو.",
+        src: "assets/videos/video-1.mp4",
+        poster: "assets/img/video-1.jpg"
+      }
+    ];
 
     // روابط التواصل
     const socials = [
@@ -669,46 +669,52 @@
       return card;
     }
 
- function makeVideoCard({title, desc, src, poster}) {
-  const card = document.createElement("div");
-  card.className = "item";
-  card.style.cursor = "pointer";
+    function makeVideoCard({title, desc, src, poster}) {
+      const card = document.createElement("div");
+      card.className = "item";
+      card.style.cursor = "pointer";
 
-  card.innerHTML = `
-    <div class="item-media">
-      <video
-        src="${src}"
-        ${poster ? `poster="${poster}"` : ""}
-        muted
-        playsinline
-        preload="metadata"
-        style="width:100%;height:100%;object-fit:cover;display:block;"
-      ></video>
-    </div>
-    <div class="item-body">
-      <h4 class="item-title">${title}</h4>
-      <p class="item-desc">${desc || ""}</p>
-    </div>
-  `;
+      card.innerHTML = `
+        <div class="item-media">
+          <video
+            src="${src}"
+            ${poster ? `poster="${poster}"` : ""}
+            muted
+            playsinline
+            preload="metadata"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+          ></video>
+        </div>
+        <div class="item-body">
+          <h4 class="item-title">${title}</h4>
+          <p class="item-desc">${desc || ""}</p>
+        </div>
+      `;
 
-  const vid = card.querySelector("video");
+      const vid = card.querySelector("video");
 
-  card.addEventListener("mouseenter", () => {
-    vid.play().catch(()=>{});
-  });
+      card.addEventListener("pointerenter", (event) => {
+        if (event.pointerType !== "mouse") return;
+        vid.play().catch(() => {});
+      });
 
-  card.addEventListener("mouseleave", () => {
-    vid.pause();
-    vid.currentTime = 0;
-  });
+      card.addEventListener("pointerleave", (event) => {
+        if (event.pointerType !== "mouse") return;
+        vid.pause();
+        vid.currentTime = 0;
+      });
 
-  card.addEventListener("touchstart", () => {
-    if (vid.paused) vid.play().catch(()=>{});
-    else vid.pause();
-  }, { passive: true });
+      card.addEventListener("pointerup", (event) => {
+        if (event.pointerType === "mouse") return;
+        if (vid.paused) {
+          vid.play().catch(() => {});
+        } else {
+          vid.pause();
+        }
+      });
 
-  return card;
-}
+      return card;
+    }
 
     function renderTrack(trackId, items, factory){
       const track = document.getElementById(trackId);
