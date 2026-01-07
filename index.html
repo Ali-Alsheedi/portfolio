@@ -693,13 +693,11 @@
 
       const vid = card.querySelector("video");
 
-      card.addEventListener("pointerenter", (event) => {
-        if (event.pointerType !== "mouse") return;
+      card.addEventListener("mouseenter", () => {
         vid.play().catch(() => {});
       });
 
-      card.addEventListener("pointerleave", (event) => {
-        if (event.pointerType !== "mouse") return;
+      card.addEventListener("mouseleave", () => {
         vid.pause();
         vid.currentTime = 0;
       });
