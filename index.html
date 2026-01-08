@@ -24,10 +24,7 @@
     body {
       margin: 0;
       font-family: "Tajawal", "Noto Kufi Arabic", "Noto Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(1000px 520px at 10% 0%, rgba(124, 92, 255, 0.18), transparent 60%),
-        radial-gradient(900px 450px at 90% 10%, rgba(34, 193, 195, 0.18), transparent 60%),
-        var(--bg);
+      background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
     }
@@ -192,15 +189,7 @@
       min-height: 260px;
     }
 
-    .profile::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(260px 200px at 20% 20%, rgba(124, 92, 255, 0.25), transparent 65%),
-        radial-gradient(260px 200px at 80% 15%, rgba(34, 193, 195, 0.18), transparent 65%);
-      pointer-events: none;
-    }
+    .profile::before { content: none; }
 
     .avatar {
       width: min(260px, 70vw);
@@ -492,6 +481,27 @@
       object-fit: contain;
       background: rgba(0, 0, 0, 0.25);
     }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 16px 14px 48px; }
+      .topbar-inner { padding: 10px 14px; }
+      .hero { gap: 14px; }
+      .profile { order: -1; min-height: auto; padding: 12px; }
+      .bio { min-height: auto; padding: 16px; }
+      .avatar {
+        width: min(220px, 72vw);
+        border-radius: 50%;
+      }
+      h1 { font-size: clamp(22px, 6vw, 30px); }
+      .bio p { font-size: 15px; }
+      .item { width: 85vw; }
+      .item-media img,
+      .item-media video {
+        object-fit: contain;
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .carousel { padding: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -499,7 +509,7 @@
     <div class="topbar-inner">
       <div class="brand">
         <span class="brand-dot"></span>
-        <span id="brandName">علي بن سالم بن علي الشيدي</span>
+        <span id="brandName">علي الشيدي</span>
       </div>
       <nav>
         <a class="chip" href="#about">نبذة</a>
@@ -529,20 +539,6 @@
           <img id="profileImg" src="assets/img/profile.jpg" alt="صورتي الشخصية" loading="lazy" />
           <div class="badge" id="profileBadge">أخصائي في الاتصال الجماهيري وآدابه</div>
         </div>
-      </div>
-    </section>
-
-    <section id="about-details">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">نبذة عني</h2>
-          <p class="section-sub">ملخص سريع عن مساري الأكاديمي والمهني.</p>
-        </div>
-      </div>
-      <div class="card" style="padding: 16px;">
-        <p style="margin: 0; color: var(--muted); line-height: 1.9;">
-          علي بن سالم بن علي الشيدي — أخصائي في الاتصال الجماهيري وآدابه. خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة تسويق ومحتوى وتصميم، وأسعى لدور في الإعلام والتواصل المؤسسي.
-        </p>
       </div>
     </section>
 
@@ -640,7 +636,6 @@
           <p class="section-sub">ثمان صور مختارة من أعمالي.</p>
         </div>
         <div class="track" data-dragscroll id="photosTrack" aria-label="تصويري"></div>
-        <div class="hint">📱 بالجوال: اسحب | 💻 بالكمبيوتر: اسحب بالماوس</div>
       </div>
 
       <div class="card carousel" style="margin-top: 14px;">
@@ -649,16 +644,14 @@
           <p class="section-sub">ملصقات وتصاميم مختارة.</p>
         </div>
         <div class="track" data-dragscroll id="postersTrack" aria-label="بوسترات"></div>
-        <div class="hint">🎨 اضغط على أي بوستر لمشاهدته بالحجم الكامل</div>
       </div>
 
       <div class="card carousel" style="margin-top: 14px;">
         <div class="section-head" style="margin: 0 0 8px;">
           <h3 class="section-title" style="font-size: 18px;">فيديوات</h3>
-          <p class="section-sub">تشغيل تلقائي داخل البطاقة.</p>
+          <p class="section-sub">لقطات مختارة من أعمالي.</p>
         </div>
         <div class="track" data-dragscroll id="videosTrack" aria-label="فيديوات"></div>
-        <div class="hint">▶️ تشغيل تلقائي بمجرد تحميل الصفحة</div>
       </div>
     </section>
 
@@ -731,7 +724,7 @@
       { name: "العنوان", handle: "سلطنة عمان، شمال الباطنة، صحم", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، شمال الباطنة، صحم" }
     ];
 
-    document.getElementById("brandName").textContent = profile.name;
+    document.getElementById("brandName").textContent = "علي الشيدي";
     document.getElementById("heroTitle").innerHTML =
       `مرحباً! أنا <span style="background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent;">${profile.name}</span>`;
     document.getElementById("heroBio").textContent = profile.bio;
