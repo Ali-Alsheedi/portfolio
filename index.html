@@ -19,8 +19,8 @@
       --max: 1100px;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; overflow-x: hidden; }
     body {
       margin: 0;
       font-family: "Tajawal", "Noto Kufi Arabic", "Noto Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -112,6 +112,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
+      max-width: 100%;
     }
 
     .bio {
@@ -252,6 +253,7 @@
       display: flex;
       gap: 12px;
       overflow-x: auto;
+      max-width: 100%;
       overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
       scroll-padding-inline: 14px;
@@ -491,6 +493,7 @@
       .avatar {
         width: min(220px, 72vw);
         border-radius: 50%;
+        margin: 0 auto;
       }
       h1 { font-size: clamp(22px, 6vw, 30px); }
       .bio p { font-size: 15px; }
@@ -512,7 +515,6 @@
         <span id="brandName">علي الشيدي</span>
       </div>
       <nav>
-        <a class="chip" href="#about">نبذة</a>
         <a class="chip" href="#education">المؤهل العلمي</a>
         <a class="chip" href="#experience">الخبرات</a>
         <a class="chip" href="#skills">المهارات</a>
@@ -524,10 +526,9 @@
   </div>
 
   <main class="wrap">
-    <section id="about" class="hero">
+    <section class="hero">
       <div class="card bio">
-        <div class="kicker"><span></span> نبذة عني</div>
-        <h1 id="heroTitle">مرحباً! أنا <span style="background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent;">علي بن سالم بن علي الشيدي</span></h1>
+        <h1 id="heroTitle">مرحباً! أنا <span style="background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent;">علي الشيدي</span></h1>
         <p id="heroBio">أخصائي في الاتصال الجماهيري وآدابه، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة تسويق ومحتوى وتصميم، وأسعى لدور في الإعلام والتواصل المؤسسي.</p>
         <div class="cta-row">
           <a class="btn primary" href="#works">شوف أعمالي</a>
@@ -626,14 +627,12 @@
       <div class="section-head">
         <div>
           <h2 class="section-title">أعمالي</h2>
-          <p class="section-sub">اسحب البطاقات يمين ويسار لمشاهدة المزيد.</p>
         </div>
       </div>
 
       <div class="card carousel" style="margin-top: 10px;">
         <div class="section-head" style="margin: 0 0 8px;">
           <h3 class="section-title" style="font-size: 18px;">تصويري</h3>
-          <p class="section-sub">ثمان صور مختارة من أعمالي.</p>
         </div>
         <div class="track" data-dragscroll id="photosTrack" aria-label="تصويري"></div>
       </div>
@@ -641,7 +640,6 @@
       <div class="card carousel" style="margin-top: 14px;">
         <div class="section-head" style="margin: 0 0 8px;">
           <h3 class="section-title" style="font-size: 18px;">بوسترات</h3>
-          <p class="section-sub">ملصقات وتصاميم مختارة.</p>
         </div>
         <div class="track" data-dragscroll id="postersTrack" aria-label="بوسترات"></div>
       </div>
@@ -649,7 +647,6 @@
       <div class="card carousel" style="margin-top: 14px;">
         <div class="section-head" style="margin: 0 0 8px;">
           <h3 class="section-title" style="font-size: 18px;">فيديوات</h3>
-          <p class="section-sub">لقطات مختارة من أعمالي.</p>
         </div>
         <div class="track" data-dragscroll id="videosTrack" aria-label="فيديوات"></div>
       </div>
@@ -685,7 +682,7 @@
 
   <script>
     const profile = {
-      name: "علي بن سالم بن علي الشيدي",
+      name: "علي الشيدي",
       badge: "أخصائي في الاتصال الجماهيري وآدابه",
       bio: "أخصائي في الاتصال الجماهيري وآدابه، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة تسويق ومحتوى وتصميم، وأسعى لدور في الإعلام والتواصل المؤسسي.",
       image: "assets/img/profile.jpg"
@@ -721,7 +718,7 @@
     const socials = [
       { name: "الهاتف", handle: "95647786", icon: "☎", url: "tel:95647786" },
       { name: "البريد الإلكتروني", handle: "alialsheidi@gmail.com", icon: "✉", url: "mailto:alialsheidi@gmail.com" },
-      { name: "العنوان", handle: "سلطنة عمان، شمال الباطنة، صحم", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، شمال الباطنة، صحم" }
+      { name: "العنوان", handle: "سلطنة عمان، محافظة شمال الباطنة، ولاية صحار", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، محافظة شمال الباطنة، ولاية صحار" }
     ];
 
     document.getElementById("brandName").textContent = "علي الشيدي";
