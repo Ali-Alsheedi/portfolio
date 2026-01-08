@@ -312,7 +312,6 @@
     #postersTrack .item-media img {
       width: 100%;
       height: auto;
-      object-fit: contain;
       display: block;
     }
 
@@ -337,10 +336,7 @@
     }
 
     .hint {
-      margin-top: 8px;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.6);
-      padding: 0 2px;
+      display: none;
     }
 
     .social-grid {
@@ -490,6 +486,7 @@
       .hero { gap: 14px; }
       .profile { order: -1; min-height: auto; padding: 12px; }
       .bio { min-height: auto; padding: 16px; }
+      .card { box-shadow: none; }
       .avatar {
         width: min(220px, 72vw);
         border-radius: 50%;
@@ -497,11 +494,15 @@
       }
       h1 { font-size: clamp(22px, 6vw, 30px); }
       .bio p { font-size: 15px; }
-      .item { width: 85vw; }
+      .item { width: min(360px, 85vw); height: auto; }
+      .item-media { height: auto; aspect-ratio: auto; background: transparent; }
       .item-media img,
       .item-media video {
-        object-fit: contain;
-        background: rgba(0, 0, 0, 0.2);
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        background: transparent;
+        display: block;
       }
       .carousel { padding: 12px; }
     }
@@ -718,7 +719,7 @@
     const socials = [
       { name: "الهاتف", handle: "95647786", icon: "☎", url: "tel:95647786" },
       { name: "البريد الإلكتروني", handle: "alialsheidi@gmail.com", icon: "✉", url: "mailto:alialsheidi@gmail.com" },
-      { name: "العنوان", handle: "سلطنة عمان، محافظة شمال الباطنة، ولاية صحار", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، محافظة شمال الباطنة، ولاية صحار" }
+      { name: "العنوان", handle: "سلطنة عمان، محافظة شمال الباطنة، ولاية صحم", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، محافظة شمال الباطنة، ولاية صحم" }
     ];
 
     document.getElementById("brandName").textContent = "علي الشيدي";
@@ -759,7 +760,7 @@
             loop
             muted
             playsinline
-            preload="auto"
+            preload="metadata"
           ></video>
         </div>
         <div class="item-body">
