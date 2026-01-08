@@ -547,10 +547,10 @@
       <div class="card carousel" style="margin-top: 14px;">
         <div class="section-head" style="margin: 0 0 8px;">
           <h3 class="section-title" style="font-size: 18px;">فيديوات</h3>
-          <p class="section-sub">مرر المؤشر للتشغيل أو اضغط على الهاتف للتبديل.</p>
+          <p class="section-sub">تشغيل تلقائي داخل البطاقة.</p>
         </div>
         <div class="track" data-dragscroll id="videosTrack" aria-label="فيديوات"></div>
-        <div class="hint">▶️ تشغيل تلقائي عند المرور بالماوس على الكمبيوتر</div>
+        <div class="hint">▶️ تشغيل تلقائي بمجرد تحميل الصفحة</div>
       </div>
     </section>
 
@@ -653,15 +653,16 @@
     function makeVideoCard({ title, desc, src, poster }) {
       const card = document.createElement("div");
       card.className = "item";
-      card.style.cursor = "pointer";
       card.innerHTML = `
         <div class="item-media">
           <video
             src="${src}"
             poster="${poster}"
+            autoplay
+            loop
             muted
             playsinline
-            preload="metadata"
+            preload="auto"
           ></video>
         </div>
         <div class="item-body">
@@ -669,26 +670,6 @@
           <p class="item-desc">${desc || ""}</p>
         </div>
       `;
-
-      const vid = card.querySelector("video");
-
-      card.addEventListener("mouseenter", () => {
-        vid.play().catch(() => {});
-      });
-
-      card.addEventListener("mouseleave", () => {
-        vid.pause();
-        vid.currentTime = 0;
-      });
-
-      card.addEventListener("pointerup", (event) => {
-        if (event.pointerType === "mouse") return;
-        if (vid.paused) {
-          vid.play().catch(() => {});
-        } else {
-          vid.pause();
-        }
-      });
 
       return card;
     }
@@ -702,6 +683,20 @@
     renderTrack("photosTrack", photography, (item) => makeImageCard(item, { clickToZoom: true }));
     renderTrack("postersTrack", posters, (item) => makeImageCard(item, { clickToZoom: true }));
     renderTrack("videosTrack", videos, makeVideoCard);
+
+    function attemptAutoplayVideos() {
+      document.querySelectorAll("#videosTrack video").forEach((video) => {
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {});
+        }
+      });
+    }
+
+    attemptAutoplayVideos();
+    document.addEventListener("DOMContentLoaded", () => {
+      attemptAutoplayVideos();
+    });
 
     const socialGrid = document.getElementById("socialGrid");
     socialGrid.innerHTML = "";
