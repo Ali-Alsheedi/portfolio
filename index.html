@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>ملفي الشخصي</title>
   <meta name="description" content="ملف شخصي عربي يحتوي على نبذة وأعمالي وروابط التواصل." />
   <style>
@@ -36,7 +36,9 @@
     .wrap {
       width: min(100%, var(--max));
       margin: 0 auto;
-      padding: 20px 16px 64px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 20px 16px calc(24px + env(safe-area-inset-bottom));
     }
 
     .topbar {
@@ -411,7 +413,7 @@
     }
 
     footer {
-      margin-top: 18px;
+      margin-top: 24px;
       color: rgba(255, 255, 255, 0.55);
       font-size: 13px;
       text-align: center;
