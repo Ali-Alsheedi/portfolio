@@ -635,6 +635,15 @@
         <div class="section-head" style="margin: 0 0 8px;">
           <h3 class="section-title" style="font-size: 18px;">تصويري</h3>
         </div>
+        <div class="section-head" style="margin: 0 0 8px;">
+          <h4 class="section-title" style="font-size: 16px;">تصويري للخنجر العُماني</h4>
+          <p class="section-sub" style="margin-top: 4px;">مجموعة مختارة من تصويري.</p>
+        </div>
+        <div class="track" data-dragscroll id="khanjarTrack" aria-label="تصويري للخنجر العُماني"></div>
+        <div class="section-head" style="margin: 12px 0 8px;">
+          <h4 class="section-title" style="font-size: 16px;">تصويري</h4>
+          <p class="section-sub" style="margin-top: 4px;">مختارات إضافية من أعمال التصوير.</p>
+        </div>
         <div class="track" data-dragscroll id="photosTrack" aria-label="تصويري"></div>
       </div>
 
@@ -689,11 +698,14 @@
       image: "assets/img/profile.jpg"
     };
 
+    const photographyKhanjar = [
+      { title: "صورة 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-04.jpeg" }
+    ];
+
     const photography = [
       { title: "صورة 01", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-01.jpeg" },
       { title: "صورة 02", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-02.jpeg" },
       { title: "صورة 03", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-03.jpeg" },
-      { title: "صورة 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-04.jpeg" },
       { title: "صورة 05", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-05.jpeg" },
       { title: "صورة 06", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-06.jpeg" },
       { title: "صورة 07", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-07.jpeg" },
@@ -778,6 +790,7 @@
       items.forEach((item) => track.appendChild(factory(item)));
     }
 
+    renderTrack("khanjarTrack", photographyKhanjar, (item) => makeImageCard(item, { clickToZoom: true }));
     renderTrack("photosTrack", photography, (item) => makeImageCard(item, { clickToZoom: true }));
     renderTrack("postersTrack", posters, (item) => makeImageCard(item, { clickToZoom: true }));
     renderTrack("videosTrack", videos, makeVideoCard);
