@@ -9,6 +9,7 @@
     :root {
       --bg: #0b0f1a;
       --surface: rgba(255, 255, 255, 0.06);
+      --card: rgba(255, 255, 255, 0.05);
       --border: rgba(255, 255, 255, 0.12);
       --text: rgba(255, 255, 255, 0.92);
       --muted: rgba(255, 255, 255, 0.65);
@@ -278,7 +279,7 @@
       max-width: 78vw;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--card);
       overflow: hidden;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
@@ -291,12 +292,18 @@
     .item-media {
       width: 100%;
       aspect-ratio: 16 / 10;
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--card);
       position: relative;
       overflow: hidden;
     }
 
-    .item-media img,
+    .item-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: var(--card);
+    }
+
     .item-media video {
       width: 100%;
       height: 100%;
@@ -306,7 +313,7 @@
     #postersTrack .item-media {
       height: auto;
       aspect-ratio: auto;
-      background: transparent;
+      background: var(--card);
     }
 
     #postersTrack .item-media img {
@@ -494,17 +501,19 @@
       }
       h1 { font-size: clamp(22px, 6vw, 30px); }
       .bio p { font-size: 15px; }
-      .item { width: min(360px, 85vw); height: auto; }
-      .item-media { height: auto; aspect-ratio: auto; background: transparent; }
+      .item { width: min(360px, 88vw); height: auto; }
+      .item-media { height: auto; aspect-ratio: auto; background: var(--card); }
       .item-media img,
       .item-media video {
         width: 100%;
         height: auto;
-        object-fit: cover;
-        background: transparent;
+        object-fit: contain;
+        background: var(--card);
         display: block;
       }
-      .carousel { padding: 12px; }
+      .item-body { padding: 10px 10px 12px; }
+      .carousel { padding: 10px; }
+      .track { padding-inline: 0; }
     }
   </style>
 </head>
@@ -699,27 +708,33 @@
     };
 
     const photographyKhanjar = [
-      { title: "خنجر 01", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-01.jpeg" },
-      { title: "خنجر 02", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-02.jpeg" },
-      { title: "خنجر 03", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-03.jpeg" },
-      { title: "خنجر 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-04.jpeg" }
+      { title: "خنجر 01", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-01.jpg" },
+      { title: "خنجر 02", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-02.jpg" },
+      { title: "خنجر 03", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-03.jpg" },
+      { title: "خنجر 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-04.jpg" }
     ];
 
     const photography = [
-      { title: "صورة 01", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-01.jpeg" },
-      { title: "صورة 02", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-02.jpeg" },
-      { title: "صورة 03", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-03.jpeg" },
+      { title: "صورة 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-04.jpeg" },
       { title: "صورة 05", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-05.jpeg" },
       { title: "صورة 06", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-06.jpeg" },
       { title: "صورة 07", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-07.jpeg" },
-      { title: "صورة 08", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-08.jpeg" }
+      { title: "صورة 08", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-08.jpeg" },
+      { title: "صورة 09", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-09.jpg" },
+      { title: "صورة 10", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-10.jpg" },
+      { title: "صورة 11", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-11.jpg" },
+      { title: "صورة 12", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-12.jpg" },
+      { title: "صورة 13", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-13.jpg" }
     ];
 
-    const posters = [
+    const basePosters = [
       { title: "بوستر 01", desc: "تصميم ملصق.", img: "assets/img/posters/poster-01.jpg" },
       { title: "بوستر 02", desc: "تصميم ملصق.", img: "assets/img/posters/poster-02.jpg" },
       { title: "بوستر 03", desc: "تصميم ملصق.", img: "assets/img/posters/poster-03.jpg" },
-      { title: "بوستر 04", desc: "تصميم ملصق.", img: "assets/img/posters/poster-04.png" }
+      { title: "بوستر 04", desc: "تصميم ملصق.", img: "assets/img/posters/poster-04.png" },
+      { title: "بوستر 05", desc: "تصميم ملصق.", img: "assets/img/posters/poster-05.jpeg" },
+      { title: "بوستر 06", desc: "تصميم ملصق.", img: "assets/img/posters/poster-06.jpeg" },
+      { title: "بوستر 07", desc: "تصميم ملصق.", img: "assets/img/posters/poster-07.jpeg" }
     ];
 
     const videos = [
@@ -799,10 +814,42 @@
       items.forEach((item) => track.appendChild(factory(item)));
     }
 
-    renderTrack("khanjarTrack", photographyKhanjar, (item) => makeImageCard(item, { clickToZoom: true }));
-    renderTrack("photosTrack", photography, (item) => makeImageCard(item, { clickToZoom: true }));
-    renderTrack("postersTrack", posters, (item) => makeImageCard(item, { clickToZoom: true }));
-    renderTrack("videosTrack", videos, makeVideoCard);
+    function checkImageExists(src) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = src;
+      });
+    }
+
+    async function buildPostersList() {
+      const optionalPosterPhotos = [
+        "assets/img/posters/photo-01.jpeg",
+        "assets/img/posters/photo-02.jpeg",
+        "assets/img/posters/photo-03.jpeg"
+      ];
+
+      const optionalItems = [];
+      for (const img of optionalPosterPhotos) {
+        const exists = await checkImageExists(img);
+        if (exists) {
+          optionalItems.push({ title: "بوستر إضافي", desc: "تصميم ملصق.", img });
+        }
+      }
+
+      return [...basePosters, ...optionalItems];
+    }
+
+    async function renderWorks() {
+      renderTrack("khanjarTrack", photographyKhanjar, (item) => makeImageCard(item, { clickToZoom: true }));
+      renderTrack("photosTrack", photography, (item) => makeImageCard(item, { clickToZoom: true }));
+      const posters = await buildPostersList();
+      renderTrack("postersTrack", posters, (item) => makeImageCard(item, { clickToZoom: true }));
+      renderTrack("videosTrack", videos, makeVideoCard);
+    }
+
+    renderWorks();
 
     function attemptAutoplayVideos() {
       document.querySelectorAll("#videosTrack video").forEach((video) => {
