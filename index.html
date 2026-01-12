@@ -699,7 +699,10 @@
     };
 
     const photographyKhanjar = [
-      { title: "صورة 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-04.jpeg" }
+      { title: "خنجر 01", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-01.jpeg" },
+      { title: "خنجر 02", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-02.jpeg" },
+      { title: "خنجر 03", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-03.jpeg" },
+      { title: "خنجر 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-04.jpeg" }
     ];
 
     const photography = [
@@ -753,6 +756,12 @@
           <p class="item-desc">${desc || ""}</p>
         </div>
       `;
+      const imageEl = card.querySelector("img");
+      if (imageEl) {
+        imageEl.addEventListener("error", () => {
+          card.remove();
+        }, { once: true });
+      }
       if (clickToZoom) {
         card.style.cursor = "pointer";
         card.addEventListener("click", () => openModal(title, img));
