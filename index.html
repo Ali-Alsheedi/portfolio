@@ -361,23 +361,37 @@
       padding: 16px;
     }
 
-    .carousel-3d {
+    .carousel-shell {
       position: relative;
-      margin-top: 12px;
-      padding: 12px 8px 6px;
-      perspective: 1200px;
+      overflow: hidden;
+      isolation: isolate;
+      contain: layout paint;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 28px;
     }
 
-    .carousel-3d .carousel-track {
+    .carousel-viewport {
       position: relative;
-      height: 360px;
-      display: grid;
-      place-items: center;
+      height: clamp(260px, 42vw, 420px);
+      perspective: 1200px;
+      overflow: hidden;
+    }
+
+    .carousel-stage {
+      position: absolute;
+      inset: 0;
       transform-style: preserve-3d;
     }
 
     .carousel-card {
+      --carousel-shift: 220px;
+      --carousel-far-shift: 360px;
+      --carousel-tilt: 18deg;
+      --carousel-far-tilt: 24deg;
       position: absolute;
+      top: 50%;
+      left: 50%;
       width: min(78vw, 420px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.14);
@@ -433,38 +447,42 @@
     }
 
     .carousel-card.is-active {
-      transform: translateX(0) translateZ(120px) scale(1.02);
+      transform: translate(-50%, -50%) translateX(0) translateZ(140px) scale(1.03);
       opacity: 1;
+      filter: none;
+      z-index: 5;
+    }
+
+    .carousel-card.is-left {
+      transform: translate(-50%, -50%) translateX(calc(var(--carousel-shift) * -1)) translateZ(40px) rotateY(var(--carousel-tilt)) scale(0.92);
+      opacity: 0.78;
       filter: none;
       z-index: 4;
     }
 
-    .carousel-card.is-left {
-      transform: translateX(calc(var(--carousel-shift, 240px) * -1)) translateZ(0) rotateY(var(--carousel-tilt, 18deg)) scale(0.92);
-      opacity: 0.75;
-      filter: none;
-      z-index: 3;
-    }
-
     .carousel-card.is-right {
-      transform: translateX(var(--carousel-shift, 240px)) translateZ(0) rotateY(calc(var(--carousel-tilt, 18deg) * -1)) scale(0.92);
-      opacity: 0.75;
+      transform: translate(-50%, -50%) translateX(var(--carousel-shift) ) translateZ(40px) rotateY(calc(var(--carousel-tilt) * -1)) scale(0.92);
+      opacity: 0.78;
       filter: none;
-      z-index: 3;
+      z-index: 4;
     }
 
     .carousel-card.is-far-left {
-      transform: translateX(calc(var(--carousel-far-shift, 440px) * -1)) translateZ(-40px) rotateY(calc(var(--carousel-tilt, 18deg) * 1.4)) scale(0.85);
-      opacity: 0.45;
-      filter: blur(1.5px);
-      z-index: 1;
+      transform: translate(-50%, -50%) translateX(calc(var(--carousel-far-shift) * -1)) translateZ(0) rotateY(var(--carousel-far-tilt)) scale(0.86);
+      opacity: 0.55;
+      filter: blur(0.6px);
+      z-index: 3;
     }
 
     .carousel-card.is-far-right {
-      transform: translateX(var(--carousel-far-shift, 440px)) translateZ(-40px) rotateY(calc(var(--carousel-tilt, 18deg) * -1.4)) scale(0.85);
-      opacity: 0.45;
-      filter: blur(1.5px);
-      z-index: 1;
+      transform: translate(-50%, -50%) translateX(var(--carousel-far-shift)) translateZ(0) rotateY(calc(var(--carousel-far-tilt) * -1)) scale(0.86);
+      opacity: 0.55;
+      filter: blur(0.6px);
+      z-index: 3;
+    }
+
+    .carousel-card.is-hidden {
+      display: none;
     }
 
     .carousel-arrow {
@@ -481,7 +499,7 @@
       place-items: center;
       cursor: pointer;
       transition: 0.2s ease;
-      z-index: 6;
+      z-index: 10;
     }
 
     .carousel-arrow:hover {
@@ -791,12 +809,12 @@
       .item-body { padding: 12px 12px 14px; }
       .carousel { padding: 10px; }
       .track { padding-inline: 0; }
-      .carousel-3d {
-        --carousel-shift: 160px;
-        --carousel-far-shift: 280px;
-        --carousel-tilt: 10deg;
+      .carousel-card {
+        --carousel-shift: 150px;
+        --carousel-far-shift: 260px;
+        --carousel-tilt: 12deg;
+        --carousel-far-tilt: 18deg;
       }
-      .carousel-3d .carousel-track { height: 320px; }
       nav { gap: 8px; }
       .chip { font-size: 13px; padding: 6px 12px; }
       .hero-socials { justify-content: center; }
@@ -964,9 +982,11 @@
             <p class="section-sub" style="margin-top: 4px;">مختارات من أعمال التصوير.</p>
           </div>
         </div>
-        <div class="carousel-3d" id="photosCarousel" aria-label="تصويري">
+        <div class="carousel-shell" id="photosCarousel" aria-label="تصويري">
           <button class="carousel-arrow prev" type="button" data-direction="prev" aria-label="السابق">❯</button>
-          <div class="carousel-track"></div>
+          <div class="carousel-viewport">
+            <div class="carousel-stage"></div>
+          </div>
           <button class="carousel-arrow next" type="button" data-direction="next" aria-label="التالي">❮</button>
         </div>
       </div>
@@ -978,9 +998,11 @@
             <p class="section-sub" style="margin-top: 4px;">بوسترات تسويقية وحملات.</p>
           </div>
         </div>
-        <div class="carousel-3d" id="postersCarousel" aria-label="بوسترات">
+        <div class="carousel-shell" id="postersCarousel" aria-label="بوسترات">
           <button class="carousel-arrow prev" type="button" data-direction="prev" aria-label="السابق">❯</button>
-          <div class="carousel-track"></div>
+          <div class="carousel-viewport">
+            <div class="carousel-stage"></div>
+          </div>
           <button class="carousel-arrow next" type="button" data-direction="next" aria-label="التالي">❮</button>
         </div>
       </div>
@@ -1148,7 +1170,7 @@
 
     function initCarousel(rootEl, items, { variant = "", clickToZoom = true } = {}) {
       if (!rootEl || !items.length) return null;
-      const track = rootEl.querySelector(".carousel-track");
+      const track = rootEl.querySelector(".carousel-stage");
       const prevBtn = rootEl.querySelector("[data-direction='prev']");
       const nextBtn = rootEl.querySelector("[data-direction='next']");
       track.innerHTML = "";
@@ -1169,12 +1191,21 @@
       const updateClasses = () => {
         cards.forEach((card, index) => {
           const diff = getRelativeIndex(index, currentIndex, total);
-          card.classList.remove("is-active", "is-left", "is-right", "is-far-left", "is-far-right");
+          card.classList.remove(
+            "is-active",
+            "is-left",
+            "is-right",
+            "is-far-left",
+            "is-far-right",
+            "is-hidden"
+          );
+          card.style.transform = "";
           if (diff === 0) card.classList.add("is-active");
           if (diff === -1) card.classList.add("is-left");
           if (diff === 1) card.classList.add("is-right");
           if (diff === -2) card.classList.add("is-far-left");
           if (diff === 2) card.classList.add("is-far-right");
+          if (diff < -2 || diff > 2) card.classList.add("is-hidden");
         });
       };
 
