@@ -31,6 +31,8 @@
         linear-gradient(140deg, #05070f 0%, #0a0f1c 45%, #0b1424 100%);
       color: var(--text);
       overflow-x: hidden;
+      min-height: 100%;
+      padding-bottom: calc(24px + env(safe-area-inset-bottom));
     }
 
     a { color: inherit; text-decoration: none; }
@@ -40,8 +42,7 @@
     .wrap {
       width: min(100%, var(--max));
       margin: 0 auto;
-      min-height: 100vh;
-      min-height: 100dvh;
+      min-height: 100%;
       padding: 20px 16px calc(24px + env(safe-area-inset-bottom));
     }
 
@@ -110,7 +111,8 @@
       grid-template-columns: 1.1fr 0.9fr;
       gap: 28px;
       align-items: center;
-      min-height: 100vh;
+      min-height: 80vh;
+      padding-bottom: 24px;
     }
 
     @media (max-width: 900px) {
@@ -156,8 +158,15 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(30px, 4vw, 50px);
-      line-height: 1.2;
+      font-size: clamp(32px, 4.6vw, 54px);
+      line-height: 1.25;
+    }
+
+    .hero-role {
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.78);
+      letter-spacing: 0.3px;
     }
 
     .bio p {
@@ -247,6 +256,17 @@
       position: relative;
       overflow: hidden;
       min-height: 320px;
+    }
+
+    .profile-glow {
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(123, 109, 255, 0.25), rgba(10, 12, 24, 0) 65%);
+      filter: blur(4px);
+      opacity: 0.85;
+      z-index: 0;
     }
 
     .profile::before,
@@ -595,9 +615,13 @@
       background: rgba(0, 0, 0, 0.25);
     }
 
-    #postersTrack .item-media img {
+    .item--poster .item-media {
+      background: linear-gradient(180deg, rgba(20, 24, 40, 0.92), rgba(10, 12, 22, 0.92));
+    }
+
+    .item--poster .item-media img {
       object-fit: contain;
-      background: rgba(12, 16, 28, 0.85);
+      background: transparent;
     }
 
     @media (max-width: 768px) {
@@ -615,7 +639,7 @@
       }
       h1 { font-size: clamp(26px, 7vw, 34px); }
       .bio p { font-size: 15px; }
-      .item { width: min(360px, 88vw); height: auto; }
+      .item { width: 100%; max-width: 100%; height: auto; }
       .item-media { aspect-ratio: 4 / 3; }
       .item-body { padding: 12px 12px 14px; }
       .carousel { padding: 10px; }
@@ -634,13 +658,10 @@
         <span id="brandName">علي الشيدي</span>
       </div>
       <nav>
-        <a class="chip" href="#about">نبذة</a>
-        <a class="chip" href="#education">المؤهل العلمي</a>
-        <a class="chip" href="#experience">الخبرات</a>
-        <a class="chip" href="#skills">المهارات</a>
-        <a class="chip" href="#languages">اللغات</a>
-        <a class="chip" href="#works">أعمالي</a>
-        <a class="chip" href="#social">معلومات التواصل</a>
+        <a class="chip" href="#about">الرئيسية</a>
+        <a class="chip" href="#works">الأعمال</a>
+        <a class="chip" href="#services">الخدمات</a>
+        <a class="chip" href="#courses">الدورات</a>
       </nav>
     </div>
   </div>
@@ -648,6 +669,7 @@
   <main class="wrap">
     <section class="hero" id="about">
       <div class="card bio">
+        <span class="kicker">مرحبا، هذا ملف أعمالي</span>
         <div class="rating-row">
           <span>تقييم العملاء</span>
           <span class="stars" aria-hidden="true">
@@ -659,8 +681,9 @@
           </span>
           <span>4.9/5</span>
         </div>
-        <h1 id="heroTitle">تصاميم إبداعية تحوّل الزوار إلى عملاء</h1>
-        <p id="heroBio">أخصائي في الاتصال الجماهيري وآدابه، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة تسويق ومحتوى وتصميم، وأسعى لدور في الإعلام والتواصل المؤسسي.</p>
+        <h1 id="heroTitle">تصاميم عصرية ومحتوى بصري<br />يروي القصة ويخطف الانتباه</h1>
+        <div class="hero-role" id="heroRole"></div>
+        <p id="heroBio">مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.</p>
         <div class="cta-row">
           <a class="btn primary" href="#works">استكشف أعمالي</a>
           <a class="btn" href="#social">تواصل معي</a>
@@ -684,13 +707,15 @@
         </div>
       </div>
       <div class="card profile">
+        <div class="profile-glow" aria-hidden="true"></div>
         <div class="avatar">
           <img id="profileImg" src="assets/img/profile.jpg" alt="صورتي الشخصية" loading="lazy" />
-          <div class="badge" id="profileBadge">أخصائي في الاتصال الجماهيري وآدابه</div>
+          <div class="badge" id="profileBadge"></div>
         </div>
       </div>
     </section>
 
+    <div id="courses"></div>
     <section id="education">
       <div class="section-head">
         <div>
@@ -736,6 +761,7 @@
       </div>
     </section>
 
+    <div id="services"></div>
     <section id="skills">
       <div class="section-head">
         <div>
@@ -780,16 +806,8 @@
 
       <div class="card carousel" style="margin-top: 10px;">
         <div class="section-head" style="margin: 0 0 8px;">
-          <h3 class="section-title" style="font-size: 18px;">تصويري</h3>
-        </div>
-        <div class="section-head" style="margin: 0 0 8px;">
-          <h4 class="section-title" style="font-size: 16px;">تصويري للخنجر العُماني</h4>
-          <p class="section-sub" style="margin-top: 4px;">مجموعة مختارة من تصويري.</p>
-        </div>
-        <div class="track" data-dragscroll id="khanjarTrack" aria-label="تصويري للخنجر العُماني"></div>
-        <div class="section-head" style="margin: 12px 0 8px;">
-          <h4 class="section-title" style="font-size: 16px;">تصويري</h4>
-          <p class="section-sub" style="margin-top: 4px;">مختارات إضافية من أعمال التصوير.</p>
+          <h3 class="section-title" style="font-size: 18px;">تصوير</h3>
+          <p class="section-sub" style="margin-top: 4px;">مختارات من أعمال التصوير.</p>
         </div>
         <div class="track" data-dragscroll id="photosTrack" aria-label="تصويري"></div>
       </div>
@@ -822,7 +840,7 @@
       </div>
     </section>
 
-    <footer>© 2026 — علي الشيدي — كل الحقوق محفوظة</footer>
+    <footer>علي الشيدي - كل الحقوق محفوظة</footer>
   </main>
 
   <div class="modal" id="modal" role="dialog" aria-modal="true">
@@ -840,40 +858,15 @@
   <script>
     const profile = {
       name: "علي الشيدي",
-      badge: "أخصائي في الاتصال الجماهيري وآدابه",
-      bio: "أخصائي في الاتصال الجماهيري وآدابه، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة تسويق ومحتوى وتصميم، وأسعى لدور في الإعلام والتواصل المؤسسي.",
+      role: "مصمم ومصور ومحرر فيديو",
+      badge: "مصمم ومصور ومحرر فيديو",
+      bio: "مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.",
       image: "assets/img/profile.jpg"
     };
 
-    const photographyKhanjar = [
-      { title: "خنجر 01", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-01.jpg" },
-      { title: "خنجر 02", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-02.jpg" },
-      { title: "خنجر 03", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-03.jpg" },
-      { title: "خنجر 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/khanjar-04.jpg" }
-    ];
-
-    const photography = [
-      { title: "صورة 04", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-04.jpeg" },
-      { title: "صورة 05", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-05.jpeg" },
-      { title: "صورة 06", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-06.jpeg" },
-      { title: "صورة 07", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-07.jpeg" },
-      { title: "صورة 08", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-08.jpeg" },
-      { title: "صورة 09", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-09.jpg" },
-      { title: "صورة 10", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-10.jpg" },
-      { title: "صورة 11", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-11.jpg" },
-      { title: "صورة 12", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-12.jpg" },
-      { title: "صورة 13", desc: "تفاصيل أو مكان التصوير.", img: "assets/img/photos/photo-13.jpg" }
-    ];
-
-    const basePosters = [
-      { title: "بوستر 01", desc: "تصميم ملصق.", img: "assets/img/posters/poster-01.jpg" },
-      { title: "بوستر 02", desc: "تصميم ملصق.", img: "assets/img/posters/poster-02.jpg" },
-      { title: "بوستر 03", desc: "تصميم ملصق.", img: "assets/img/posters/poster-03.jpg" },
-      { title: "بوستر 04", desc: "تصميم ملصق.", img: "assets/img/posters/poster-04.png" },
-      { title: "بوستر 05", desc: "تصميم ملصق.", img: "assets/img/posters/poster-05.jpeg" },
-      { title: "بوستر 06", desc: "تصميم ملصق.", img: "assets/img/posters/poster-06.jpeg" },
-      { title: "بوستر 07", desc: "تصميم ملصق.", img: "assets/img/posters/poster-07.jpeg" }
-    ];
+    const PHOTOS_API_URL = "https://api.github.com/repos/Ali-Alsheedi/portfolio/contents/assets/img/photos?ref=main";
+    const POSTERS_API_URL = "https://api.github.com/repos/Ali-Alsheedi/portfolio/contents/assets/img/posters?ref=main";
+    const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp"]);
 
     const videos = [
       {
@@ -891,20 +884,22 @@
     ];
 
     document.getElementById("brandName").textContent = "علي الشيدي";
+    document.getElementById("heroRole").textContent = profile.role;
     document.getElementById("heroBio").textContent = profile.bio;
     document.getElementById("profileBadge").textContent = profile.badge;
     document.getElementById("profileImg").src = profile.image;
 
-    function makeImageCard({ title, desc, img }, { clickToZoom = true } = {}) {
+    function makeImageCard({ title, desc, img }, { clickToZoom = true, variant = "" } = {}) {
       const card = document.createElement("div");
-      card.className = "item portfolio-card";
+      card.className = `item portfolio-card ${variant}`.trim();
+      const descMarkup = desc ? `<p class="item-desc">${desc}</p>` : "";
       card.innerHTML = `
         <div class="item-media">
           <img src="${img}" alt="${title}" loading="lazy" />
         </div>
         <div class="item-body">
           <h4 class="item-title">${title}</h4>
-          <p class="item-desc">${desc || ""}</p>
+          ${descMarkup}
         </div>
       `;
       const imageEl = card.querySelector("img");
@@ -950,39 +945,42 @@
       items.forEach((item) => track.appendChild(factory(item)));
     }
 
-    function checkImageExists(src) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = src;
-      });
+    function isImageFile(name) {
+      const ext = name.split(".").pop().toLowerCase();
+      return IMAGE_EXTENSIONS.has(ext);
     }
 
-    async function buildPostersList() {
-      const optionalPosterPhotos = [
-        "assets/img/posters/photo-01.jpeg",
-        "assets/img/posters/photo-02.jpeg",
-        "assets/img/posters/photo-03.jpeg"
-      ];
+    function formatTitleFromName(name) {
+      return name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+    }
 
-      const optionalItems = [];
-      for (const img of optionalPosterPhotos) {
-        const exists = await checkImageExists(img);
-        if (exists) {
-          optionalItems.push({ title: "بوستر إضافي", desc: "تصميم ملصق.", img });
-        }
+    async function fetchGallery(apiUrl) {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        console.warn("Failed to load gallery", apiUrl);
+        return [];
       }
-
-      return [...basePosters, ...optionalItems];
+      const data = await response.json();
+      return data
+        .filter((item) => item.type === "file" && isImageFile(item.name))
+        .sort((a, b) => a.name.localeCompare(b.name, "en"))
+        .map((item) => ({
+          title: formatTitleFromName(item.name),
+          desc: "",
+          img: item.download_url || item.html_url
+        }));
     }
 
     async function renderWorks() {
-      renderTrack("khanjarTrack", photographyKhanjar, (item) => makeImageCard(item, { clickToZoom: true }));
-      renderTrack("photosTrack", photography, (item) => makeImageCard(item, { clickToZoom: true }));
-      const posters = await buildPostersList();
-      renderTrack("postersTrack", posters, (item) => makeImageCard(item, { clickToZoom: true }));
-      renderTrack("videosTrack", videos, makeVideoCard);
+      const [photos, posters] = await Promise.all([
+        fetchGallery(PHOTOS_API_URL),
+        fetchGallery(POSTERS_API_URL)
+      ]);
+      renderTrack("photosTrack", photos, (item) => makeImageCard(item, { clickToZoom: true }));
+      renderTrack("postersTrack", posters, (item) => makeImageCard(item, { clickToZoom: true, variant: "item--poster" }));
+      if (videos.length) {
+        renderTrack("videosTrack", videos, makeVideoCard);
+      }
     }
 
     renderWorks();
