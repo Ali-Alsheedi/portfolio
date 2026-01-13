@@ -7,31 +7,35 @@
   <meta name="description" content="ملف شخصي عربي يحتوي على نبذة وأعمالي وروابط التواصل." />
   <style>
     :root {
-      --bg: #0b0f1a;
+      --bg: #080b14;
       --surface: rgba(255, 255, 255, 0.06);
       --card: rgba(255, 255, 255, 0.05);
       --border: rgba(255, 255, 255, 0.12);
       --text: rgba(255, 255, 255, 0.92);
       --muted: rgba(255, 255, 255, 0.65);
-      --accent: #7c5cff;
-      --accent2: #22c1c3;
+      --accent: #7b6dff;
+      --accent2: #26d9c4;
+      --accent3: #1a8f9d;
       --radius: 18px;
-      --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
-      --max: 1100px;
+      --shadow: 0 26px 80px rgba(0, 0, 0, 0.45);
+      --max: 1180px;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-    html, body { height: 100%; overflow-x: hidden; }
+    html, body { height: 100%; overflow-x: hidden; scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: "Tajawal", "Noto Kufi Arabic", "Noto Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
-      background: var(--bg);
+      background: radial-gradient(circle at top right, rgba(44, 196, 181, 0.16), transparent 45%),
+        radial-gradient(circle at 10% 20%, rgba(123, 109, 255, 0.16), transparent 42%),
+        linear-gradient(140deg, #05070f 0%, #0a0f1c 45%, #0b1424 100%);
       color: var(--text);
       overflow-x: hidden;
     }
 
     a { color: inherit; text-decoration: none; }
     img, video { display: block; }
+    ul { list-style-position: inside; }
 
     .wrap {
       width: min(100%, var(--max));
@@ -45,8 +49,8 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      background: rgba(11, 15, 26, 0.7);
-      backdrop-filter: blur(12px);
+      background: rgba(10, 14, 24, 0.45);
+      backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
@@ -80,30 +84,33 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      justify-content: flex-start;
     }
 
     .chip {
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 8px 14px;
       font-size: 14px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.08);
+      white-space: nowrap;
       transition: 0.2s ease;
     }
 
     .chip:hover {
       transform: translateY(-1px);
       color: var(--text);
-      border-color: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .hero {
-      margin-top: 18px;
+      margin-top: 12px;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 18px;
-      align-items: stretch;
+      gap: 28px;
+      align-items: center;
+      min-height: 100vh;
     }
 
     @media (max-width: 900px) {
@@ -112,19 +119,30 @@
 
     .card {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       max-width: 100%;
     }
 
     .bio {
-      padding: 20px;
+      padding: 26px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       justify-content: center;
-      min-height: 260px;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bio::before {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 160px;
+      background: radial-gradient(circle at 20% 20%, rgba(123, 109, 255, 0.18), transparent 65%);
+      pointer-events: none;
     }
 
     .kicker {
@@ -136,38 +154,31 @@
       gap: 8px;
     }
 
-    .kicker span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(34, 193, 195, 0.75);
-    }
-
     h1 {
       margin: 0;
-      font-size: clamp(24px, 3.2vw, 38px);
-      line-height: 1.25;
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.2;
     }
 
     .bio p {
       margin: 0;
       color: var(--muted);
-      font-size: 16px;
-      line-height: 1.85;
+      font-size: 17px;
+      line-height: 1.9;
     }
 
     .cta-row {
-      margin-top: 6px;
+      margin-top: 4px;
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
 
     .btn {
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.05);
-      padding: 10px 14px;
-      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 12px 18px;
+      border-radius: 999px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -183,23 +194,90 @@
 
     .btn:hover { transform: translateY(-1px); }
 
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #ffd36c;
+    }
+
+    .hero-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .hero-socials a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      transition: 0.2s ease;
+    }
+
+    .hero-socials a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-socials svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
     .profile {
-      padding: 16px;
+      padding: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
-      min-height: 260px;
+      min-height: 320px;
     }
 
-    .profile::before { content: none; }
+    .profile::before,
+    .profile::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 40px;
+      background: radial-gradient(circle at top, rgba(123, 109, 255, 0.25), transparent 70%);
+      filter: blur(2px);
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    .profile::before {
+      top: -30px;
+      inset-inline-end: -30px;
+    }
+
+    .profile::after {
+      bottom: -40px;
+      inset-inline-start: -20px;
+      background: radial-gradient(circle at top, rgba(38, 217, 196, 0.25), transparent 70%);
+    }
 
     .avatar {
-      width: min(260px, 70vw);
-      aspect-ratio: 1 / 1;
-      border-radius: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      width: min(320px, 70vw);
+      aspect-ratio: 4 / 5;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
       overflow: hidden;
       box-shadow: 0 22px 60px rgba(0, 0, 0, 0.4);
       position: relative;
@@ -517,25 +595,34 @@
       background: rgba(0, 0, 0, 0.25);
     }
 
+    #postersTrack .item-media img {
+      object-fit: contain;
+      background: rgba(12, 16, 28, 0.85);
+    }
+
     @media (max-width: 768px) {
       .wrap { padding: 16px 14px 48px; }
       .topbar-inner { padding: 10px 14px; }
-      .hero { gap: 14px; }
+      .hero { gap: 16px; min-height: auto; }
       .profile { order: -1; min-height: auto; padding: 12px; }
-      .bio { min-height: auto; padding: 16px; }
+      .bio { min-height: auto; padding: 18px; }
       .card { box-shadow: none; }
       .avatar {
-        width: min(220px, 72vw);
+        width: min(240px, 80vw);
         border-radius: 50%;
+        aspect-ratio: 1 / 1;
         margin: 0 auto;
       }
-      h1 { font-size: clamp(22px, 6vw, 30px); }
+      h1 { font-size: clamp(26px, 7vw, 34px); }
       .bio p { font-size: 15px; }
       .item { width: min(360px, 88vw); height: auto; }
       .item-media { aspect-ratio: 4 / 3; }
       .item-body { padding: 12px 12px 14px; }
       .carousel { padding: 10px; }
       .track { padding-inline: 0; }
+      nav { gap: 8px; }
+      .chip { font-size: 13px; padding: 6px 12px; }
+      .hero-socials { justify-content: center; }
     }
   </style>
 </head>
@@ -547,6 +634,7 @@
         <span id="brandName">علي الشيدي</span>
       </div>
       <nav>
+        <a class="chip" href="#about">نبذة</a>
         <a class="chip" href="#education">المؤهل العلمي</a>
         <a class="chip" href="#experience">الخبرات</a>
         <a class="chip" href="#skills">المهارات</a>
@@ -558,13 +646,41 @@
   </div>
 
   <main class="wrap">
-    <section class="hero">
+    <section class="hero" id="about">
       <div class="card bio">
-        <h1 id="heroTitle">مرحباً! أنا <span style="background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent;">علي الشيدي</span></h1>
+        <div class="rating-row">
+          <span>تقييم العملاء</span>
+          <span class="stars" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+          </span>
+          <span>4.9/5</span>
+        </div>
+        <h1 id="heroTitle">تصاميم إبداعية تحوّل الزوار إلى عملاء</h1>
         <p id="heroBio">أخصائي في الاتصال الجماهيري وآدابه، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة تسويق ومحتوى وتصميم، وأسعى لدور في الإعلام والتواصل المؤسسي.</p>
         <div class="cta-row">
-          <a class="btn primary" href="#works">شوف أعمالي</a>
-          <a class="btn" href="#social">معلومات التواصل</a>
+          <a class="btn primary" href="#works">استكشف أعمالي</a>
+          <a class="btn" href="#social">تواصل معي</a>
+        </div>
+        <div class="hero-socials">
+          <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm10 2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm-5 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 8.2zm0 1.8a3 3 0 1 0 3 3 3 3 0 0 0-3-3zm4.9-2.9a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24">
+              <path d="M6.94 8.5H4V20h2.94zM5.47 4a1.47 1.47 0 1 0 0 2.94A1.47 1.47 0 0 0 5.47 4zM20 13.2c0-3.1-1.65-4.54-3.86-4.54a3.4 3.4 0 0 0-3.08 1.7v-1.5H10.2V20h2.94v-6c0-1.58.3-3.1 2.26-3.1 1.93 0 1.96 1.8 1.96 3.2V20H20z"/>
+            </svg>
+          </a>
+          <a href="mailto:alialsheidi@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/>
+            </svg>
+          </a>
         </div>
       </div>
       <div class="card profile">
@@ -706,7 +822,7 @@
       </div>
     </section>
 
-    <footer>© <span id="year"></span> — علي الشيدي - كل الحقوق محفوظة</footer>
+    <footer>© 2026 — علي الشيدي — كل الحقوق محفوظة</footer>
   </main>
 
   <div class="modal" id="modal" role="dialog" aria-modal="true">
@@ -775,8 +891,6 @@
     ];
 
     document.getElementById("brandName").textContent = "علي الشيدي";
-    document.getElementById("heroTitle").innerHTML =
-      `مرحباً! أنا <span style="background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent;">${profile.name}</span>`;
     document.getElementById("heroBio").textContent = profile.bio;
     document.getElementById("profileBadge").textContent = profile.badge;
     document.getElementById("profileImg").src = profile.image;
@@ -907,8 +1021,6 @@
       `;
       socialGrid.appendChild(link);
     });
-
-    document.getElementById("year").textContent = new Date().getFullYear();
 
     function enableDragScroll(el) {
       let isDown = false;
