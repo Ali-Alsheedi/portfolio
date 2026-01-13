@@ -279,25 +279,39 @@
       flex: 0 0 auto;
       width: 320px;
       max-width: 78vw;
-      border-radius: 16px;
+      border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      background: var(--card);
+      background: linear-gradient(180deg, rgba(18, 22, 36, 0.92), rgba(12, 14, 26, 0.92));
       overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
     }
 
     .item:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.45);
     }
 
     .item-media {
       width: 100%;
-      aspect-ratio: 16 / 10;
-      background: var(--card);
+      aspect-ratio: 4 / 3;
+      background: #0e1220;
       position: relative;
       overflow: hidden;
-      border-radius: inherit;
+    }
+
+    .item-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 12, 20, 0.05) 0%, rgba(10, 12, 20, 0.7) 100%);
+      opacity: 0.9;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
     }
 
     .item-media img,
@@ -310,13 +324,26 @@
       margin: 0;
       padding: 0;
       display: block;
+      transform: scale(1);
+      transition: transform 0.35s ease;
+    }
+
+    .item:hover .item-media img,
+    .item:hover .item-media video {
+      transform: scale(1.04);
+    }
+
+    .item:hover .item-media::after {
+      opacity: 1;
     }
 
     .item-body {
-      padding: 12px 12px 14px;
+      padding: 14px 14px 16px;
       display: flex;
       flex-direction: column;
       gap: 6px;
+      background: linear-gradient(180deg, rgba(15, 18, 30, 0.92), rgba(9, 11, 20, 0.95));
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .item-title {
@@ -330,6 +357,19 @@
       font-size: 13px;
       color: var(--muted);
       line-height: 1.7;
+    }
+
+    .item--text {
+      width: 100%;
+      max-width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: none;
+    }
+
+    .item--text .item-body {
+      background: transparent;
+      border-top: none;
+      padding: 12px 14px 14px;
     }
 
     .hint {
@@ -493,7 +533,7 @@
       .bio p { font-size: 15px; }
       .item { width: min(360px, 88vw); height: auto; }
       .item-media { aspect-ratio: 4 / 3; }
-      .item-body { padding: 10px 10px 12px; }
+      .item-body { padding: 12px 12px 14px; }
       .carousel { padding: 10px; }
       .track { padding-inline: 0; }
     }
@@ -558,19 +598,19 @@
       </div>
       <div class="card" style="padding: 16px;">
         <div style="display: grid; gap: 12px;">
-          <div class="item" style="width: 100%; max-width: 100%;">
+          <div class="item item--text">
             <div class="item-body">
               <h4 class="item-title">عضو فريق الحملة الطلابية — الإعلام والتسويق | جامعة التقنية والعلوم التطبيقية بصور (مارس 2025 – يونيو 2025)</h4>
               <p class="item-desc">مهام: التسويق الميداني، التسويق الإلكتروني وإدارة المحتوى، تنسيق الفعاليات، إعداد التصاميم.</p>
             </div>
           </div>
-          <div class="item" style="width: 100%; max-width: 100%;">
+          <div class="item item--text">
             <div class="item-body">
               <h4 class="item-title">نائب مدير التسويق — ورشة مهاد (MHAD) للأثاث (3 أشهر)</h4>
               <p class="item-desc">مهام: تنسيق الحملات، إدارة المحتوى، الإلقاء، تصوير، تصميم جرافيكي، مونتاج.</p>
             </div>
           </div>
-          <div class="item" style="width: 100%; max-width: 100%;">
+          <div class="item item--text">
             <div class="item-body">
               <h4 class="item-title">متدرب علاقات عامة — إداري وموظف استقبال | بلدية صحم (8 يوليو 2024 – 15 أغسطس 2024)</h4>
               <p class="item-desc">مهام: صياغة رسائل رسمية، تنظيم وثائق، الرد على الاستفسارات، إعداد تقارير داخلية، دعم التواصل المؤسسي.</p>
@@ -743,7 +783,7 @@
 
     function makeImageCard({ title, desc, img }, { clickToZoom = true } = {}) {
       const card = document.createElement("div");
-      card.className = "item";
+      card.className = "item portfolio-card";
       card.innerHTML = `
         <div class="item-media">
           <img src="${img}" alt="${title}" loading="lazy" />
@@ -768,7 +808,7 @@
 
     function makeVideoCard({ title, desc, src, poster }) {
       const card = document.createElement("div");
-      card.className = "item";
+      card.className = "item portfolio-card";
       card.innerHTML = `
         <div class="item-media">
           <video
