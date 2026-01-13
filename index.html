@@ -32,7 +32,7 @@
       color: var(--text);
       overflow-x: hidden;
       min-height: 100%;
-      padding-bottom: calc(24px + env(safe-area-inset-bottom));
+      padding-bottom: calc(18px + env(safe-area-inset-bottom));
     }
 
     a { color: inherit; text-decoration: none; }
@@ -44,6 +44,13 @@
       margin: 0 auto;
       min-height: 100%;
       padding: 20px 16px calc(24px + env(safe-area-inset-bottom));
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      padding: 0 16px;
+      margin: 0 auto;
     }
 
     .topbar {
@@ -350,6 +357,146 @@
       padding: 14px;
     }
 
+    .works-carousel {
+      padding: 16px;
+    }
+
+    .carousel-3d {
+      position: relative;
+      margin-top: 12px;
+      padding: 12px 8px 6px;
+      perspective: 1200px;
+    }
+
+    .carousel-3d .carousel-track {
+      position: relative;
+      height: 360px;
+      display: grid;
+      place-items: center;
+      transform-style: preserve-3d;
+    }
+
+    .carousel-card {
+      position: absolute;
+      width: min(78vw, 420px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: linear-gradient(180deg, rgba(18, 22, 36, 0.95), rgba(12, 14, 26, 0.98));
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transform-style: preserve-3d;
+      opacity: 0;
+      filter: blur(2px);
+      transition: transform 0.45s ease, opacity 0.45s ease, filter 0.45s ease;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .carousel-card .media {
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 18px;
+      margin: 12px 12px 0;
+      position: relative;
+    }
+
+    .carousel-card .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-card--poster .media {
+      aspect-ratio: 3 / 4;
+    }
+
+    .carousel-card .info {
+      padding: 12px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .carousel-card .title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .carousel-card .desc {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .carousel-card.is-active {
+      transform: translateX(0) translateZ(120px) scale(1.02);
+      opacity: 1;
+      filter: none;
+      z-index: 4;
+    }
+
+    .carousel-card.is-left {
+      transform: translateX(calc(var(--carousel-shift, 240px) * -1)) translateZ(0) rotateY(var(--carousel-tilt, 18deg)) scale(0.92);
+      opacity: 0.75;
+      filter: none;
+      z-index: 3;
+    }
+
+    .carousel-card.is-right {
+      transform: translateX(var(--carousel-shift, 240px)) translateZ(0) rotateY(calc(var(--carousel-tilt, 18deg) * -1)) scale(0.92);
+      opacity: 0.75;
+      filter: none;
+      z-index: 3;
+    }
+
+    .carousel-card.is-far-left {
+      transform: translateX(calc(var(--carousel-far-shift, 440px) * -1)) translateZ(-40px) rotateY(calc(var(--carousel-tilt, 18deg) * 1.4)) scale(0.85);
+      opacity: 0.45;
+      filter: blur(1.5px);
+      z-index: 1;
+    }
+
+    .carousel-card.is-far-right {
+      transform: translateX(var(--carousel-far-shift, 440px)) translateZ(-40px) rotateY(calc(var(--carousel-tilt, 18deg) * -1.4)) scale(0.85);
+      opacity: 0.45;
+      filter: blur(1.5px);
+      z-index: 1;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(9, 12, 22, 0.7);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+      z-index: 6;
+    }
+
+    .carousel-arrow:hover {
+      transform: translateY(-50%) scale(1.04);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .carousel-arrow.prev {
+      inset-inline-start: 8px;
+    }
+
+    .carousel-arrow.next {
+      inset-inline-end: 8px;
+    }
+
     .track {
       display: flex;
       gap: 12px;
@@ -644,6 +791,12 @@
       .item-body { padding: 12px 12px 14px; }
       .carousel { padding: 10px; }
       .track { padding-inline: 0; }
+      .carousel-3d {
+        --carousel-shift: 160px;
+        --carousel-far-shift: 280px;
+        --carousel-tilt: 10deg;
+      }
+      .carousel-3d .carousel-track { height: 320px; }
       nav { gap: 8px; }
       .chip { font-size: 13px; padding: 6px 12px; }
       .hero-socials { justify-content: center; }
@@ -666,7 +819,7 @@
     </div>
   </div>
 
-  <main class="wrap">
+  <main class="wrap container">
     <section class="hero" id="about">
       <div class="card bio">
         <span class="kicker">مرحبا، هذا ملف أعمالي</span>
@@ -804,26 +957,39 @@
         </div>
       </div>
 
-      <div class="card carousel" style="margin-top: 10px;">
+      <div class="card works-carousel" style="margin-top: 10px;">
         <div class="section-head" style="margin: 0 0 8px;">
-          <h3 class="section-title" style="font-size: 18px;">تصوير</h3>
-          <p class="section-sub" style="margin-top: 4px;">مختارات من أعمال التصوير.</p>
+          <div>
+            <h3 class="section-title" style="font-size: 18px;">تصويري</h3>
+            <p class="section-sub" style="margin-top: 4px;">مختارات من أعمال التصوير.</p>
+          </div>
         </div>
-        <div class="track" data-dragscroll id="photosTrack" aria-label="تصويري"></div>
+        <div class="carousel-3d" id="photosCarousel" aria-label="تصويري">
+          <button class="carousel-arrow prev" type="button" data-direction="prev" aria-label="السابق">❯</button>
+          <div class="carousel-track"></div>
+          <button class="carousel-arrow next" type="button" data-direction="next" aria-label="التالي">❮</button>
+        </div>
       </div>
 
-      <div class="card carousel" style="margin-top: 14px;">
+      <div class="card works-carousel" style="margin-top: 14px;">
         <div class="section-head" style="margin: 0 0 8px;">
-          <h3 class="section-title" style="font-size: 18px;">بوسترات</h3>
+          <div>
+            <h3 class="section-title" style="font-size: 18px;">بوسترات</h3>
+            <p class="section-sub" style="margin-top: 4px;">بوسترات تسويقية وحملات.</p>
+          </div>
         </div>
-        <div class="track" data-dragscroll id="postersTrack" aria-label="بوسترات"></div>
+        <div class="carousel-3d" id="postersCarousel" aria-label="بوسترات">
+          <button class="carousel-arrow prev" type="button" data-direction="prev" aria-label="السابق">❯</button>
+          <div class="carousel-track"></div>
+          <button class="carousel-arrow next" type="button" data-direction="next" aria-label="التالي">❮</button>
+        </div>
       </div>
 
       <div class="card carousel" style="margin-top: 14px;">
         <div class="section-head" style="margin: 0 0 8px;">
           <h3 class="section-title" style="font-size: 18px;">فيديوات</h3>
         </div>
-        <div class="track" data-dragscroll id="videosTrack" aria-label="فيديوات"></div>
+        <div class="track" id="videosTrack" aria-label="فيديوات"></div>
       </div>
     </section>
 
@@ -864,9 +1030,32 @@
       image: "assets/img/profile.jpg"
     };
 
-    const PHOTOS_API_URL = "https://api.github.com/repos/Ali-Alsheedi/portfolio/contents/assets/img/photos?ref=main";
-    const POSTERS_API_URL = "https://api.github.com/repos/Ali-Alsheedi/portfolio/contents/assets/img/posters?ref=main";
-    const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp"]);
+    const photoFiles = [
+      "photo-04.jpeg",
+      "photo-05.jpeg",
+      "photo-06.jpeg",
+      "photo-07.jpeg",
+      "photo-08.jpeg",
+      "photo-09.jpg",
+      "photo-10.jpg",
+      "photo-11.jpg",
+      "photo-12.jpg",
+      "photo-13.jpg",
+      "khanjar-01.jpg",
+      "khanjar-02.jpg",
+      "khanjar-03.jpg",
+      "khanjar-04.jpg"
+    ];
+
+    const posterFiles = [
+      "poster-01.jpg",
+      "poster-02.jpg",
+      "poster-03.jpg",
+      "poster-04.png",
+      "poster-05.jpeg",
+      "poster-06.jpeg",
+      "poster-07.jpeg"
+    ];
 
     const videos = [
       {
@@ -889,17 +1078,16 @@
     document.getElementById("profileBadge").textContent = profile.badge;
     document.getElementById("profileImg").src = profile.image;
 
-    function makeImageCard({ title, desc, img }, { clickToZoom = true, variant = "" } = {}) {
-      const card = document.createElement("div");
-      card.className = `item portfolio-card ${variant}`.trim();
-      const descMarkup = desc ? `<p class="item-desc">${desc}</p>` : "";
+    function makeCarouselCard({ title, desc, img }, { clickToZoom = true, variant = "" } = {}) {
+      const card = document.createElement("article");
+      card.className = `carousel-card ${variant}`.trim();
       card.innerHTML = `
-        <div class="item-media">
+        <div class="media">
           <img src="${img}" alt="${title}" loading="lazy" />
         </div>
-        <div class="item-body">
-          <h4 class="item-title">${title}</h4>
-          ${descMarkup}
+        <div class="info">
+          <h4 class="title">${title}</h4>
+          <p class="desc">${desc || ""}</p>
         </div>
       `;
       const imageEl = card.querySelector("img");
@@ -939,48 +1127,165 @@
       return card;
     }
 
-    function renderTrack(trackId, items, factory) {
-      const track = document.getElementById(trackId);
-      track.innerHTML = "";
-      items.forEach((item) => track.appendChild(factory(item)));
-    }
-
-    function isImageFile(name) {
-      const ext = name.split(".").pop().toLowerCase();
-      return IMAGE_EXTENSIONS.has(ext);
-    }
-
     function formatTitleFromName(name) {
       return name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
     }
 
-    async function fetchGallery(apiUrl) {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        console.warn("Failed to load gallery", apiUrl);
-        return [];
-      }
-      const data = await response.json();
-      return data
-        .filter((item) => item.type === "file" && isImageFile(item.name))
-        .sort((a, b) => a.name.localeCompare(b.name, "en"))
-        .map((item) => ({
-          title: formatTitleFromName(item.name),
-          desc: "",
-          img: item.download_url || item.html_url
-        }));
+    function buildItems(files, basePath, descFallback) {
+      return files.map((file) => ({
+        title: formatTitleFromName(file),
+        desc: descFallback,
+        img: `${basePath}/${file}`
+      }));
     }
 
-    async function renderWorks() {
-      const [photos, posters] = await Promise.all([
-        fetchGallery(PHOTOS_API_URL),
-        fetchGallery(POSTERS_API_URL)
-      ]);
-      renderTrack("photosTrack", photos, (item) => makeImageCard(item, { clickToZoom: true }));
-      renderTrack("postersTrack", posters, (item) => makeImageCard(item, { clickToZoom: true, variant: "item--poster" }));
+    function getRelativeIndex(index, activeIndex, total) {
+      let diff = index - activeIndex;
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+      return diff;
+    }
+
+    function initCarousel(rootEl, items, { variant = "", clickToZoom = true } = {}) {
+      if (!rootEl || !items.length) return null;
+      const track = rootEl.querySelector(".carousel-track");
+      const prevBtn = rootEl.querySelector("[data-direction='prev']");
+      const nextBtn = rootEl.querySelector("[data-direction='next']");
+      track.innerHTML = "";
+
+      const cards = items.map((item) => {
+        const card = makeCarouselCard(item, { clickToZoom, variant });
+        track.appendChild(card);
+        return card;
+      });
+
+      let currentIndex = 0;
+      const total = cards.length;
+      let dragStartX = 0;
+      let dragDelta = 0;
+      let isDragging = false;
+      let hasMoved = false;
+
+      const updateClasses = () => {
+        cards.forEach((card, index) => {
+          const diff = getRelativeIndex(index, currentIndex, total);
+          card.classList.remove("is-active", "is-left", "is-right", "is-far-left", "is-far-right");
+          if (diff === 0) card.classList.add("is-active");
+          if (diff === -1) card.classList.add("is-left");
+          if (diff === 1) card.classList.add("is-right");
+          if (diff === -2) card.classList.add("is-far-left");
+          if (diff === 2) card.classList.add("is-far-right");
+        });
+      };
+
+      const goNext = () => {
+        currentIndex = (currentIndex + 1) % total;
+        updateClasses();
+      };
+
+      const goPrev = () => {
+        currentIndex = (currentIndex - 1 + total) % total;
+        updateClasses();
+      };
+
+      updateClasses();
+
+      prevBtn?.addEventListener("click", goPrev);
+      nextBtn?.addEventListener("click", goNext);
+
+      track.addEventListener("mousedown", (event) => {
+        isDragging = true;
+        hasMoved = false;
+        dragStartX = event.clientX;
+        dragDelta = 0;
+      });
+
+      window.addEventListener("mousemove", (event) => {
+        if (!isDragging) return;
+        dragDelta = event.clientX - dragStartX;
+        if (Math.abs(dragDelta) > 8) hasMoved = true;
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        if (Math.abs(dragDelta) > 40) {
+          if (dragDelta > 0) {
+            goPrev();
+          } else {
+            goNext();
+          }
+        }
+      });
+
+      track.addEventListener("touchstart", (event) => {
+        const touch = event.touches[0];
+        hasMoved = false;
+        dragStartX = touch.clientX;
+        dragDelta = 0;
+      }, { passive: true });
+
+      track.addEventListener("touchmove", (event) => {
+        const touch = event.touches[0];
+        dragDelta = touch.clientX - dragStartX;
+        if (Math.abs(dragDelta) > 8) hasMoved = true;
+      }, { passive: true });
+
+      track.addEventListener("touchend", () => {
+        if (Math.abs(dragDelta) > 40) {
+          if (dragDelta > 0) {
+            goPrev();
+          } else {
+            goNext();
+          }
+        }
+      });
+
+      track.addEventListener("click", (event) => {
+        if (hasMoved) {
+          event.preventDefault();
+          event.stopPropagation();
+          hasMoved = false;
+        }
+      }, true);
+
+      return {
+        rootEl,
+        goNext,
+        goPrev,
+        getVisibilityScore() {
+          const rect = rootEl.getBoundingClientRect();
+          const visible = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+          return Math.max(0, visible);
+        }
+      };
+    }
+
+    function renderWorks() {
+      const photos = buildItems(photoFiles, "assets/img/photos", "تصوير فوتوغرافي");
+      const posters = buildItems(posterFiles, "assets/img/posters", "تصميم بوستر");
+
+      const carousels = [];
+      carousels.push(initCarousel(document.getElementById("photosCarousel"), photos));
+      carousels.push(initCarousel(document.getElementById("postersCarousel"), posters, { variant: "carousel-card--poster" }));
+
       if (videos.length) {
-        renderTrack("videosTrack", videos, makeVideoCard);
+        const track = document.getElementById("videosTrack");
+        track.innerHTML = "";
+        videos.forEach((video) => track.appendChild(makeVideoCard(video)));
       }
+
+      window.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+        const visibleCarousels = carousels.filter((carousel) => carousel && carousel.getVisibilityScore() > 0);
+        if (!visibleCarousels.length) return;
+        const activeCarousel = visibleCarousels.sort((a, b) => b.getVisibilityScore() - a.getVisibilityScore())[0];
+        if (event.key === "ArrowLeft") {
+          activeCarousel.goPrev();
+        } else {
+          activeCarousel.goNext();
+        }
+      });
     }
 
     renderWorks();
@@ -1019,41 +1324,6 @@
       `;
       socialGrid.appendChild(link);
     });
-
-    function enableDragScroll(el) {
-      let isDown = false;
-      let startX = 0;
-      let scrollLeft = 0;
-      let moved = false;
-
-      el.addEventListener("mousedown", (event) => {
-        isDown = true;
-        moved = false;
-        startX = event.pageX - el.offsetLeft;
-        scrollLeft = el.scrollLeft;
-      });
-
-      el.addEventListener("mouseleave", () => { isDown = false; });
-      el.addEventListener("mouseup", () => { isDown = false; });
-
-      el.addEventListener("mousemove", (event) => {
-        if (!isDown) return;
-        event.preventDefault();
-        const x = event.pageX - el.offsetLeft;
-        const walk = (x - startX) * 1.1;
-        if (Math.abs(walk) > 6) moved = true;
-        el.scrollLeft = scrollLeft - walk;
-      });
-
-      el.addEventListener("click", (event) => {
-        if (moved) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-      }, true);
-    }
-
-    document.querySelectorAll("[data-dragscroll]").forEach(enableDragScroll);
 
     const modal = document.getElementById("modal");
     const modalImg = document.getElementById("modalImg");
