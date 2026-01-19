@@ -490,6 +490,14 @@
       background: rgba(255, 255, 255, 0.08);
     }
 
+    .carousel-card.is-broken::after {
+      content: "Image not found";
+      display: grid;
+      place-items: center;
+      height: 100%;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
     .carousel-card--poster .media {
       height: 100%;
     }
@@ -1094,7 +1102,7 @@
       <div class="card profile">
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="avatar">
-          <img id="profileImg" src="assets/img/profile.jpg" alt="صورتي الشخصية" loading="lazy" />
+          <img id="profileImg" src="profile.jpg" alt="صورتي الشخصية" loading="lazy" />
           <div class="badge" id="profileBadge"></div>
         </div>
       </div>
@@ -1317,6 +1325,11 @@
           <img src="${img}" alt="${title}" loading="lazy" />
         </div>
       `;
+      const imageEl = card.querySelector("img");
+      imageEl?.addEventListener("error", () => {
+        card.classList.add("is-broken");
+        imageEl.style.display = "none";
+      }, { once: true });
       if (clickToZoom) {
         card.style.cursor = "pointer";
         card.addEventListener("click", () => openModal(title, img));
