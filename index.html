@@ -1138,6 +1138,18 @@
     @supports (overflow: clip){
       body{ overflow-x: clip; }
     }
+
+    /* Force scrollbar to the right (desktop) while keeping Arabic RTL layout */
+    @media (min-width: 901px){
+      html { direction: ltr; }   /* scrollbar on the right */
+      body { direction: rtl; }   /* content stays RTL */
+    }
+
+    /* Safety: no horizontal overflow */
+    html, body { overflow-x: hidden; max-width: 100%; }
+    @supports (overflow: clip){
+      body{ overflow-x: clip; }
+    }
   </style>
 </head>
 <body>
