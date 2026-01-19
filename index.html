@@ -1058,6 +1058,62 @@
 
     /* prevent any 100vw from creating extra width on desktop */
     *{ max-width:100%; }
+
+    /* Kill horizontal scroll caused by 3D transforms */
+    html, body{
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden;   /* fallback */
+      background:#070A12;
+    }
+    @supports (overflow: clip){
+      html, body{ overflow-x: clip; }
+    }
+
+    /* Contain 3D carousels so they cannot expand page width */
+    .carousel-shell,
+    .carousel-viewport{
+      overflow: hidden;
+      contain: layout paint;
+    }
+    .carousel-stage{
+      overflow: visible;
+    }
+
+    /* Ensure no element can force extra width */
+    .wrap, .container, main, section{
+      max-width:100%;
+    }
+
+    /* Desktop layout (>= 900px): show proper 2-column hero like computer */
+    @media (min-width: 901px){
+      .hero{
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+        min-height: 80vh;
+        text-align: start;
+      }
+      .bio{
+        align-items: flex-start;
+      }
+      .cta-row, .hero-socials{
+        justify-content: flex-start;
+      }
+    }
+
+    /* Mobile layout (<= 900px): use phone version */
+    @media (max-width: 900px){
+      .hero{
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .bio{
+        align-items: center;
+      }
+      .cta-row, .hero-socials{
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
