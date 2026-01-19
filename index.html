@@ -1114,6 +1114,30 @@
         justify-content: center;
       }
     }
+
+    /* Desktop: hide vertical scrollbar (RTL shows it on the left) but keep scrolling */
+    @media (min-width: 901px){
+      html, body{
+        overflow-x: hidden;
+        scrollbar-width: none;          /* Firefox */
+        -ms-overflow-style: none;       /* IE/old Edge */
+      }
+      body::-webkit-scrollbar{
+        width: 0;
+        height: 0;                      /* Chrome/Safari */
+      }
+    }
+
+    /* Extra safety: prevent any horizontal overflow */
+    html, body{
+      max-width: 100%;
+    }
+    body{
+      overflow-x: hidden;
+    }
+    @supports (overflow: clip){
+      body{ overflow-x: clip; }
+    }
   </style>
 </head>
 <body>
