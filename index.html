@@ -456,9 +456,10 @@
       top: 50%;
       left: 50%;
       width: min(78vw, 420px);
-      border-radius: 20px;
+      aspect-ratio: 4 / 3;
+      border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.14);
-      background: linear-gradient(180deg, rgba(18, 22, 36, 0.95), rgba(12, 14, 26, 0.98));
+      background: rgba(12, 15, 24, 0.82);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -471,26 +472,32 @@
     }
 
     .carousel-card .media {
-      aspect-ratio: 16 / 9;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
-      border-radius: 18px;
-      margin: 12px 12px 0;
+      border-radius: 0;
+      margin: 0;
       position: relative;
     }
 
     .carousel-card .media img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
+      object-position: center;
       display: block;
     }
 
     .carousel-card--poster .media {
-      aspect-ratio: 3 / 4;
+      height: 100%;
+    }
+
+    .carousel-card--poster {
+      aspect-ratio: 9 / 16;
     }
 
     .poster-card {
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 9 / 16;
       width: min(520px, 78vw);
       max-width: 620px;
       border-radius: 22px;
@@ -513,7 +520,7 @@
     .poster-card img {
       width: 100%;
       height: 100%;
-      object-fit: contain !important;
+      object-fit: cover !important;
       object-position: center;
       display: block;
     }
@@ -526,24 +533,10 @@
       background: linear-gradient(180deg, rgba(10, 12, 20, 0) 0%, rgba(10, 12, 20, 0.7) 100%);
     }
 
-    .carousel-card .info {
-      padding: 12px 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .carousel-card .title {
-      margin: 0;
-      font-size: 15px;
-      font-weight: 800;
-    }
-
+    .carousel-card .info,
+    .carousel-card .title,
     .carousel-card .desc {
-      margin: 0;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.7;
+      display: none;
     }
 
     .carousel-card.is-active {
@@ -684,7 +677,7 @@
     .item-media video {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
       background: transparent;
       margin: 0;
@@ -890,7 +883,7 @@
     }
 
     .item--poster .item-media img {
-      object-fit: contain;
+      object-fit: cover;
       background: transparent;
     }
 
@@ -971,8 +964,11 @@
       .item-media { aspect-ratio: 4 / 3; }
       .item-body { padding: 12px 12px 14px; }
       .carousel { padding: 10px; }
+      .carousel-shell { padding: 10px; }
+      .carousel-card { width: min(86vw, 360px); }
+      #postersCarousel .carousel-viewport { height: clamp(380px, 96vw, 640px); }
       .track { padding-inline: 0; }
-      .poster-card { width: 86vw; aspect-ratio: 3 / 4; }
+      .poster-card { width: 86vw; aspect-ratio: 9 / 16; }
       .carousel-card {
         --carousel-shift: 150px;
         --carousel-far-shift: 260px;
@@ -1317,10 +1313,6 @@
       card.innerHTML = `
         <div class="media media-frame">
           <img src="${img}" alt="${title}" loading="lazy" />
-        </div>
-        <div class="info">
-          <h4 class="title">${title}</h4>
-          <p class="desc">${desc || ""}</p>
         </div>
       `;
       const imageEl = card.querySelector("img");
