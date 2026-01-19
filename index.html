@@ -506,43 +506,31 @@
       aspect-ratio: 9 / 16;
     }
 
-    .poster-card {
-      aspect-ratio: 9 / 16;
-      width: min(520px, 78vw);
-      max-width: 620px;
-      border-radius: 22px;
-      overflow: hidden;
-      background: rgba(10, 12, 18, 0.55);
-      backdrop-filter: blur(10px);
-      display: grid;
-      place-items: center;
-      position: relative;
+    /* Posters 3D carousel: correct portrait sizing */
+    #postersCarousel .carousel-viewport{
+      height: clamp(460px, 125vw, 720px);
     }
 
-    .poster-card .media {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      border-radius: 0;
+    #postersCarousel .carousel-card{
+      width: min(78vw, 380px);
+      height: clamp(460px, 125vw, 720px);
+      aspect-ratio: auto; /* use explicit height */
     }
 
-    .poster-card img {
+    #postersCarousel .carousel-card .media{
       width: 100%;
       height: 100%;
-      object-fit: contain !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.25);
+    }
+
+    #postersCarousel .carousel-card .media img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain !important; /* show full poster */
       object-position: center;
-      display: block;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .poster-card .info {
-      position: absolute;
-      inset-inline: 0;
-      bottom: 0;
-      padding: 12px 14px 16px;
-      background: linear-gradient(180deg, rgba(10, 12, 20, 0) 0%, rgba(10, 12, 20, 0.7) 100%);
     }
 
     .carousel-card .info,
@@ -983,11 +971,10 @@
       .carousel-card { width: min(88vw, 380px); }
       #postersCarousel .carousel-viewport { height: clamp(380px, 96vw, 640px); }
       .track { padding-inline: 0; }
-      .poster-card { width: min(88vw, 380px); aspect-ratio: 9 / 16; }
       .photo-card { width: min(88vw, 380px); aspect-ratio: 4 / 3; }
       .carousel-card {
-        --carousel-shift: 150px;
-        --carousel-far-shift: 260px;
+        --carousel-shift: 110px;
+        --carousel-far-shift: 190px;
         --carousel-tilt: 12deg;
         --carousel-far-tilt: 18deg;
       }
