@@ -1150,6 +1150,42 @@
     @supports (overflow: clip){
       body{ overflow-x: clip; }
     }
+
+    /* ---- FIX: kill horizontal overflow caused by 3D transforms ---- */
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    main, .wrap, .container, section, .topbar, .topbar-inner {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Ensure carousels cannot expand page width */
+    .carousel-shell,
+    .carousel-viewport {
+      overflow: hidden !important;
+      max-width: 100%;
+    }
+
+    .carousel-stage {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* Safety: 3D cards should never exceed viewport width */
+    .carousel-card {
+      max-width: calc(100vw - 48px);
+    }
+
+    /* Desktop: make 3D shifts smaller so cards don't push layout wider */
+    @media (min-width: 901px) {
+      .carousel-card {
+        --carousel-shift: 180px;
+        --carousel-far-shift: 300px;
+      }
+    }
   </style>
 </head>
 <body>
