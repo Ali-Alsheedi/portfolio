@@ -491,7 +491,7 @@
     }
 
     .carousel-card.is-broken::after {
-      content: "Image not found";
+      content: "";
       display: grid;
       place-items: center;
       height: 100%;
@@ -1326,10 +1326,7 @@
         </div>
       `;
       const imageEl = card.querySelector("img");
-      imageEl?.addEventListener("error", () => {
-        card.classList.add("is-broken");
-        imageEl.style.display = "none";
-      }, { once: true });
+      imageEl.addEventListener("error", () => { imageEl.style.display="none"; card.classList.add("is-broken"); }, { once: true });
       if (clickToZoom) {
         card.style.cursor = "pointer";
         card.addEventListener("click", () => openModal(title, img));
