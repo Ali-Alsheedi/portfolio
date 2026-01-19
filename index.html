@@ -985,6 +985,49 @@
       .cta-row { justify-content: center; }
       section { margin-top: 30px; }
     }
+
+    html,body{background:#070A12;color:#EAF0FF;overflow-x:hidden;}
+    /* Make sure decorative overlay never covers content */
+    .bg-glow, .glow, .ambient, .parallax-glow,
+    body::before, body::after,
+    main::before, main::after,
+    section::before, section::after{
+      pointer-events:none !important;
+    }
+
+    /* Safe layering utility */
+    .layer-wrap{position:relative;isolation:isolate;}
+    .layer-wrap > .content{position:relative;z-index:1;}
+    .layer-wrap::before{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      z-index:0;
+      background:
+        radial-gradient(60% 40% at 20% 20%, rgba(124,58,237,.22), transparent 60%),
+        radial-gradient(55% 45% at 85% 25%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(55% 55% at 40% 85%, rgba(59,130,246,.14), transparent 65%);
+      filter: blur(22px);
+      opacity:.65;
+    }
+
+    /* IMPORTANT: never blur/fade parent containers */
+    .hero, .section, .card, .container, main, header{
+      filter:none !important;
+      opacity:1 !important;
+    }
+
+    /* Mobile: reduce intensity (this is the real fix for your screenshot) */
+    @media (max-width:768px){
+      .layer-wrap::before{
+        filter: blur(16px);
+        opacity:.22; /* prevent white wash-out */
+      }
+      /* If any overlay is still strong, force it off */
+      body::before, body::after, main::before, main::after{
+        opacity:.18 !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1004,7 +1047,8 @@
   </div>
 
   <main class="wrap container">
-    <section class="hero" id="about">
+    <section class="hero layer-wrap" id="about">
+      <div class="content">
       <div class="card bio">
         <span class="kicker">مرحبا، هذا ملف أعمالي</span>
         <div class="rating-row">
@@ -1049,6 +1093,7 @@
           <img id="profileImg" src="assets/img/profile.jpg" alt="صورتي الشخصية" loading="lazy" />
           <div class="badge" id="profileBadge"></div>
         </div>
+      </div>
       </div>
     </section>
 
