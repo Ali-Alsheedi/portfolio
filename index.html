@@ -1802,18 +1802,20 @@
     const modalClose = document.getElementById("modalClose");
 
     function openModal(title, img) {
+      if (!modal || !modalImg || !modalTitle) return;
       modalTitle.textContent = title;
       modalImg.src = img;
       modal.classList.add("open");
     }
 
     function closeModal() {
+      if (!modal || !modalImg) return;
       modal.classList.remove("open");
       modalImg.src = "";
     }
 
-    modalClose.addEventListener("click", closeModal);
-    modal.addEventListener("click", (event) => {
+    modalClose?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (event) => {
       if (event.target === modal) closeModal();
     });
     window.addEventListener("keydown", (event) => {
