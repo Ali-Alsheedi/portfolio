@@ -608,6 +608,11 @@
       inset-inline-end: 8px;
     }
 
+    .carousel-shell { overflow: hidden; }
+    .carousel-viewport { overflow: hidden; }
+    .carousel-stage { width: 100%; overflow: visible; }
+    .carousel-card { will-change: transform; }
+
     .track {
       display: flex;
       gap: 12px;
@@ -1029,6 +1034,9 @@
     }
 
     .carousel-card.is-broken { outline: 2px solid rgba(255,80,80,.35); }
+
+    html, body { width: 100%; max-width: 100%; overflow-x: hidden !important; }
+    .wrap, .container, main, section { max-width: 100%; overflow-x: hidden; }
   </style>
 </head>
 <body>
