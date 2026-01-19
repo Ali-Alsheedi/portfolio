@@ -1281,10 +1281,14 @@
       role: "مصمم ومصور ومحرر فيديو",
       badge: "مصمم ومصور ومحرر فيديو",
       bio: "مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.",
-      image: `${BASE}/profile.jpg`
+      image: "assets/img/profile.jpg"
     };
 
     const photoFiles = [
+      "khanjar-01.jpg",
+      "khanjar-02.jpg",
+      "khanjar-03.jpg",
+      "khanjar-04.jpg",
       "photo-04.jpeg",
       "photo-05.jpeg",
       "photo-06.jpeg",
@@ -1294,11 +1298,7 @@
       "photo-10.jpg",
       "photo-11.jpg",
       "photo-12.jpg",
-      "photo-13.jpg",
-      "khanjar-01.jpg",
-      "khanjar-02.jpg",
-      "khanjar-03.jpg",
-      "khanjar-04.jpg"
+      "photo-13.jpg"
     ];
 
     const posterFiles = [
@@ -1338,7 +1338,7 @@
       imageEl.addEventListener("error", () => {
         card.classList.add("is-broken");
         imageEl.style.opacity = "0.2";
-        console.warn("Image failed:", imageEl.src);
+        console.warn("Image failed:", img);
       }, { once: true });
       if (clickToZoom) {
         card.style.cursor = "pointer";
@@ -1515,8 +1515,8 @@
     }
 
     function renderWorks() {
-      const photos = buildItems(photoFiles, `${BASE}/photos`, "تصوير فوتوغرافي");
-      const posters = buildItems(posterFiles, `${BASE}/posters`, "تصميم بوستر");
+      const photos = buildItems(photoFiles, "assets/img/photos", "تصوير فوتوغرافي");
+      const posters = buildItems(posterFiles, "assets/img/posters", "تصميم بوستر");
 
       const carousels = [];
       carousels.push(initCarousel(document.getElementById("photosCarousel"), photos, { variant: "photo-card" }));
