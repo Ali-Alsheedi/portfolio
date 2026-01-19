@@ -459,7 +459,8 @@
       aspect-ratio: 4 / 3;
       border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(12, 15, 24, 0.82);
+      background: rgba(10, 12, 18, 0.55);
+      backdrop-filter: blur(10px);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -483,9 +484,10 @@
     .carousel-card .media img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
       display: block;
+      background: rgba(0, 0, 0, 0.25);
     }
 
     .carousel-card--poster .media {
@@ -502,7 +504,8 @@
       max-width: 620px;
       border-radius: 22px;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(10, 12, 18, 0.55);
+      backdrop-filter: blur(10px);
       display: grid;
       place-items: center;
       position: relative;
@@ -520,9 +523,10 @@
     .poster-card img {
       width: 100%;
       height: 100%;
-      object-fit: cover !important;
+      object-fit: contain !important;
       object-position: center;
       display: block;
+      background: rgba(0, 0, 0, 0.25);
     }
 
     .poster-card .info {
@@ -677,9 +681,9 @@
     .item-media video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
-      background: transparent;
+      background: rgba(0, 0, 0, 0.25);
       margin: 0;
       padding: 0;
       display: block;
@@ -691,7 +695,7 @@
 
     .item:hover .item-media img,
     .item:hover .item-media video {
-      transform: scale(1.04);
+      transform: scale(1);
     }
 
     .item:hover .item-media::after {
@@ -883,8 +887,8 @@
     }
 
     .item--poster .item-media img {
-      object-fit: cover;
-      background: transparent;
+      object-fit: contain;
+      background: rgba(0, 0, 0, 0.25);
     }
 
     .media-frame {
@@ -946,6 +950,9 @@
     }
 
     @media (max-width: 768px) {
+      body { overflow-x: hidden; }
+      .container,
+      section { width: 100%; max-width: 100%; }
       .wrap { padding: 16px 14px 48px; }
       .topbar-inner { padding: 10px 14px; flex-wrap: wrap; justify-content: center; }
       .hero { gap: 16px; min-height: auto; text-align: center; }
@@ -965,10 +972,11 @@
       .item-body { padding: 12px 12px 14px; }
       .carousel { padding: 10px; }
       .carousel-shell { padding: 10px; }
-      .carousel-card { width: min(86vw, 360px); }
+      .carousel-card { width: min(88vw, 380px); }
       #postersCarousel .carousel-viewport { height: clamp(380px, 96vw, 640px); }
       .track { padding-inline: 0; }
-      .poster-card { width: 86vw; aspect-ratio: 9 / 16; }
+      .poster-card { width: min(88vw, 380px); aspect-ratio: 9 / 16; }
+      .photo-card { width: min(88vw, 380px); aspect-ratio: 4 / 3; }
       .carousel-card {
         --carousel-shift: 150px;
         --carousel-far-shift: 260px;
@@ -1301,12 +1309,6 @@
       { name: "العنوان", handle: "سلطنة عمان، محافظة شمال الباطنة، ولاية صحم", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، محافظة شمال الباطنة، ولاية صحم" }
     ];
 
-    document.getElementById("brandName").textContent = "علي الشيدي";
-    document.getElementById("heroRole").textContent = profile.role;
-    document.getElementById("heroBio").textContent = profile.bio;
-    document.getElementById("profileBadge").textContent = profile.badge;
-    document.getElementById("profileImg").src = profile.image;
-
     function makeCarouselCard({ title, desc, img }, { clickToZoom = true, variant = "" } = {}) {
       const card = document.createElement("article");
       card.className = `carousel-card ${variant}`.trim();
@@ -1500,7 +1502,7 @@
       const posters = buildItems(posterFiles, "assets/img/posters", "تصميم بوستر");
 
       const carousels = [];
-      carousels.push(initCarousel(document.getElementById("photosCarousel"), photos));
+      carousels.push(initCarousel(document.getElementById("photosCarousel"), photos, { variant: "photo-card" }));
       carousels.push(initCarousel(document.getElementById("postersCarousel"), posters, { variant: "carousel-card--poster poster-card" }));
 
       if (videos.length) {
@@ -1521,8 +1523,6 @@
         }
       });
     }
-
-    renderWorks();
 
     function attemptAutoplayVideos() {
       document.querySelectorAll("#videosTrack video").forEach((video) => {
@@ -1602,29 +1602,38 @@
       initTilt();
     }
 
-    const socialGrid = document.getElementById("socialGrid");
-    socialGrid.innerHTML = "";
-    socials.forEach((social) => {
-      const link = document.createElement("a");
-      link.className = "social";
-      link.href = social.url;
-      link.target = social.url.startsWith("mailto:") ? "_self" : "_blank";
-      link.rel = "noopener";
-      link.innerHTML = `
-        <div class="left">
-          <div class="icon">${social.icon}</div>
-          <div class="meta">
-            <div class="name">${social.name}</div>
-            <div class="handle">${social.handle}</div>
-          </div>
-        </div>
-        <div class="arrow">↗</div>
-      `;
-      socialGrid.appendChild(link);
-    });
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("brandName").textContent = "علي الشيدي";
+      document.getElementById("heroRole").textContent = profile.role;
+      document.getElementById("heroBio").textContent = profile.bio;
+      document.getElementById("profileBadge").textContent = profile.badge;
+      document.getElementById("profileImg").src = profile.image;
 
-    initMotion();
-    document.addEventListener("DOMContentLoaded", initMotion, { once: true });
+      renderWorks();
+
+      const socialGrid = document.getElementById("socialGrid");
+      socialGrid.innerHTML = "";
+      socials.forEach((social) => {
+        const link = document.createElement("a");
+        link.className = "social";
+        link.href = social.url;
+        link.target = social.url.startsWith("mailto:") ? "_self" : "_blank";
+        link.rel = "noopener";
+        link.innerHTML = `
+          <div class="left">
+            <div class="icon">${social.icon}</div>
+            <div class="meta">
+              <div class="name">${social.name}</div>
+              <div class="handle">${social.handle}</div>
+            </div>
+          </div>
+          <div class="arrow">↗</div>
+        `;
+        socialGrid.appendChild(link);
+      });
+
+      initMotion();
+    }, { once: true });
 
     const modal = document.getElementById("modal");
     const modalImg = document.getElementById("modalImg");
