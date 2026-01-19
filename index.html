@@ -1040,6 +1040,8 @@
         opacity:.18 !important;
       }
     }
+
+    .carousel-card.is-broken { outline: 2px solid rgba(255,80,80,.35); }
   </style>
 </head>
 <body>
@@ -1267,12 +1269,19 @@
   </div>
 
   <script>
+    const BASE = (() => {
+      // works on: local, custom domain, and username.github.io/<repo>/
+      const parts = location.pathname.split("/").filter(Boolean);
+      const repo = (location.hostname.endsWith("github.io") && parts.length) ? parts[0] : "";
+      return repo ? `/${repo}` : "";
+    })();
+
     const profile = {
       name: "علي الشيدي",
       role: "مصمم ومصور ومحرر فيديو",
       badge: "مصمم ومصور ومحرر فيديو",
       bio: "مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.",
-      image: "profile.jpg"
+      image: `${BASE}/profile.jpg`
     };
 
     const photoFiles = [
@@ -1306,8 +1315,8 @@
       {
         title: "فيديو 01",
         desc: "بانر لمنتجات ALVA",
-        src: "videos/video-1.mp4",
-        poster: "video-1.jpg"
+        src: `${BASE}/videos/video-1.mp4`,
+        poster: `${BASE}/video-1.jpg`
       }
     ];
 
@@ -1326,7 +1335,11 @@
         </div>
       `;
       const imageEl = card.querySelector("img");
-      imageEl.addEventListener("error", () => { imageEl.style.display="none"; card.classList.add("is-broken"); }, { once: true });
+      imageEl.addEventListener("error", () => {
+        card.classList.add("is-broken");
+        imageEl.style.opacity = "0.2";
+        console.warn("Image failed:", imageEl.src);
+      }, { once: true });
       if (clickToZoom) {
         card.style.cursor = "pointer";
         card.addEventListener("click", () => openModal(title, img));
@@ -1502,8 +1515,8 @@
     }
 
     function renderWorks() {
-      const photos = buildItems(photoFiles, "photos", "تصوير فوتوغرافي");
-      const posters = buildItems(posterFiles, "posters", "تصميم بوستر");
+      const photos = buildItems(photoFiles, `${BASE}/photos`, "تصوير فوتوغرافي");
+      const posters = buildItems(posterFiles, `${BASE}/posters`, "تصميم بوستر");
 
       const carousels = [];
       carousels.push(initCarousel(document.getElementById("photosCarousel"), photos, { variant: "photo-card" }));
