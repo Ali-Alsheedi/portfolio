@@ -1037,6 +1037,27 @@
 
     html, body { width: 100%; max-width: 100%; overflow-x: hidden !important; }
     .wrap, .container, main, section { max-width: 100%; overflow-x: hidden; }
+
+    html{
+      background:#070A12 !important;
+      overflow-x: clip !important;
+    }
+    body{
+      min-width:100%;
+      background:#070A12 !important;
+      overflow-x: clip !important;
+    }
+
+    /* hard containment for 3D carousels so transforms never create page width */
+    #photosCarousel, #postersCarousel,
+    #photosCarousel .carousel-shell, #postersCarousel .carousel-shell,
+    #photosCarousel .carousel-viewport, #postersCarousel .carousel-viewport{
+      overflow: clip !important;
+      contain: layout paint !important;
+    }
+
+    /* prevent any 100vw from creating extra width on desktop */
+    *{ max-width:100%; }
   </style>
 </head>
 <body>
