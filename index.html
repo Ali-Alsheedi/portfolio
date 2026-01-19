@@ -487,7 +487,7 @@
       object-fit: contain;
       object-position: center;
       display: block;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .carousel-card--poster .media {
@@ -526,7 +526,7 @@
       object-fit: contain !important;
       object-position: center;
       display: block;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .poster-card .info {
@@ -660,7 +660,7 @@
     .item-media {
       width: 100%;
       aspect-ratio: 4 / 3;
-      background: #0e1220;
+      background: rgba(255, 255, 255, 0.06);
       position: relative;
       overflow: hidden;
       display: grid;
@@ -683,7 +683,7 @@
       height: 100%;
       object-fit: contain;
       object-position: center;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(255, 255, 255, 0.08);
       margin: 0;
       padding: 0;
       display: block;
@@ -1264,7 +1264,7 @@
       role: "مصمم ومصور ومحرر فيديو",
       badge: "مصمم ومصور ومحرر فيديو",
       bio: "مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.",
-      image: "assets/img/profile.jpg"
+      image: "profile.jpg"
     };
 
     const photoFiles = [
@@ -1298,8 +1298,8 @@
       {
         title: "فيديو 01",
         desc: "بانر لمنتجات ALVA",
-        src: "assets/videos/video-1.mp4",
-        poster: "assets/img/video-1.jpg"
+        src: "videos/video-1.mp4",
+        poster: "video-1.jpg"
       }
     ];
 
@@ -1317,12 +1317,6 @@
           <img src="${img}" alt="${title}" loading="lazy" />
         </div>
       `;
-      const imageEl = card.querySelector("img");
-      if (imageEl) {
-        imageEl.addEventListener("error", () => {
-          card.remove();
-        }, { once: true });
-      }
       if (clickToZoom) {
         card.style.cursor = "pointer";
         card.addEventListener("click", () => openModal(title, img));
@@ -1498,8 +1492,8 @@
     }
 
     function renderWorks() {
-      const photos = buildItems(photoFiles, "assets/img/photos", "تصوير فوتوغرافي");
-      const posters = buildItems(posterFiles, "assets/img/posters", "تصميم بوستر");
+      const photos = buildItems(photoFiles, "photos", "تصوير فوتوغرافي");
+      const posters = buildItems(posterFiles, "posters", "تصميم بوستر");
 
       const carousels = [];
       carousels.push(initCarousel(document.getElementById("photosCarousel"), photos, { variant: "photo-card" }));
