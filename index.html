@@ -173,7 +173,7 @@
       max-width: 100%;
       transform-style: preserve-3d;
       perspective: 900px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     }
 
     .bio {
@@ -1193,6 +1193,142 @@
 
     html, body { direction: ltr; }
     .topbar, .wrap, footer { direction: rtl; }
+
+    @media (min-width: 992px) {
+      :root {
+        --max: 1240px;
+      }
+
+      body::before,
+      body::after {
+        filter: blur(8px);
+        opacity: 0.35;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 36px 24px 64px;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 28px;
+      }
+
+      .wrap > section,
+      .wrap > footer,
+      .wrap > div {
+        grid-column: 1 / -1;
+      }
+
+      .topbar {
+        background: rgba(9, 12, 22, 0.7);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(10px);
+      }
+
+      .topbar-inner {
+        width: min(100%, var(--max));
+        padding: 16px 24px;
+      }
+
+      nav { gap: 12px; }
+
+      .chip {
+        font-size: 14px;
+        padding: 9px 16px;
+      }
+
+      .hero {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 32px;
+        align-items: center;
+        min-height: 72vh;
+        padding: 24px 0 32px;
+      }
+
+      .hero .content { display: contents; }
+
+      .bio {
+        grid-column: 1 / span 7;
+        padding: 32px;
+        gap: 18px;
+        min-height: 360px;
+      }
+
+      .profile {
+        grid-column: 8 / span 5;
+        padding: 26px;
+        min-height: 380px;
+      }
+
+      h1 {
+        font-size: clamp(42px, 3.2vw, 60px);
+        line-height: 1.18;
+      }
+
+      .hero-role {
+        font-size: 16px;
+      }
+
+      .bio p {
+        font-size: 18px;
+        line-height: 1.95;
+      }
+
+      .section-head {
+        margin-bottom: 16px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .section-sub {
+        font-size: 15px;
+      }
+
+      .card,
+      .item,
+      .social {
+        transform-style: flat;
+        perspective: none;
+      }
+
+      .carousel-card {
+        --carousel-shift: 170px;
+        --carousel-far-shift: 260px;
+        --carousel-tilt: 14deg;
+        --carousel-far-tilt: 18deg;
+        width: min(52vw, 420px);
+        backdrop-filter: blur(6px);
+      }
+
+      .carousel-shell {
+        padding: 22px;
+      }
+
+      .works-carousel {
+        padding: 22px;
+      }
+
+      .track {
+        padding: 10px 8px 18px;
+      }
+
+      .social-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      footer {
+        margin-top: 36px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1768,8 +1904,9 @@
 
     function initTilt() {
       if (!window.matchMedia("(pointer: fine)").matches) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const tiltTargets = document.querySelectorAll(".card, .item, .social");
-      const maxTilt = 6;
+      const maxTilt = 4;
       tiltTargets.forEach((el) => {
         if (el.classList.contains("carousel-card")) return;
         el.addEventListener("mousemove", (event) => {
@@ -1790,7 +1927,9 @@
       attemptAutoplayVideos();
       applyMediaFrames();
       initReveal();
-      initParallax();
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        initParallax();
+      }
       initTilt();
     }
 
