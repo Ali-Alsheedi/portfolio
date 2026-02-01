@@ -1,0 +1,1996 @@
+<!doctype html>
+<html lang="ar" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ملفي الشخصي</title>
+  <meta name="description" content="ملف شخصي عربي يحتوي على نبذة وأعمالي وروابط التواصل." />
+  <style>
+    :root {
+      --bg: #080b14;
+      --surface: rgba(255, 255, 255, 0.06);
+      --card: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.65);
+      --accent: #7b6dff;
+      --accent2: #26d9c4;
+      --accent3: #1a8f9d;
+      --radius: 18px;
+      --shadow: 0 26px 80px rgba(0, 0, 0, 0.45);
+      --max: 1180px;
+      --space-xs: 8px;
+      --space-sm: 14px;
+      --space-md: 22px;
+      --space-lg: 32px;
+      --reveal-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --reveal-duration: 600ms;
+      --bg-shift: 0px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; overflow-x: hidden; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Tajawal", "Noto Kufi Arabic", "Noto Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top right, rgba(44, 196, 181, 0.16), transparent 45%),
+        radial-gradient(circle at 10% 20%, rgba(123, 109, 255, 0.16), transparent 42%),
+        linear-gradient(140deg, #05070f 0%, #0a0f1c 45%, #0b1424 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100%;
+      padding-bottom: calc(18px + env(safe-area-inset-bottom));
+      position: relative;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img, video { display: block; }
+    ul { list-style-position: inside; }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(12px);
+      opacity: 0.5;
+      z-index: -1;
+      transform: translate3d(0, var(--bg-shift), 0);
+      transition: transform 0.2s ease-out;
+    }
+
+    body::before {
+      inset-inline-end: -120px;
+      top: 8%;
+      background: radial-gradient(circle, rgba(123, 109, 255, 0.35), transparent 70%);
+    }
+
+    body::after {
+      inset-inline-start: -140px;
+      bottom: 10%;
+      background: radial-gradient(circle, rgba(38, 217, 196, 0.3), transparent 70%);
+    }
+
+    .wrap {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      min-height: 100%;
+      padding: calc(20px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-left))
+        calc(24px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-right));
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      padding: 0 16px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(10, 14, 24, 0.45);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: env(safe-area-inset-top);
+    }
+
+    .topbar-inner {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(124, 92, 255, 0.45);
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .chip {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.08);
+      white-space: nowrap;
+      transition: 0.2s ease;
+    }
+
+    .chip:hover {
+      transform: translateY(-1px);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+      min-height: 80vh;
+      padding-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 100%;
+      transform-style: preserve-3d;
+      perspective: 900px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .bio {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bio::before {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 160px;
+      background: radial-gradient(circle at 20% 20%, rgba(123, 109, 255, 0.18), transparent 65%);
+      pointer-events: none;
+    }
+
+    .kicker {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 4.6vw, 54px);
+      line-height: 1.25;
+    }
+
+    .hero-role {
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.78);
+      letter-spacing: 0.3px;
+    }
+
+    .bio p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .cta-row {
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 12px 18px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn.primary {
+      border: none;
+      color: #0b0f1a;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #ffd36c;
+    }
+
+    .hero-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .hero-socials a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      transition: 0.2s ease;
+    }
+
+    .hero-socials a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-socials svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .profile {
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+    }
+
+    .profile-glow {
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(123, 109, 255, 0.25), rgba(10, 12, 24, 0) 65%);
+      filter: blur(4px);
+      opacity: 0.85;
+      z-index: 0;
+      animation: floaty 10s ease-in-out infinite;
+    }
+
+    .profile::before,
+    .profile::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 40px;
+      background: radial-gradient(circle at top, rgba(123, 109, 255, 0.25), transparent 70%);
+      filter: blur(2px);
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    .profile::before {
+      top: -30px;
+      inset-inline-end: -30px;
+    }
+
+    .profile::after {
+      bottom: -40px;
+      inset-inline-start: -20px;
+      background: radial-gradient(circle at top, rgba(38, 217, 196, 0.25), transparent 70%);
+    }
+
+    @keyframes floaty {
+      0% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(0, -12px, 0); }
+      100% { transform: translate3d(0, 0, 0); }
+    }
+
+    .avatar {
+      width: min(320px, 70vw);
+      aspect-ratio: 4 / 5;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar .badge {
+      position: absolute;
+      bottom: 10px;
+      inset-inline-start: 10px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    section { margin-top: 24px; }
+
+    main { overflow-x: hidden; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+      transition: var(--reveal-duration) var(--reveal-ease);
+      transition-property: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .section-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .carousel {
+      padding: 14px;
+    }
+
+    .works-carousel {
+      padding: 16px;
+    }
+
+    .carousel-shell {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      contain: layout paint;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 28px;
+    }
+
+    .carousel-viewport {
+      position: relative;
+      height: clamp(260px, 42vw, 420px);
+      perspective: 1200px;
+      overflow: hidden;
+    }
+
+    .carousel-stage {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+    }
+
+    .carousel-card {
+      --carousel-shift: 220px;
+      --carousel-far-shift: 360px;
+      --carousel-tilt: 18deg;
+      --carousel-far-tilt: 24deg;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(78vw, 420px);
+      aspect-ratio: 4 / 3;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(10, 12, 18, 0.55);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transform-style: preserve-3d;
+      opacity: 0;
+      filter: blur(2px);
+      transition: transform 0.45s ease, opacity 0.45s ease, filter 0.45s ease;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .carousel-card .media {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 0;
+      margin: 0;
+      position: relative;
+    }
+
+    .carousel-card .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .carousel-card.is-broken::after {
+      content: "";
+      display: grid;
+      place-items: center;
+      height: 100%;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .carousel-card--poster .media {
+      height: 100%;
+    }
+
+    .carousel-card--poster {
+      aspect-ratio: 9 / 16;
+    }
+
+    /* Posters 3D carousel: correct portrait sizing */
+    #postersCarousel .carousel-viewport{
+      height: clamp(460px, 125vw, 720px);
+    }
+
+    #postersCarousel .carousel-card{
+      width: min(78vw, 380px);
+      height: clamp(460px, 125vw, 720px);
+      aspect-ratio: auto; /* use explicit height */
+    }
+
+    #postersCarousel .carousel-card .media{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.25);
+    }
+
+    #postersCarousel .carousel-card .media img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain !important; /* show full poster */
+      object-position: center;
+    }
+
+    #logosCarousel .media img {
+      object-fit: contain !important;
+    }
+
+    .carousel-card .info,
+    .carousel-card .title,
+    .carousel-card .desc {
+      display: none;
+    }
+
+    .carousel-card.is-active {
+      transform: translate(-50%, -50%) translateX(0) translateZ(140px) scale(1.03);
+      opacity: 1;
+      filter: none;
+      z-index: 5;
+    }
+
+    .carousel-card.is-left {
+      transform: translate(-50%, -50%) translateX(calc(var(--carousel-shift) * -1)) translateZ(40px) rotateY(var(--carousel-tilt)) scale(0.92);
+      opacity: 0.78;
+      filter: none;
+      z-index: 4;
+    }
+
+    .carousel-card.is-right {
+      transform: translate(-50%, -50%) translateX(var(--carousel-shift) ) translateZ(40px) rotateY(calc(var(--carousel-tilt) * -1)) scale(0.92);
+      opacity: 0.78;
+      filter: none;
+      z-index: 4;
+    }
+
+    .carousel-card.is-far-left {
+      transform: translate(-50%, -50%) translateX(calc(var(--carousel-far-shift) * -1)) translateZ(0) rotateY(var(--carousel-far-tilt)) scale(0.86);
+      opacity: 0.55;
+      filter: blur(0.6px);
+      z-index: 3;
+    }
+
+    .carousel-card.is-far-right {
+      transform: translate(-50%, -50%) translateX(var(--carousel-far-shift)) translateZ(0) rotateY(calc(var(--carousel-far-tilt) * -1)) scale(0.86);
+      opacity: 0.55;
+      filter: blur(0.6px);
+      z-index: 3;
+    }
+
+    .carousel-card.is-hidden {
+      display: none;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(9, 12, 22, 0.7);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+      z-index: 10;
+    }
+
+    .carousel-arrow:hover {
+      transform: translateY(-50%) scale(1.04);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .carousel-arrow.prev {
+      inset-inline-start: 8px;
+    }
+
+    .carousel-arrow.next {
+      inset-inline-end: 8px;
+    }
+
+    .carousel-shell { overflow: hidden; }
+    .carousel-viewport { overflow: hidden; }
+    .carousel-stage { width: 100%; overflow: visible; }
+    .carousel-card { will-change: transform; }
+
+    .track {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      max-width: 100%;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 14px;
+      padding: 6px 4px 14px;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .track:active { cursor: grabbing; }
+
+    .track::-webkit-scrollbar { height: 9px; }
+    .track::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+    }
+
+    .item {
+      scroll-snap-align: start;
+      flex: 0 0 auto;
+      width: 320px;
+      max-width: 78vw;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(180deg, rgba(18, 22, 36, 0.92), rgba(12, 14, 26, 0.92));
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      transform-style: preserve-3d;
+      perspective: 900px;
+    }
+
+    .item:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.45);
+    }
+
+    .item-media {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .item-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 12, 20, 0.05) 0%, rgba(10, 12, 20, 0.7) 100%);
+      opacity: 0.9;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .item-media img,
+    .item-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 0;
+      padding: 0;
+      display: block;
+      transform: scale(1);
+      transition: transform 0.35s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .item:hover .item-media img,
+    .item:hover .item-media video {
+      transform: scale(1);
+    }
+
+    .item:hover .item-media::after {
+      opacity: 1;
+    }
+
+    .item-body {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: linear-gradient(180deg, rgba(15, 18, 30, 0.92), rgba(9, 11, 20, 0.95));
+    }
+
+    .item-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .item-desc {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .item--text {
+      width: 100%;
+      max-width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: none;
+    }
+
+    .item--text .item-body {
+      background: transparent;
+      border-top: none;
+      padding: 12px 14px 14px;
+    }
+
+    .hint {
+      display: none;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 14px;
+    }
+
+    @media (max-width: 720px) {
+      .social-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .social {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      transition: 0.2s ease;
+      transform-style: preserve-3d;
+      perspective: 900px;
+    }
+
+    .social:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .social .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .social .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.35), rgba(34, 193, 195, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .social .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .social .name {
+      font-weight: 800;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .social .handle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .social .arrow {
+      font-weight: 900;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    footer {
+      margin-top: 24px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 13px;
+      text-align: center;
+      padding: 14px 0 calc(24px + env(safe-area-inset-bottom));
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 100;
+      padding: 18px;
+    }
+
+    .modal.open { display: grid; }
+
+    .modal-card {
+      width: min(980px, 100%);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(10, 12, 22, 0.9);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.55);
+    }
+
+    .modal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .close {
+      border: none;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.85);
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 900;
+    }
+
+    .modal-media {
+      width: 100%;
+      max-height: 70vh;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .modal-media img {
+      width: 100%;
+      height: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .item--poster .item-media {
+      background: linear-gradient(180deg, rgba(20, 24, 40, 0.92), rgba(10, 12, 22, 0.92));
+    }
+
+    .item--poster .item-media img {
+      object-fit: contain;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .media-frame {
+      position: relative;
+      overflow: hidden;
+      background: rgba(8, 10, 18, 0.6);
+      isolation: isolate;
+    }
+
+    .media-frame::before {
+      content: "";
+      position: absolute;
+      inset: -10%;
+      background-image: var(--img, linear-gradient(140deg, rgba(123, 109, 255, 0.2), rgba(38, 217, 196, 0.2)));
+      background-size: cover;
+      background-position: center;
+      filter: blur(18px);
+      opacity: 0.35;
+      transform: scale(1.1);
+      z-index: 0;
+    }
+
+    .media-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 12, 20, 0.2), rgba(10, 12, 20, 0.6));
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    .media-frame > img,
+    .media-frame > video {
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-frame::before {
+      background-image: radial-gradient(circle at top, rgba(123, 109, 255, 0.3), transparent 65%),
+        radial-gradient(circle at bottom, rgba(38, 217, 196, 0.28), transparent 60%);
+      filter: blur(22px);
+      opacity: 0.5;
+    }
+
+    @media (hover: none) {
+      .card:active,
+      .item:active,
+      .social:active {
+        transform: scale(0.98);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body { overflow-x: hidden; }
+      .container,
+      section { width: 100%; max-width: 100%; }
+      .wrap { padding: 16px 14px 48px; }
+      .topbar-inner { padding: 10px 14px; flex-wrap: wrap; justify-content: center; }
+      .hero { gap: 16px; min-height: auto; text-align: center; }
+      .profile { order: -1; min-height: auto; padding: 12px; overflow: visible; }
+      .bio { min-height: auto; padding: 18px; align-items: center; }
+      .card { box-shadow: none; }
+      .avatar {
+        width: min(240px, 80vw);
+        border-radius: 50%;
+        aspect-ratio: 1 / 1;
+        margin: 0 auto;
+      }
+      h1 { font-size: clamp(26px, 7vw, 34px); }
+      .bio p { font-size: 15px; }
+      .item { width: 100%; max-width: 100%; height: auto; }
+      .item-media { aspect-ratio: 4 / 3; }
+      .item-body { padding: 12px 12px 14px; }
+      .carousel { padding: 10px; }
+      .carousel-shell { padding: 10px; }
+      .carousel-card { width: min(88vw, 380px); }
+      #postersCarousel .carousel-viewport { height: clamp(380px, 96vw, 640px); }
+      .track { padding-inline: 0; }
+      .photo-card { width: min(88vw, 380px); aspect-ratio: 4 / 3; }
+      .carousel-card {
+        --carousel-shift: 110px;
+        --carousel-far-shift: 190px;
+        --carousel-tilt: 12deg;
+        --carousel-far-tilt: 18deg;
+      }
+      nav { gap: 8px; justify-content: center; }
+      .chip { font-size: 13px; padding: 6px 12px; }
+      .hero-socials { justify-content: center; }
+      .cta-row { justify-content: center; }
+      section { margin-top: 30px; }
+    }
+
+    html,body{background:#070A12;color:#EAF0FF;overflow-x:hidden;}
+    /* Make sure decorative overlay never covers content */
+    .bg-glow, .glow, .ambient, .parallax-glow,
+    body::before, body::after,
+    main::before, main::after,
+    section::before, section::after{
+      pointer-events:none !important;
+    }
+
+    /* Safe layering utility */
+    .layer-wrap{position:relative;isolation:isolate;}
+    .layer-wrap > .content{position:relative;z-index:1;}
+    .layer-wrap::before{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      z-index:0;
+      background:
+        radial-gradient(60% 40% at 20% 20%, rgba(124,58,237,.22), transparent 60%),
+        radial-gradient(55% 45% at 85% 25%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(55% 55% at 40% 85%, rgba(59,130,246,.14), transparent 65%);
+      filter: blur(22px);
+      opacity:.65;
+    }
+
+    /* IMPORTANT: never blur/fade parent containers */
+    .hero, .section, .card, .container, main, header{
+      filter:none !important;
+      opacity:1 !important;
+    }
+
+    /* Mobile: reduce intensity (this is the real fix for your screenshot) */
+    @media (max-width:768px){
+      .layer-wrap::before{
+        filter: blur(16px);
+        opacity:.22; /* prevent white wash-out */
+      }
+      /* If any overlay is still strong, force it off */
+      body::before, body::after, main::before, main::after{
+        opacity:.18 !important;
+      }
+    }
+
+    .carousel-card.is-broken { outline: 2px solid rgba(255,80,80,.35); }
+
+    html, body { width: 100%; max-width: 100%; overflow-x: hidden !important; }
+    .wrap, .container, main, section { max-width: 100%; overflow-x: hidden; }
+
+    html{
+      background:#070A12 !important;
+      overflow-x: clip !important;
+    }
+    body{
+      min-width:100%;
+      background:#070A12 !important;
+      overflow-x: clip !important;
+    }
+
+    /* hard containment for 3D carousels so transforms never create page width */
+    #photosCarousel, #postersCarousel,
+    #photosCarousel .carousel-shell, #postersCarousel .carousel-shell,
+    #photosCarousel .carousel-viewport, #postersCarousel .carousel-viewport{
+      overflow: clip !important;
+      contain: layout paint !important;
+    }
+
+    /* prevent any 100vw from creating extra width on desktop */
+    *{ max-width:100%; }
+
+    /* Kill horizontal scroll caused by 3D transforms */
+    html, body{
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden;   /* fallback */
+      background:#070A12;
+    }
+    @supports (overflow: clip){
+      html, body{ overflow-x: clip; }
+    }
+
+    /* Contain 3D carousels so they cannot expand page width */
+    .carousel-shell,
+    .carousel-viewport{
+      overflow: hidden;
+      contain: layout paint;
+    }
+    .carousel-stage{
+      overflow: visible;
+    }
+
+    /* Ensure no element can force extra width */
+    .wrap, .container, main, section{
+      max-width:100%;
+    }
+
+    /* Desktop layout (>= 900px): show proper 2-column hero like computer */
+    @media (min-width: 901px){
+      .hero{
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+        min-height: 80vh;
+        text-align: start;
+      }
+      .bio{
+        align-items: flex-start;
+      }
+      .cta-row, .hero-socials{
+        justify-content: flex-start;
+      }
+    }
+
+    /* Mobile layout (<= 900px): use phone version */
+    @media (max-width: 900px){
+      .hero{
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .bio{
+        align-items: center;
+      }
+      .cta-row, .hero-socials{
+        justify-content: center;
+      }
+    }
+
+    /* Desktop: hide vertical scrollbar (RTL shows it on the left) but keep scrolling */
+    @media (min-width: 901px){
+      html, body{
+        overflow-x: hidden;
+        scrollbar-width: none;          /* Firefox */
+        -ms-overflow-style: none;       /* IE/old Edge */
+      }
+      body::-webkit-scrollbar{
+        width: 0;
+        height: 0;                      /* Chrome/Safari */
+      }
+    }
+
+    /* Extra safety: prevent any horizontal overflow */
+    html, body{
+      max-width: 100%;
+    }
+    body{
+      overflow-x: hidden;
+    }
+    @supports (overflow: clip){
+      body{ overflow-x: clip; }
+    }
+
+    /* Force scrollbar to the right (desktop) while keeping Arabic RTL layout */
+    @media (min-width: 901px){
+      html { direction: ltr; }   /* scrollbar on the right */
+      body { direction: rtl; }   /* content stays RTL */
+    }
+
+    /* Safety: no horizontal overflow */
+    html, body { overflow-x: hidden; max-width: 100%; }
+    @supports (overflow: clip){
+      body{ overflow-x: clip; }
+    }
+
+    /* ---- FIX: kill horizontal overflow caused by 3D transforms ---- */
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    main, .wrap, .container, section, .topbar, .topbar-inner {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Ensure carousels cannot expand page width */
+    .carousel-shell,
+    .carousel-viewport {
+      overflow: hidden !important;
+      max-width: 100%;
+    }
+
+    .carousel-stage {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* Safety: 3D cards should never exceed viewport width */
+    .carousel-card {
+      max-width: calc(100vw - 48px);
+    }
+
+    /* Desktop: make 3D shifts smaller so cards don't push layout wider */
+    @media (min-width: 901px) {
+      .carousel-card {
+        --carousel-shift: 180px;
+        --carousel-far-shift: 300px;
+      }
+    }
+
+    html, body { direction: ltr; }
+    .topbar, .wrap, footer { direction: rtl; }
+
+    @media (min-width: 992px) {
+      :root {
+        --max: 1240px;
+      }
+
+      body::before,
+      body::after {
+        filter: blur(8px);
+        opacity: 0.35;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 36px 24px 64px;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 28px;
+      }
+
+      .wrap > section,
+      .wrap > footer,
+      .wrap > div {
+        grid-column: 1 / -1;
+      }
+
+      .topbar {
+        background: rgba(9, 12, 22, 0.7);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(10px);
+      }
+
+      .topbar-inner {
+        width: min(100%, var(--max));
+        padding: 16px 24px;
+      }
+
+      nav { gap: 12px; }
+
+      .chip {
+        font-size: 14px;
+        padding: 9px 16px;
+      }
+
+      .hero {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 32px;
+        align-items: center;
+        min-height: 72vh;
+        padding: 24px 0 32px;
+      }
+
+      .hero .content { display: contents; }
+
+      .bio {
+        grid-column: 1 / span 7;
+        padding: 32px;
+        gap: 18px;
+        min-height: 360px;
+      }
+
+      .profile {
+        grid-column: 8 / span 5;
+        padding: 26px;
+        min-height: 380px;
+      }
+
+      h1 {
+        font-size: clamp(42px, 3.2vw, 60px);
+        line-height: 1.18;
+      }
+
+      .hero-role {
+        font-size: 16px;
+      }
+
+      .bio p {
+        font-size: 18px;
+        line-height: 1.95;
+      }
+
+      .section-head {
+        margin-bottom: 16px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .section-sub {
+        font-size: 15px;
+      }
+
+      .card,
+      .item,
+      .social {
+        transform-style: flat;
+        perspective: none;
+      }
+
+      .carousel-card {
+        --carousel-shift: 170px;
+        --carousel-far-shift: 260px;
+        --carousel-tilt: 14deg;
+        --carousel-far-tilt: 18deg;
+        width: min(52vw, 420px);
+        backdrop-filter: blur(6px);
+      }
+
+      .carousel-shell {
+        padding: 22px;
+      }
+
+      .works-carousel {
+        padding: 22px;
+      }
+
+      .track {
+        padding: 10px 8px 18px;
+      }
+
+      .social-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      footer {
+        margin-top: 36px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span id="brandName">علي الشيدي</span>
+      </div>
+      <nav>
+        <a class="chip" href="#about">الرئيسية</a>
+        <a class="chip" href="#works">الأعمال</a>
+        <a class="chip" href="#services">الخدمات</a>
+        <a class="chip" href="#courses">الدورات</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="wrap container">
+    <section class="hero layer-wrap" id="about">
+      <div class="content">
+      <div class="card bio">
+        <span class="kicker">مرحبا، هذا ملف أعمالي</span>
+        <div class="rating-row">
+          <span>تقييم العملاء</span>
+          <span class="stars" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
+          </span>
+          <span>4.9/5</span>
+        </div>
+        <h1 id="heroTitle">تصاميم عصرية ومحتوى بصري<br />يروي القصة ويخطف الانتباه</h1>
+        <div class="hero-role" id="heroRole"></div>
+        <p id="heroBio">مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#works">استكشف أعمالي</a>
+          <a class="btn" href="#social">تواصل معي</a>
+        </div>
+        <div class="hero-socials">
+          <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm10 2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm-5 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 8.2zm0 1.8a3 3 0 1 0 3 3 3 3 0 0 0-3-3zm4.9-2.9a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24">
+              <path d="M6.94 8.5H4V20h2.94zM5.47 4a1.47 1.47 0 1 0 0 2.94A1.47 1.47 0 0 0 5.47 4zM20 13.2c0-3.1-1.65-4.54-3.86-4.54a3.4 3.4 0 0 0-3.08 1.7v-1.5H10.2V20h2.94v-6c0-1.58.3-3.1 2.26-3.1 1.93 0 1.96 1.8 1.96 3.2V20H20z"/>
+            </svg>
+          </a>
+          <a href="mailto:alialsheidi@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="card profile">
+        <div class="profile-glow" aria-hidden="true"></div>
+        <div class="avatar">
+          <img id="profileImg" src="profile.jpg" alt="صورتي الشخصية" loading="lazy" />
+          <div class="badge" id="profileBadge"></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <div id="courses"></div>
+    <section id="education">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">المؤهل العلمي</h2>
+          <p class="section-sub">آخر مؤهل أكاديمي.</p>
+        </div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <ul style="margin: 0; padding-inline-start: 20px; color: var(--muted); line-height: 1.9;">
+          <li>بكالوريوس الاتصال الجماهيري (العلاقات العامة) — جامعة التقنية والعلوم التطبيقية – صور.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">الخبرات</h2>
+          <p class="section-sub">أحدث الخبرات أولاً.</p>
+        </div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <div style="display: grid; gap: 12px;">
+          <div class="item item--text">
+            <div class="item-body">
+              <h4 class="item-title">عضو فريق الحملة الطلابية — الإعلام والتسويق | جامعة التقنية والعلوم التطبيقية بصور (مارس 2025 – يونيو 2025)</h4>
+              <p class="item-desc">مهام: التسويق الميداني، التسويق الإلكتروني وإدارة المحتوى، تنسيق الفعاليات، إعداد التصاميم.</p>
+            </div>
+          </div>
+          <div class="item item--text">
+            <div class="item-body">
+              <h4 class="item-title">نائب مدير التسويق — ورشة مهاد (MHAD) للأثاث (3 أشهر)</h4>
+              <p class="item-desc">مهام: تنسيق الحملات، إدارة المحتوى، الإلقاء، تصوير، تصميم جرافيكي، مونتاج.</p>
+            </div>
+          </div>
+          <div class="item item--text">
+            <div class="item-body">
+              <h4 class="item-title">متدرب علاقات عامة — إداري وموظف استقبال | بلدية صحم (8 يوليو 2024 – 15 أغسطس 2024)</h4>
+              <p class="item-desc">مهام: صياغة رسائل رسمية، تنظيم وثائق، الرد على الاستفسارات، إعداد تقارير داخلية، دعم التواصل المؤسسي.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="services"></div>
+    <section id="skills">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">المهارات</h2>
+          <p class="section-sub">مجموعة مهارات داعمة للمجال الإعلامي.</p>
+        </div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <ul style="margin: 0; padding-inline-start: 20px; color: var(--muted); line-height: 1.9;">
+          <li>Adobe Photoshop، Adobe Premiere.</li>
+          <li>التواصل والعرض والإقناع.</li>
+          <li>تنظيم الفعاليات وإدارة الحملات.</li>
+          <li>Microsoft Office وأنظمة الأرشفة.</li>
+          <li>إدخال البيانات وإنجاز المعاملات.</li>
+          <li>العمل تحت الضغط.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="languages">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">اللغات</h2>
+          <p class="section-sub">مستوى الإتقان اللغوي.</p>
+        </div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <ul style="margin: 0; padding-inline-start: 20px; color: var(--muted); line-height: 1.9;">
+          <li>العربية (أم).</li>
+          <li>الإنجليزية (ممتاز).</li>
+          <li>الهندية/الأردو (ممتاز).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="works">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">أعمالي</h2>
+        </div>
+      </div>
+
+      <div class="card works-carousel" style="margin-top: 10px;">
+        <div class="section-head" style="margin: 0 0 8px;">
+          <div>
+            <h3 class="section-title" style="font-size: 18px;">تصويري</h3>
+            <p class="section-sub" style="margin-top: 4px;">مختارات من أعمال التصوير.</p>
+          </div>
+        </div>
+        <div class="carousel-shell" id="photosCarousel" aria-label="تصويري">
+          <button class="carousel-arrow prev" type="button" data-direction="prev" aria-label="السابق">❯</button>
+          <div class="carousel-viewport">
+            <div class="carousel-stage"></div>
+          </div>
+          <button class="carousel-arrow next" type="button" data-direction="next" aria-label="التالي">❮</button>
+        </div>
+      </div>
+
+      <div class="card works-carousel" style="margin-top: 14px;">
+        <div class="section-head" style="margin: 0 0 8px;">
+          <div>
+            <h3 class="section-title" style="font-size: 18px;">بوسترات</h3>
+            <p class="section-sub" style="margin-top: 4px;">بوسترات تسويقية وحملات.</p>
+          </div>
+        </div>
+        <div class="carousel-shell" id="postersCarousel" aria-label="بوسترات">
+          <button class="carousel-arrow prev" type="button" data-direction="prev" aria-label="السابق">❯</button>
+          <div class="carousel-viewport">
+            <div class="carousel-stage"></div>
+          </div>
+          <button class="carousel-arrow next" type="button" data-direction="next" aria-label="التالي">❮</button>
+        </div>
+      </div>
+
+      <div class="card works-carousel" style="margin-top: 14px;">
+        <div class="section-head" style="margin: 0 0 8px;">
+          <div>
+            <h3 class="section-title" style="font-size: 18px;">شعارات</h3>
+            <p class="section-sub" style="margin-top: 4px;">شعارات (Logo) صممتها.</p>
+          </div>
+        </div>
+        <div class="carousel-shell" id="logosCarousel" aria-label="شعارات">
+          <button class="carousel-arrow prev" type="button" data-direction="prev" aria-label="السابق">❯</button>
+          <div class="carousel-viewport">
+            <div class="carousel-stage"></div>
+          </div>
+          <button class="carousel-arrow next" type="button" data-direction="next" aria-label="التالي">❮</button>
+        </div>
+      </div>
+
+      <div class="card carousel" style="margin-top: 14px;">
+        <div class="section-head" style="margin: 0 0 8px;">
+          <h3 class="section-title" style="font-size: 18px;">فيديوات</h3>
+        </div>
+        <div class="track" id="videosTrack" aria-label="فيديوات"></div>
+      </div>
+    </section>
+
+    <section id="social">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">معلومات التواصل</h2>
+          <p class="section-sub">وسائل التواصل المباشرة.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="social-grid" id="socialGrid"></div>
+      </div>
+    </section>
+
+    <footer>علي الشيدي - كل الحقوق محفوظة</footer>
+  </main>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-top">
+        <div id="modalTitle">عرض</div>
+        <button class="close" id="modalClose" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="modal-media">
+        <img id="modalImg" alt="عرض الصورة" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BASE = (() => {
+      // works on: local, custom domain, and username.github.io/<repo>/
+      const parts = location.pathname.split("/").filter(Boolean);
+      const repo = (location.hostname.endsWith("github.io") && parts.length) ? parts[0] : "";
+      return repo ? `/${repo}` : "";
+    })();
+
+    const profile = {
+      name: "علي الشيدي",
+      role: "مصمم ومصور ومحرر فيديو",
+      badge: "مصمم ومصور ومحرر فيديو",
+      bio: "مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.",
+      image: "assets/img/profile.jpg"
+    };
+
+    const photoFiles = [
+      "khanjar-01.jpg",
+      "khanjar-02.jpg",
+      "khanjar-03.jpg",
+      "khanjar-04.jpg",
+      "photo-04.jpeg",
+      "photo-05.jpeg",
+      "photo-06.jpeg",
+      "photo-07.jpeg",
+      "photo-08.jpeg",
+      "photo-09.jpg",
+      "photo-10.jpg",
+      "photo-11.jpg",
+      "photo-12.jpg",
+      "photo-13.jpg"
+    ];
+
+    // Poster filenames synced with assets/img/posters
+    const posterFiles = [
+      "poster-01.jpg",
+      "poster-02.jpg",
+      "poster-03.jpg",
+      "poster-04.png",
+      "poster-05.jpeg",
+      "poster-06.jpeg",
+      "poster-07.jpeg"
+    ];
+
+    const logoFiles = [
+      "logo-01.png",
+      "logo-02.png",
+      "logo-03.png"
+    ];
+    const videos = [
+      {
+        title: "فيديو 01",
+        desc: "بانر لمنتجات ALVA",
+        src: `${BASE}/videos/video-1.mp4`,
+        poster: `${BASE}/video-1.jpg`
+      }
+    ];
+
+    const socials = [
+      { name: "الهاتف", handle: "95647786", icon: "☎", url: "tel:95647786" },
+      { name: "البريد الإلكتروني", handle: "alialsheidi@gmail.com", icon: "✉", url: "mailto:alialsheidi@gmail.com" },
+      { name: "العنوان", handle: "سلطنة عمان، محافظة شمال الباطنة، ولاية صحم", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، محافظة شمال الباطنة، ولاية صحم" }
+    ];
+
+    function makeCarouselCard({ title, desc, img }, { clickToZoom = true, variant = "" } = {}) {
+      const card = document.createElement("article");
+      card.className = `carousel-card ${variant}`.trim();
+      card.innerHTML = `
+        <div class="media media-frame">
+          <img src="${img}" alt="${title}" loading="lazy" />
+        </div>
+      `;
+      const imageEl = card.querySelector("img");
+      imageEl.addEventListener("error", () => {
+        card.classList.add("is-broken");
+        imageEl.style.opacity = "0.2";
+        console.warn("Image failed:", img);
+      }, { once: true });
+      if (clickToZoom) {
+        card.style.cursor = "pointer";
+        card.addEventListener("click", () => openModal(title, img));
+      }
+      return card;
+    }
+
+    function makeVideoCard({ title, desc, src, poster }) {
+      const card = document.createElement("div");
+      card.className = "item portfolio-card";
+      card.innerHTML = `
+        <div class="item-media media-frame video-frame">
+          <video
+            src="${src}"
+            poster="${poster}"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="metadata"
+          ></video>
+        </div>
+        <div class="item-body">
+          <h4 class="item-title">${title}</h4>
+          <p class="item-desc">${desc || ""}</p>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function formatTitleFromName(name) {
+      return name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+    }
+
+    function buildItems(files, basePath, descFallback) {
+      return files.map((file) => ({
+        title: formatTitleFromName(file),
+        desc: descFallback,
+        img: `${basePath}/${file}`
+      }));
+    }
+
+    function getRelativeIndex(index, activeIndex, total) {
+      let diff = index - activeIndex;
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+      return diff;
+    }
+
+    function initCarousel(rootEl, items, { variant = "", clickToZoom = true } = {}) {
+      if (!rootEl || !items.length) return null;
+      const track = rootEl.querySelector(".carousel-stage");
+      const prevBtn = rootEl.querySelector("[data-direction='prev']");
+      const nextBtn = rootEl.querySelector("[data-direction='next']");
+      track.innerHTML = "";
+
+      const cards = items.map((item) => {
+        const card = makeCarouselCard(item, { clickToZoom, variant });
+        track.appendChild(card);
+        return card;
+      });
+
+      let currentIndex = 0;
+      const total = cards.length;
+      let dragStartX = 0;
+      let dragDelta = 0;
+      let isDragging = false;
+      let hasMoved = false;
+
+      const updateClasses = () => {
+        cards.forEach((card, index) => {
+          const diff = getRelativeIndex(index, currentIndex, total);
+          card.classList.remove(
+            "is-active",
+            "is-left",
+            "is-right",
+            "is-far-left",
+            "is-far-right",
+            "is-hidden"
+          );
+          card.style.transform = "";
+          if (diff === 0) card.classList.add("is-active");
+          if (diff === -1) card.classList.add("is-left");
+          if (diff === 1) card.classList.add("is-right");
+          if (diff === -2) card.classList.add("is-far-left");
+          if (diff === 2) card.classList.add("is-far-right");
+          if (diff < -2 || diff > 2) card.classList.add("is-hidden");
+        });
+      };
+
+      const goNext = () => {
+        currentIndex = (currentIndex + 1) % total;
+        updateClasses();
+      };
+
+      const goPrev = () => {
+        currentIndex = (currentIndex - 1 + total) % total;
+        updateClasses();
+      };
+
+      updateClasses();
+
+      prevBtn?.addEventListener("click", goPrev);
+      nextBtn?.addEventListener("click", goNext);
+
+      track.addEventListener("mousedown", (event) => {
+        isDragging = true;
+        hasMoved = false;
+        dragStartX = event.clientX;
+        dragDelta = 0;
+      });
+
+      window.addEventListener("mousemove", (event) => {
+        if (!isDragging) return;
+        dragDelta = event.clientX - dragStartX;
+        if (Math.abs(dragDelta) > 8) hasMoved = true;
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        if (Math.abs(dragDelta) > 40) {
+          if (dragDelta > 0) {
+            goPrev();
+          } else {
+            goNext();
+          }
+        }
+      });
+
+      track.addEventListener("touchstart", (event) => {
+        const touch = event.touches[0];
+        hasMoved = false;
+        dragStartX = touch.clientX;
+        dragDelta = 0;
+      }, { passive: true });
+
+      track.addEventListener("touchmove", (event) => {
+        const touch = event.touches[0];
+        dragDelta = touch.clientX - dragStartX;
+        if (Math.abs(dragDelta) > 8) hasMoved = true;
+      }, { passive: true });
+
+      track.addEventListener("touchend", () => {
+        if (Math.abs(dragDelta) > 40) {
+          if (dragDelta > 0) {
+            goPrev();
+          } else {
+            goNext();
+          }
+        }
+      });
+
+      track.addEventListener("click", (event) => {
+        if (hasMoved) {
+          event.preventDefault();
+          event.stopPropagation();
+          hasMoved = false;
+        }
+      }, true);
+
+      return {
+        rootEl,
+        goNext,
+        goPrev,
+        getVisibilityScore() {
+          const rect = rootEl.getBoundingClientRect();
+          const visible = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+          return Math.max(0, visible);
+        }
+      };
+    }
+
+    function renderWorks() {
+      const photos = buildItems(photoFiles, "assets/img/photos", "تصوير فوتوغرافي");
+      const posters = buildItems(posterFiles, "assets/img/posters", "تصميم بوستر");
+      const logos = buildItems(logoFiles, "assets/img/logos", "تصميم شعار");
+
+      const carousels = [];
+      carousels.push(initCarousel(document.getElementById("photosCarousel"), photos, { variant: "photo-card" }));
+      carousels.push(initCarousel(document.getElementById("postersCarousel"), posters, { variant: "carousel-card--poster poster-card" }));
+      carousels.push(initCarousel(document.getElementById("logosCarousel"), logos, { variant: "photo-card" }));
+
+      if (videos.length) {
+        const track = document.getElementById("videosTrack");
+        track.innerHTML = "";
+        videos.forEach((video) => track.appendChild(makeVideoCard(video)));
+      }
+
+      window.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+        const visibleCarousels = carousels.filter((carousel) => carousel && carousel.getVisibilityScore() > 0);
+        if (!visibleCarousels.length) return;
+        const activeCarousel = visibleCarousels.sort((a, b) => b.getVisibilityScore() - a.getVisibilityScore())[0];
+        if (event.key === "ArrowLeft") {
+          activeCarousel.goPrev();
+        } else {
+          activeCarousel.goNext();
+        }
+      });
+    }
+
+    function attemptAutoplayVideos() {
+      document.querySelectorAll("#videosTrack video").forEach((video) => {
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {});
+        }
+      });
+    }
+
+    function applyMediaFrames() {
+      document.querySelectorAll(".media-frame img").forEach((img) => {
+        const frame = img.closest(".media-frame");
+        if (!frame) return;
+        frame.style.setProperty("--img", `url("${img.src}")`);
+      });
+    }
+
+    function initReveal() {
+      const revealTargets = document.querySelectorAll("section, .card, .item, .social, footer");
+      revealTargets.forEach((el) => el.classList.add("reveal"));
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+      );
+      revealTargets.forEach((el) => observer.observe(el));
+    }
+
+    function initParallax() {
+      let ticking = false;
+      const update = () => {
+        const shift = Math.min(60, window.scrollY * 0.08);
+        document.documentElement.style.setProperty("--bg-shift", `${shift}px`);
+        ticking = false;
+      };
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(update);
+      };
+      update();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+
+    function initTilt() {
+      if (!window.matchMedia("(pointer: fine)").matches) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const tiltTargets = document.querySelectorAll(".card, .item, .social");
+      const maxTilt = 4;
+      tiltTargets.forEach((el) => {
+        if (el.classList.contains("carousel-card")) return;
+        el.addEventListener("mousemove", (event) => {
+          const rect = el.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width - 0.5;
+          const y = (event.clientY - rect.top) / rect.height - 0.5;
+          const rotateX = (-y * maxTilt).toFixed(2);
+          const rotateY = (x * maxTilt).toFixed(2);
+          el.style.transform = `translateY(-4px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        el.addEventListener("mouseleave", () => {
+          el.style.transform = "";
+        });
+      });
+    }
+
+    function initMotion() {
+      attemptAutoplayVideos();
+      applyMediaFrames();
+      initReveal();
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        initParallax();
+      }
+      initTilt();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("brandName").textContent = "علي الشيدي";
+      document.getElementById("heroRole").textContent = profile.role;
+      document.getElementById("heroBio").textContent = profile.bio;
+      document.getElementById("profileBadge").textContent = profile.badge;
+      document.getElementById("profileImg").src = profile.image;
+
+      renderWorks();
+
+      const socialGrid = document.getElementById("socialGrid");
+      socialGrid.innerHTML = "";
+      socials.forEach((social) => {
+        const link = document.createElement("a");
+        link.className = "social";
+        link.href = social.url;
+        link.target = social.url.startsWith("mailto:") ? "_self" : "_blank";
+        link.rel = "noopener";
+        link.innerHTML = `
+          <div class="left">
+            <div class="icon">${social.icon}</div>
+            <div class="meta">
+              <div class="name">${social.name}</div>
+              <div class="handle">${social.handle}</div>
+            </div>
+          </div>
+          <div class="arrow">↗</div>
+        `;
+        socialGrid.appendChild(link);
+      });
+
+      initMotion();
+    }, { once: true });
+
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalClose = document.getElementById("modalClose");
+
+    function openModal(title, img) {
+      if (!modal || !modalImg || !modalTitle) return;
+      modalTitle.textContent = title;
+      modalImg.src = img;
+      modal.classList.add("open");
+    }
+
+    function closeModal() {
+      if (!modal || !modalImg) return;
+      modal.classList.remove("open");
+      modalImg.src = "";
+    }
+
+    modalClose?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+    });
+  </script>
+</body>
+</html>
