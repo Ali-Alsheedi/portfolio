@@ -533,6 +533,10 @@
       object-position: center;
     }
 
+    #logosCarousel .media img {
+      object-fit: contain !important;
+    }
+
     .carousel-card .info,
     .carousel-card .title,
     .carousel-card .desc {
@@ -1379,6 +1383,22 @@
         </div>
       </div>
 
+      <div class="card works-carousel" style="margin-top: 14px;">
+        <div class="section-head" style="margin: 0 0 8px;">
+          <div>
+            <h3 class="section-title" style="font-size: 18px;">شعارات</h3>
+            <p class="section-sub" style="margin-top: 4px;">شعارات (Logo) صممتها.</p>
+          </div>
+        </div>
+        <div class="carousel-shell" id="logosCarousel" aria-label="شعارات">
+          <button class="carousel-arrow prev" type="button" data-direction="prev" aria-label="السابق">❯</button>
+          <div class="carousel-viewport">
+            <div class="carousel-stage"></div>
+          </div>
+          <button class="carousel-arrow next" type="button" data-direction="next" aria-label="التالي">❮</button>
+        </div>
+      </div>
+
       <div class="card carousel" style="margin-top: 14px;">
         <div class="section-head" style="margin: 0 0 8px;">
           <h3 class="section-title" style="font-size: 18px;">فيديوات</h3>
@@ -1457,6 +1477,12 @@
       "poster-05.jpeg",
       "poster-06.jpeg",
       "poster-07.jpeg"
+    ];
+
+    const logoFiles = [
+      "logo-01.png",
+      "logo-02.png",
+      "logo-03.png"
     ];
     const videos = [
       {
@@ -1664,10 +1690,12 @@
     function renderWorks() {
       const photos = buildItems(photoFiles, "assets/img/photos", "تصوير فوتوغرافي");
       const posters = buildItems(posterFiles, "assets/img/posters", "تصميم بوستر");
+      const logos = buildItems(logoFiles, "assets/img/logos", "تصميم شعار");
 
       const carousels = [];
       carousels.push(initCarousel(document.getElementById("photosCarousel"), photos, { variant: "photo-card" }));
       carousels.push(initCarousel(document.getElementById("postersCarousel"), posters, { variant: "carousel-card--poster poster-card" }));
+      carousels.push(initCarousel(document.getElementById("logosCarousel"), logos, { variant: "photo-card" }));
 
       if (videos.length) {
         const track = document.getElementById("videosTrack");
