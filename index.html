@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>ملفي الشخصي</title>
-  <meta name="description" content="ملف شخصي عربي يحتوي على نبذة وأعمالي وروابط التواصل." />
+  <title>علي الشيدي | العلاقات العامة والإعلام المؤسسي</title>
+  <meta name="description" content="بورتفوليو علي الشيدي في العلاقات العامة والإعلام المؤسسي، يضم نبذة احترافية وخبرات وأعمالًا بصرية ووسائل تواصل مباشرة." />
   <style>
     :root {
       --bg: #080b14;
@@ -16,7 +16,9 @@
       --accent: #7b6dff;
       --accent2: #26d9c4;
       --accent3: #1a8f9d;
-      --radius: 18px;
+      --radius: 22px;
+      --radius-sm: 16px;
+      --section-space: clamp(32px, 5vw, 64px);
       --shadow: 0 26px 80px rgba(0, 0, 0, 0.45);
       --max: 1180px;
       --space-xs: 8px;
@@ -110,6 +112,26 @@
       gap: 12px;
     }
 
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .menu-toggle:hover,
+    .menu-toggle:focus-visible {
+      border-color: rgba(255, 255, 255, 0.28);
+      outline: none;
+    }
+
     .brand {
       display: flex;
       align-items: center;
@@ -134,6 +156,13 @@
       align-items: center;
     }
 
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
     .chip {
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
@@ -145,6 +174,15 @@
       transition: 0.2s ease;
     }
 
+    .chip:focus-visible,
+    .btn:focus-visible,
+    .social:focus-visible,
+    .carousel-arrow:focus-visible,
+    .hero-socials a:focus-visible {
+      outline: 2px solid rgba(38, 217, 196, 0.9);
+      outline-offset: 3px;
+    }
+
     .chip:hover {
       transform: translateY(-1px);
       color: var(--text);
@@ -152,7 +190,7 @@
     }
 
     .hero {
-      margin-top: 12px;
+      margin-top: 16px;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 28px;
@@ -166,21 +204,21 @@
     }
 
     .card {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035));
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
       max-width: 100%;
       transform-style: preserve-3d;
       perspective: 900px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
     }
 
     .bio {
-      padding: 26px;
+      padding: 30px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
       justify-content: center;
       min-height: 320px;
       position: relative;
@@ -198,11 +236,16 @@
 
     .kicker {
       font-size: 14px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.8);
       font-weight: 700;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      width: fit-content;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
     h1 {
@@ -225,6 +268,31 @@
       line-height: 1.9;
     }
 
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .highlight {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .highlight strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .highlight span {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
     .cta-row {
       margin-top: 4px;
       display: flex;
@@ -235,13 +303,15 @@
     .btn {
       border: 1px solid rgba(255, 255, 255, 0.18);
       background: rgba(255, 255, 255, 0.08);
-      padding: 12px 18px;
+      padding: 13px 20px;
       border-radius: 999px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       font-weight: 700;
       transition: 0.2s ease;
+      min-height: 48px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.16);
     }
 
     .btn.primary {
@@ -250,7 +320,17 @@
       background: linear-gradient(135deg, var(--accent), var(--accent2));
     }
 
-    .btn:hover { transform: translateY(-1px); }
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.28);
+    }
+
+    .btn.primary:hover,
+    .btn.primary:focus-visible {
+      box-shadow: 0 14px 30px rgba(89, 121, 255, 0.32);
+    }
+
 
     .rating-row {
       display: flex;
@@ -379,7 +459,7 @@
       font-weight: 700;
     }
 
-    section { margin-top: 24px; }
+    section { margin-top: var(--section-space); scroll-margin-top: 96px; }
 
     main { overflow-x: hidden; }
 
@@ -400,20 +480,22 @@
       align-items: flex-end;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
 
     .section-title {
       margin: 0;
       font-size: 20px;
       font-weight: 800;
+      letter-spacing: 0.2px;
     }
 
     .section-sub {
-      margin: 0;
+      margin: 6px 0 0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.7;
+      line-height: 1.8;
+      max-width: 720px;
     }
 
     .carousel {
@@ -731,8 +813,9 @@
     .item--text {
       width: 100%;
       max-width: 100%;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
       box-shadow: none;
+      border-radius: var(--radius-sm);
     }
 
     .item--text .item-body {
@@ -747,9 +830,9 @@
 
     .social-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      padding: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      padding: 18px;
     }
 
     @media (max-width: 720px) {
@@ -954,15 +1037,191 @@
       }
     }
 
+    .stats-grid,
+    .skills-grid,
+    .contact-quick,
+    .experience-grid,
+    .identity-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .stat-card,
+    .skill-tag,
+    .contact-panel,
+    .education-card,
+    .language-card {
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .stat-card {
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .experience-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .experience-card {
+      padding: 20px;
+      min-height: 100%;
+    }
+
+    .experience-card .meta {
+      color: rgba(255,255,255,0.74);
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .experience-points {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.85;
+    }
+
+    .experience-points li {
+      position: relative;
+      padding-inline-start: 18px;
+    }
+
+    .experience-points li::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(123,109,255,0.12);
+    }
+
+    .skills-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .skill-tag {
+      padding: 16px 18px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.86);
+      line-height: 1.7;
+    }
+
+    .identity-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+
+    .education-card,
+    .language-card,
+    .contact-panel {
+      padding: 20px;
+    }
+
+    .language-list,
+    .contact-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .language-list li,
+    .contact-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .language-list li:last-child,
+    .contact-list li:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .contact-quick {
+      grid-template-columns: 1fr 1fr;
+      padding: 0 18px 18px;
+    }
+
+    .contact-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .contact-cta:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .works-intro {
+      margin-bottom: 18px;
+    }
+
     @media (max-width: 768px) {
       body { overflow-x: hidden; }
       .container,
       section { width: 100%; max-width: 100%; }
       .wrap { padding: 16px 14px 48px; }
+      .menu-toggle { display: inline-flex; }
+      nav { width: 100%; justify-content: center; }
+      .nav-links {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 6px;
+      }
+      .topbar.open .nav-links { display: flex; }
+      .chip { text-align: center; }
       .topbar-inner { padding: 10px 14px; flex-wrap: wrap; justify-content: center; }
       .hero { gap: 16px; min-height: auto; text-align: center; }
       .profile { order: -1; min-height: auto; padding: 12px; overflow: visible; }
-      .bio { min-height: auto; padding: 18px; align-items: center; }
+      .bio { min-height: auto; padding: 22px 18px; align-items: center; }
+      .hero-highlights,
+      .stats-grid,
+      .experience-grid,
+      .skills-grid,
+      .identity-grid,
+      .contact-quick { grid-template-columns: 1fr; }
       .card { box-shadow: none; }
       .avatar {
         width: min(240px, 80vw);
@@ -972,6 +1231,7 @@
       }
       h1 { font-size: clamp(26px, 7vw, 34px); }
       .bio p { font-size: 15px; }
+      .highlight, .stat-card, .experience-card, .skill-tag, .education-card, .language-card, .contact-panel { text-align: start; }
       .item { width: 100%; max-width: 100%; height: auto; }
       .item-media { aspect-ratio: 4 / 3; }
       .item-body { padding: 12px 12px 14px; }
@@ -988,10 +1248,11 @@
         --carousel-far-tilt: 18deg;
       }
       nav { gap: 8px; justify-content: center; }
-      .chip { font-size: 13px; padding: 6px 12px; }
+      .chip { font-size: 13px; padding: 10px 12px; }
       .hero-socials { justify-content: center; }
       .cta-row { justify-content: center; }
       section { margin-top: 30px; }
+      .social-grid { grid-template-columns: 1fr; padding: 14px; }
     }
 
     html,body{background:#070A12;color:#EAF0FF;overflow-x:hidden;}
@@ -1143,11 +1404,6 @@
       body{ overflow-x: clip; }
     }
 
-    /* Force scrollbar to the right (desktop) while keeping Arabic RTL layout */
-    @media (min-width: 901px){
-      html { direction: ltr; }   /* scrollbar on the right */
-      body { direction: rtl; }   /* content stays RTL */
-    }
 
     /* Safety: no horizontal overflow */
     html, body { overflow-x: hidden; max-width: 100%; }
@@ -1191,8 +1447,7 @@
       }
     }
 
-    html, body { direction: ltr; }
-    .topbar, .wrap, footer { direction: rtl; }
+    html, body { direction: rtl; }
 
     @media (min-width: 992px) {
       :root {
@@ -1338,11 +1593,15 @@
         <span class="brand-dot"></span>
         <span id="brandName">علي الشيدي</span>
       </div>
-      <nav>
-        <a class="chip" href="#about">الرئيسية</a>
-        <a class="chip" href="#works">الأعمال</a>
-        <a class="chip" href="#services">الخدمات</a>
-        <a class="chip" href="#courses">الدورات</a>
+      <button class="menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="primaryNav">☰</button>
+      <nav id="primaryNav">
+        <div class="nav-links">
+          <a class="chip" href="#about">نبذة</a>
+          <a class="chip" href="#experience">الخبرات</a>
+          <a class="chip" href="#skills">المهارات</a>
+          <a class="chip" href="#works">الأعمال</a>
+          <a class="chip" href="#social">التواصل</a>
+        </div>
       </nav>
     </div>
   </div>
@@ -1351,9 +1610,9 @@
     <section class="hero layer-wrap" id="about">
       <div class="content">
       <div class="card bio">
-        <span class="kicker">مرحبا، هذا ملف أعمالي</span>
+        <span class="kicker">بورتفوليو علاقات عامة وإعلام مؤسسي</span>
         <div class="rating-row">
-          <span>تقييم العملاء</span>
+          <span>جاهز للتعاون المهني</span>
           <span class="stars" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
             <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
@@ -1361,11 +1620,16 @@
             <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
             <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.76 1.64 7.03z"/></svg>
           </span>
-          <span>4.9/5</span>
+          <span>محتوى بصري ورسائل مؤثرة</span>
         </div>
-        <h1 id="heroTitle">تصاميم عصرية ومحتوى بصري<br />يروي القصة ويخطف الانتباه</h1>
+        <h1 id="heroTitle">أبني حضورًا إعلاميًا منظمًا يقدّم رسالتك بوضوح ويترك أثرًا احترافيًا.</h1>
         <div class="hero-role" id="heroRole"></div>
-        <p id="heroBio">مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.</p>
+        <p id="heroBio">أعمل على تحويل الأفكار إلى محتوى بصري ورسائل اتصال أكثر إقناعًا؛ من التغطية والتصميم إلى تنسيق الحملات ودعم الصورة المؤسسية، بأسلوب هادئ وعملي يناسب الجهات التي تبحث عن حضور إعلامي موثوق.</p>
+        <div class="hero-highlights">
+          <div class="highlight"><strong>رسائل أوضح</strong><span>صياغة محتوى يدعم الهوية ويخاطب الجمهور بلغة مهنية قريبة.</span></div>
+          <div class="highlight"><strong>تنفيذ متكامل</strong><span>تصميم، تصوير، ومونتاج ضمن تجربة بصرية متناسقة.</span></div>
+          <div class="highlight"><strong>جاهزية للعمل</strong><span>خبرة عملية في الحملات، الاستقبال، والتنظيم المؤسسي.</span></div>
+        </div>
         <div class="cta-row">
           <a class="btn primary" href="#works">استكشف أعمالي</a>
           <a class="btn" href="#social">تواصل معي</a>
@@ -1398,18 +1662,31 @@
       </div>
     </section>
 
-    <div id="courses"></div>
     <section id="education">
       <div class="section-head">
         <div>
-          <h2 class="section-title">المؤهل العلمي</h2>
-          <p class="section-sub">آخر مؤهل أكاديمي.</p>
+          <h2 class="section-title">نبذة سريعة</h2>
+          <p class="section-sub">ملخص مهني يوضح الخلفية الأكاديمية واللغوية ويعطي الزائر صورة سريعة وواضحة.</p>
         </div>
       </div>
-      <div class="card" style="padding: 16px;">
-        <ul style="margin: 0; padding-inline-start: 20px; color: var(--muted); line-height: 1.9;">
-          <li>بكالوريوس الاتصال الجماهيري (العلاقات العامة) — جامعة التقنية والعلوم التطبيقية – صور.</li>
-        </ul>
+      <div class="identity-grid">
+        <div class="education-card">
+          <h3 class="section-title" style="font-size: 18px; margin-bottom: 8px;">المؤهل العلمي</h3>
+          <p class="section-sub" style="margin-top: 0;">بكالوريوس الاتصال الجماهيري – تخصص العلاقات العامة، جامعة التقنية والعلوم التطبيقية بصور.</p>
+          <div class="stats-grid">
+            <div class="stat-card"><strong>PR</strong><span>أساس أكاديمي في العلاقات العامة والتواصل المؤسسي.</span></div>
+            <div class="stat-card"><strong>Media</strong><span>فهم عملي للمحتوى، التغطية، وإدارة الرسائل الإعلامية.</span></div>
+            <div class="stat-card"><strong>Brand</strong><span>اهتمام بالاتساق البصري وتقديم الهوية بصورة احترافية.</span></div>
+          </div>
+        </div>
+        <div class="language-card">
+          <h3 class="section-title" style="font-size: 18px; margin-bottom: 8px;">اللغات</h3>
+          <ul class="language-list">
+            <li><span>العربية</span><strong>لغة أم</strong></li>
+            <li><span>الإنجليزية</span><strong>ممتاز</strong></li>
+            <li><span>الهندية / الأردو</span><strong>ممتاز</strong></li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -1417,73 +1694,65 @@
       <div class="section-head">
         <div>
           <h2 class="section-title">الخبرات</h2>
-          <p class="section-sub">أحدث الخبرات أولاً.</p>
+          <p class="section-sub">خبرات عملية تركّز على الأثر: تنظيم الرسالة، دعم الحضور، والمساهمة في تنفيذ الأعمال باحترافية ومرونة.</p>
         </div>
       </div>
-      <div class="card" style="padding: 16px;">
-        <div style="display: grid; gap: 12px;">
-          <div class="item item--text">
-            <div class="item-body">
-              <h4 class="item-title">عضو فريق الحملة الطلابية — الإعلام والتسويق | جامعة التقنية والعلوم التطبيقية بصور (مارس 2025 – يونيو 2025)</h4>
-              <p class="item-desc">مهام: التسويق الميداني، التسويق الإلكتروني وإدارة المحتوى، تنسيق الفعاليات، إعداد التصاميم.</p>
-            </div>
-          </div>
-          <div class="item item--text">
-            <div class="item-body">
-              <h4 class="item-title">نائب مدير التسويق — ورشة مهاد (MHAD) للأثاث (3 أشهر)</h4>
-              <p class="item-desc">مهام: تنسيق الحملات، إدارة المحتوى، الإلقاء، تصوير، تصميم جرافيكي، مونتاج.</p>
-            </div>
-          </div>
-          <div class="item item--text">
-            <div class="item-body">
-              <h4 class="item-title">متدرب علاقات عامة — إداري وموظف استقبال | بلدية صحم (8 يوليو 2024 – 15 أغسطس 2024)</h4>
-              <p class="item-desc">مهام: صياغة رسائل رسمية، تنظيم وثائق، الرد على الاستفسارات، إعداد تقارير داخلية، دعم التواصل المؤسسي.</p>
-            </div>
-          </div>
-        </div>
+      <div class="experience-grid">
+        <article class="card experience-card">
+          <span class="meta">مارس 2025 – يونيو 2025 | جامعة التقنية والعلوم التطبيقية بصور</span>
+          <h3 class="item-title">عضو فريق الحملة الطلابية — الإعلام والتسويق</h3>
+          <ul class="experience-points">
+            <li>ساهمت في دعم الحملة ميدانيًا ورقميًا بما يعزز الوصول ويجعل الرسائل أكثر حضورًا واتساقًا.</li>
+            <li>شاركت في إعداد المحتوى والتصاميم وتنظيم التنفيذ بما يخدم الفعاليات والأنشطة المصاحبة.</li>
+            <li>عملت ضمن فريق متعدد المهام مع تركيز على السرعة والدقة وحسن تمثيل الجهة.</li>
+          </ul>
+        </article>
+        <article class="card experience-card">
+          <span class="meta">3 أشهر | ورشة مهاد (MHAD) للأثاث</span>
+          <h3 class="item-title">نائب مدير التسويق</h3>
+          <ul class="experience-points">
+            <li>دعمت تنسيق الحملات التسويقية وربطت بين المحتوى والتنفيذ بما يقدّم المنتجات بصورة أكثر جاذبية.</li>
+            <li>أدرت أعمالًا متنوعة شملت الإلقاء، التصوير، التصميم، والمونتاج ضمن هوية بصرية موحّدة.</li>
+            <li>أسهمت في تسريع إنتاج المواد التسويقية وتحسين جاهزيتها للنشر والعرض.</li>
+          </ul>
+        </article>
+        <article class="card experience-card">
+          <span class="meta">8 يوليو 2024 – 15 أغسطس 2024 | بلدية صحم</span>
+          <h3 class="item-title">متدرب علاقات عامة — إداري وموظف استقبال</h3>
+          <ul class="experience-points">
+            <li>ساندت أعمال التواصل المؤسسي عبر صياغة الخطابات والرد على الاستفسارات وتنظيم الوثائق.</li>
+            <li>أسهمت في رفع جودة المتابعة اليومية من خلال الأرشفة الدقيقة وإعداد التقارير الداخلية.</li>
+            <li>اكتسبت خبرة مباشرة في تمثيل الجهة أمام المراجعين والمحافظة على تجربة استقبال منظمة ومهنية.</li>
+          </ul>
+        </article>
       </div>
     </section>
 
-    <div id="services"></div>
     <section id="skills">
       <div class="section-head">
         <div>
           <h2 class="section-title">المهارات</h2>
-          <p class="section-sub">مجموعة مهارات داعمة للمجال الإعلامي.</p>
+          <p class="section-sub">مزيج عملي بين مهارات العلاقات العامة والإنتاج البصري، مع عرض منظّم يسهل قراءته على الجوال والكمبيوتر.</p>
         </div>
       </div>
-      <div class="card" style="padding: 16px;">
-        <ul style="margin: 0; padding-inline-start: 20px; color: var(--muted); line-height: 1.9;">
-          <li>Adobe Photoshop، Adobe Premiere.</li>
-          <li>التواصل والعرض والإقناع.</li>
-          <li>تنظيم الفعاليات وإدارة الحملات.</li>
-          <li>Microsoft Office وأنظمة الأرشفة.</li>
-          <li>إدخال البيانات وإنجاز المعاملات.</li>
-          <li>العمل تحت الضغط.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="languages">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">اللغات</h2>
-          <p class="section-sub">مستوى الإتقان اللغوي.</p>
-        </div>
-      </div>
-      <div class="card" style="padding: 16px;">
-        <ul style="margin: 0; padding-inline-start: 20px; color: var(--muted); line-height: 1.9;">
-          <li>العربية (أم).</li>
-          <li>الإنجليزية (ممتاز).</li>
-          <li>الهندية/الأردو (ممتاز).</li>
-        </ul>
+      <div class="skills-grid">
+        <div class="skill-tag">Adobe Photoshop</div>
+        <div class="skill-tag">Adobe Premiere</div>
+        <div class="skill-tag">صياغة المحتوى الإعلامي</div>
+        <div class="skill-tag">التواصل والعرض والإقناع</div>
+        <div class="skill-tag">تنظيم الفعاليات والحملات</div>
+        <div class="skill-tag">التصوير والمونتاج</div>
+        <div class="skill-tag">Microsoft Office</div>
+        <div class="skill-tag">الأرشفة والمتابعة الإدارية</div>
+        <div class="skill-tag">العمل تحت الضغط والالتزام بالمواعيد</div>
       </div>
     </section>
 
     <section id="works">
-      <div class="section-head">
+      <div class="section-head works-intro">
         <div>
-          <h2 class="section-title">أعمالي</h2>
+          <h2 class="section-title">الأعمال</h2>
+          <p class="section-sub">نماذج منتقاة تعكس اهتمامي بتقديم عمل بصري منظم يخدم الرسالة والهوية، مع الحفاظ على تنوع واضح بين التصوير، الشعارات، والمواد المرئية.</p>
         </div>
       </div>
 
@@ -1546,12 +1815,16 @@
     <section id="social">
       <div class="section-head">
         <div>
-          <h2 class="section-title">معلومات التواصل</h2>
-          <p class="section-sub">وسائل التواصل المباشرة.</p>
+          <h2 class="section-title">التواصل</h2>
+          <p class="section-sub">للاستفسارات المهنية، فرص التعاون، أو مناقشة مشروع جديد، يمكنك الوصول إليّ مباشرة عبر القنوات التالية.</p>
         </div>
       </div>
 
       <div class="card">
+        <div class="contact-quick">
+          <a class="contact-cta" href="mailto:alialsheidi@gmail.com">راسلني عبر البريد</a>
+          <a class="contact-cta" href="tel:95647786">اتصل مباشرة</a>
+        </div>
         <div class="social-grid" id="socialGrid"></div>
       </div>
     </section>
@@ -1581,9 +1854,9 @@
 
     const profile = {
       name: "علي الشيدي",
-      role: "مصمم ومصور ومحرر فيديو",
-      badge: "مصمم ومصور ومحرر فيديو",
-      bio: "مصمم ومصور ومحرر فيديو، خريج بكالوريوس اتصال جماهيري تخصص علاقات عامة من جامعة التقنية والعلوم التطبيقية – صور، ولدي خبرة تدريب في بلدية صحم وخبرة في التسويق والمحتوى والتصميم، وأسعى لعمل احترافي في الإعلام والتواصل المؤسسي.",
+      role: "متخصص علاقات عامة ومحتوى بصري",
+      badge: "علاقات عامة • محتوى بصري • إنتاج إعلامي",
+      bio: "خريج علاقات عامة أعمل على تقديم محتوى بصري ورسائل إعلامية أكثر وضوحًا وتأثيرًا، مستفيدًا من خبرتي في التصميم والتصوير والمونتاج ودعم الأعمال المؤسسية والتسويقية.",
       image: "assets/img/profile.jpg"
     };
 
@@ -1635,7 +1908,9 @@
     const socials = [
       { name: "الهاتف", handle: "95647786", icon: "☎", url: "tel:95647786" },
       { name: "البريد الإلكتروني", handle: "alialsheidi@gmail.com", icon: "✉", url: "mailto:alialsheidi@gmail.com" },
-      { name: "العنوان", handle: "سلطنة عمان، محافظة شمال الباطنة، ولاية صحم", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، محافظة شمال الباطنة، ولاية صحم" }
+      { name: "إنستغرام", handle: "instagram.com", icon: "◎", url: "https://instagram.com/" },
+      { name: "لينكدإن", handle: "linkedin.com", icon: "in", url: "https://linkedin.com/" },
+      { name: "الموقع", handle: "سلطنة عمان، محافظة شمال الباطنة، ولاية صحم", icon: "📍", url: "https://maps.google.com/?q=سلطنة عمان، محافظة شمال الباطنة، ولاية صحم" }
     ];
 
     function makeCarouselCard({ title, desc, img }, { clickToZoom = true, variant = "" } = {}) {
@@ -1937,6 +2212,19 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      const topbar = document.querySelector(".topbar");
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navLinks = document.querySelectorAll(".nav-links a");
+      menuToggle?.addEventListener("click", () => {
+        const isOpen = topbar.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          topbar.classList.remove("open");
+          menuToggle?.setAttribute("aria-expanded", "false");
+        });
+      });
       document.getElementById("brandName").textContent = "علي الشيدي";
       document.getElementById("heroRole").textContent = profile.role;
       document.getElementById("heroBio").textContent = profile.bio;
